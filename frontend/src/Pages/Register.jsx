@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa';
 import { baseUrl } from '../config';
+import Input from '../components/UI/Input';
 import OwnerRegistration from '../components/UI/OwnerRegistration';
 
 //amogus228@mail.hitler
@@ -44,33 +45,30 @@ const Register = () => {
     <main className='flex items-center justify-center w-full px-3'>
       <form className='flex flex-col w-full max-w-[400px] gap-4 px-4 py-6 shadow-2xl rounded-xl mt-[100px]'>
         <p className='text-3xl font-bold'>Register</p>
-        <input
+        <Input
           onChange={(e) => {
             setEmail(e.target.value);
             setIsError(false);
           }}
           value={email}
-          className='focus:outline-none py-2 border-b-2 border-b-black'
           placeholder='Email'
           type='text'
         />
-        <input
+        <Input
           onChange={(e) => {
             setName(e.target.value);
             setIsError(false);
           }}
           value={name}
-          className='focus:outline-none py-2 border-b-2 border-b-black'
           placeholder='Your name'
           type='text'
         />
-        <input
+        <Input
           onChange={(e) => {
             setPassword(e.target.value);
             setIsError(false);
           }}
           value={password}
-          className='focus:outline-none py-2 border-b-2 border-b-black'
           placeholder='Password'
           type={isPasswordShown ? 'text' : 'password'}
         />
@@ -92,7 +90,7 @@ const Register = () => {
           <p className='text-xl font-bold mb-2'>You are:</p>
           <div className='flex gap-4'>
             <div className='flex items-center justify-center gap-2'>
-              <input
+              <Input
                 onChange={(e) => setRole(e.target.value)}
                 value='user'
                 name='uniqueGroup'
@@ -104,7 +102,7 @@ const Register = () => {
               </label>
             </div>
             <div className='flex items-center justify-center gap-2'>
-              <input
+              <Input
                 onChange={(e) => setRole(e.target.value)}
                 value='owner'
                 name='uniqueGroup'

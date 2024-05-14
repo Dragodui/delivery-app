@@ -28,6 +28,10 @@ const RestaurantSchema = new mongoose.Schema({
       required: true,
     },
   ],
+  ownerId: {
+    type: mongoose.SchemaTypes.String,
+    required: true,
+  }
 });
 
 module.exports = mongoose.model('restaurants', RestaurantSchema);

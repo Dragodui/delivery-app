@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAppSelector } from '../store/store';
 import Wrapper from '../components/UI/Wrapper';
 import { FaUserCircle } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
+import { CiCirclePlus } from 'react-icons/ci';
+import AddResModal from '../components/AddResModal';
 
 const Profile = () => {
   const user = useAppSelector((state) => state.user.user);
+  const [isAddResModalVisible, setIsAddResModalVisible] = useState(false);
   console.log(user);
 
   return (
@@ -32,7 +35,7 @@ const Profile = () => {
           <h1 className='font-bold text-2xl mb-4'>Orders</h1>
           <div>
             {user.orders === undefined || user.orders.length === 0 ? (
-              <p className='text-center mt-[70px] text-gray-500 text-xl font-medium'>
+              <p className='text-center mt-[90px] text-gray-500 text-xl font-medium'>
                 You have no orders yet
               </p>
             ) : (
@@ -42,14 +45,20 @@ const Profile = () => {
         </div>
         {user.role === 'owner' ? (
           <div className='mt-[40px] shadow-2xl py-3 min-h-[250px] px-5 rounded-xl w-full max-w-[300px]'>
-            <h1 className='font-bold text-2xl mb-4'>Your restaurant</h1>
+            <h1 className='font-bold text-2xl'>Your restaurant</h1>
             <div className='flex justify-center'>
               {user.restaurant === null ? (
-                <button className='text-center mt-[70px] bg-gray-400 text-white py-3 px-5 rounded-xl text-xl font-medium'>
-                  register restaurant
+                <button onClick={() => setIsAddResModalVisible(true)} className='text-center mt-[70px] flex justify-center hover:translate-y-[-10px] duration-300 shadow-2xl bg-gray-300 text-white py-3 px-5 rounded-xl text-xl font-medium'>
+                  <IconContext.Provider
+                    value={{ style: { width: '60px', height: '60px' } }}
+                  >
+                    <div>
+                      <CiCirclePlus />
+                    </div>
+                  </IconContext.Provider>
                 </button>
               ) : (
-                user.orders.map((order) => <div>{order.restaurant}</div>)
+                <div>{user.restaurant.name}</div>
               )}
             </div>
           </div>
@@ -57,6 +66,14 @@ const Profile = () => {
           ''
         )}
       </div>
+      {isAddResModalVisible ? (
+        <AddResModal
+          isVisible={isAddResModalVisible}
+          setIsVisible={setIsAddResModalVisible}
+        />
+      ) : (
+        ''
+      )}
     </Wrapper>
   );
 };

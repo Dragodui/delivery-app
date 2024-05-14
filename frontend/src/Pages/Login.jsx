@@ -7,6 +7,7 @@ import { setIsLoggedIn } from '../store/features/isLoggedInSlice';
 import { useNavigate } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa';
 import { baseUrl } from '../config';
+import Input from '../components/UI/Input';
 
 //amogus228@mail.hitler
 //kurwaPojebana
@@ -37,17 +38,16 @@ const Login = () => {
     <main className='flex items-center justify-center w-full px-3'>
       <form className='flex flex-col w-full max-w-[400px] gap-4 px-4 py-6 shadow-2xl rounded-xl mt-[100px]'>
         <p className='text-3xl font-bold'>Log in</p>
-        <input
+        <Input
           onChange={(e) => {
             setEmail(e.target.value);
             setIsError(false);
           }}
           value={email}
-          className='focus:outline-none py-2 border-b-2 border-b-black'
           placeholder='Email'
           type='text'
         />
-        <input
+        <Input
           onChange={(e) => {
             setPassword(e.target.value);
             setIsError(false);
