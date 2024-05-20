@@ -17,12 +17,14 @@ import { useAppDispatch, useAppSelector } from './store/store';
 import { setUser } from './store/features/userSlice';
 import { setIsLoggedIn } from './store/features/isLoggedInSlice';
 import Header from './components/Header';
+import ResOwnerPanel from './Pages/ResOwnerPanel';
 
 const App = () => {
   const dispatch = useAppDispatch();
   const token = localStorage.getItem('token');
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedInState, setIsLoggedInState] = useState(false);
+  const user = useAppSelector(state => state.user.user);
 
   useEffect(() => {
     setIsLoading(true);
@@ -59,9 +61,8 @@ const App = () => {
           dispatch(setUser(parsedUser));
         })
         .catch((error) => {
-          console.error(
-            'Error fetching current user:',
-            error.response.data.message,
+          console.log(
+            'Error fetching current user:'
           );
         });
       axios
@@ -72,9 +73,8 @@ const App = () => {
           setIsLoggedInState(isLoggedInFromResponse);
         })
         .catch((error) => {
-          console.error(
-            'Error fetching authentication:',
-            error.response.data.message,
+          console.log(
+            'Error fetching authentication:'
           );
         });
     }
@@ -94,6 +94,10 @@ const App = () => {
           element={isLoggedInState ? <Navigate to='/profile' /> : <Register />}
         />
         <Route path='/profile' element={isLoggedInState ? <Profile /> : <Navigate to='/login'/>} />
+        <Route
+          path='/my_restaurant'
+          element={isLoggedInState && user.role === 'owner' ? <ResOwnerPanel/> : <Navigate to='/profile' /> }
+        />
       </Routes>
       <footer></footer>
     </Router>

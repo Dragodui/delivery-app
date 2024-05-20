@@ -9,13 +9,13 @@ const RestaurantSchema = new mongoose.Schema({
     unique: true,
   },
   address: {
-    type: mongoose.SchemaTypes.Number,
-    required: true,
-  },
-  image: {
     type: mongoose.SchemaTypes.String,
     required: true,
   },
+  // image: {
+  //   data: Buffer,
+  //   contentType: mongoose.SchemaTypes.String,
+  // },
   description: {
     type: mongoose.SchemaTypes.String,
     required: true,
@@ -28,6 +28,10 @@ const RestaurantSchema = new mongoose.Schema({
       required: true,
     },
   ],
+  image: {
+    type: mongoose.SchemaTypes.String,
+    required: true,
+  },
   ownerId: {
     type: mongoose.SchemaTypes.String,
     required: true,

@@ -40,7 +40,7 @@ const UserSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: Order,
       default: [],
-      required: false,
+      required: false,  
     },
   ],
   restaurant: {
