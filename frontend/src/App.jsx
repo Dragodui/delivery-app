@@ -18,6 +18,7 @@ import { setUser } from './store/features/userSlice';
 import { setIsLoggedIn } from './store/features/isLoggedInSlice';
 import Header from './components/Header';
 import ResOwnerPanel from './Pages/ResOwnerPanel';
+import Restaurants from './Pages/Restaurants';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -96,6 +97,10 @@ const App = () => {
         <Route
           path='/my_restaurant'
           element={isLoggedInState && user.role === 'owner' ? <ResOwnerPanel/> : <Navigate to='/profile' /> }
+        />
+          <Route
+          path='/restaurants'
+          element={isLoggedInState ? <Restaurants/> : <Navigate to='/login' /> }
         />
       </Routes>
       <footer></footer>
