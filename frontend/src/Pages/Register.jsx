@@ -36,7 +36,7 @@ const Register = () => {
       .post(`${baseUrl}/register`, sendUser)
       .then((res) => {
         console.log(res.data);
-        navigate('/');
+        navigate('/login');
       })
       .catch((err) => setIsError(true));
   };

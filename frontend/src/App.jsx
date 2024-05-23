@@ -28,7 +28,6 @@ const App = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    console.log(token);
     if (token) {
       axios
         .get(`${baseUrl}/currentUser`, { headers: { authorization: token } })

@@ -29,7 +29,7 @@ const Profile = () => {
         .catch((err) => console.log(err));
     };
     setIsLoading(false);
-  }, [isAddResModalVisible]);
+  }, []);
 
   return (
     <Wrapper>
