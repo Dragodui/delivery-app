@@ -62,16 +62,22 @@ const Header = () => {
             )}
           </nav>
           <div className='flex items-center gap-[40px]'>
-            {isLoggedIn ? <button onClick={logOut}>Log out</button> : ''}
-            <button onClick={() => dispatch(changeCartState(true))}>
-              <IconContext.Provider
-                value={{ style: { width: '24px', height: '24px' } }}
-              >
-                <div>
-                  <FaShoppingCart />
-                </div>
-              </IconContext.Provider>
-            </button>
+            {isLoggedIn ? (
+              <>
+                <button onClick={logOut}>Log out</button>
+                <button onClick={() => dispatch(changeCartState(true))}>
+                  <IconContext.Provider
+                    value={{ style: { width: '24px', height: '24px' } }}
+                  >
+                    <div>
+                      <FaShoppingCart />
+                    </div>
+                  </IconContext.Provider>
+                </button>
+              </>
+            ) : (
+              ''
+            )}
           </div>
         </div>
       </Wrapper>

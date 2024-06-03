@@ -114,7 +114,11 @@ const App = () => {
         />
       </Routes>
       <footer></footer>
-      <Cart/>
+      {
+        isLoggedInState
+        ? <Cart/>
+        : ''
+      }
     </Router>
   );
 };

@@ -56,7 +56,7 @@ const Cart = () => {
         {isLoading ? (
           <Loader />
         ) : (
-          <ListOfItems list={dispatchCart} isAddableToCard={false} />
+          <ListOfItems list={dispatchCart} isAddableToCard={true} />
         )}
       </div>
       <Button addStyles={'fixed bottom-[10px] w-[220px]'}>Order</Button>
