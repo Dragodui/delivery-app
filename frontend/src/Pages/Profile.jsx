@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const user = useAppSelector((state) => state.user.user);
+  console.log(user);
   const [isAddResModalVisible, setIsAddResModalVisible] = useState(false);
   console.log(user);
   const [isLoading, setIsLoading] = useState(true);

@@ -5,6 +5,7 @@ import { useAppSelector } from '../store/store';
 import Button from '../components/UI/Button';
 import axios from 'axios';
 import { baseUrl } from '../config';
+import ListOfItems from '../components/UI/ListOfItems';
 import AddMenuItemsModal from '../components/AddMenuItemsModal';
 import { FaLocationDot } from 'react-icons/fa6';
 import { RiProfileFill } from 'react-icons/ri';
@@ -84,29 +85,7 @@ const ResOwnerPanel = () => {
                   Add new item
                 </Button>
               </div>
-              <div className='flex flex-wrap gap-4'>
-                {menu.length ? (
-                  menu.map((item) => {
-                    return (
-                      <div key={item._id} className='mt-4 rounded-xl'>
-                        <img
-                          src={item.image}
-                          alt=''
-                          className='rounded-xl max-w-[200px]'
-                        />
-                        <div className='flex justify-between'>
-                          <p>{item.name}</p>
-                          <p>{item.price} $</p>
-                        </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <p className='text-center mt-[30px] text-gray-500 text-xl font-medium'>
-                    You didn't added anything
-                  </p>
-                )}
-              </div>
+              <ListOfItems isAddableToCard={false} list={menu}/>
             </div>
           </div>
         </>

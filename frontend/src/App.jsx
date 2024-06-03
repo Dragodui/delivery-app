@@ -1,4 +1,6 @@
 import React from 'react';
+import Restaurant from './Pages/Restaurant';
+import Cart from './components/UI/Cart';
 
 import {
   HashRouter as Router,
@@ -25,7 +27,7 @@ const App = () => {
   const token = localStorage.getItem('token');
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedInState, setIsLoggedInState] = useState(false);
-  const user = useAppSelector(state => state.user.user);
+  const user = useAppSelector((state) => state.user.user);
 
   useEffect(() => {
     setIsLoading(true);
@@ -44,10 +46,9 @@ const App = () => {
               orders: user.orders,
               id: user._id,
               createdAt: user.createdAt,
-              restaurant: user.restaurant
+              restaurant: user.restaurant,
             };
-          }
-          else {
+          } else {
             parsedUser = {
               email: user.email,
               name: user.name,
@@ -61,9 +62,7 @@ const App = () => {
           dispatch(setUser(parsedUser));
         })
         .catch((error) => {
-          console.log(
-            'Error fetching current user:'
-          );
+          console.log('Error fetching current user:');
         });
       axios
         .get(`${baseUrl}/checkAuth`, { headers: { authorization: token } })
@@ -73,9 +72,7 @@ const App = () => {
           setIsLoggedInState(isLoggedInFromResponse);
         })
         .catch((error) => {
-          console.log(
-            'Error fetching authentication:'
-          );
+          console.log('Error fetching authentication:');
         });
     }
   }, [token]);
@@ -93,17 +90,31 @@ const App = () => {
           path='/register'
           element={isLoggedInState ? <Navigate to='/profile' /> : <Register />}
         />
-        <Route path='/profile' element={isLoggedInState ? <Profile /> : <Navigate to='/login'/>} />
+        <Route
+          path='/profile'
+          element={isLoggedInState ? <Profile /> : <Navigate to='/login' />}
+        />
         <Route
           path='/my_restaurant'
-          element={isLoggedInState && user.role === 'owner' ? <ResOwnerPanel/> : <Navigate to='/profile' /> }
+          element={
+            isLoggedInState && user.role === 'owner' ? (
+              <ResOwnerPanel />
+            ) : (
+              <Navigate to='/profile' />
+            )
+          }
         />
-          <Route
+        <Route
           path='/restaurants'
-          element={isLoggedInState ? <Restaurants/> : <Navigate to='/login' /> }
+          element={isLoggedInState ? <Restaurants /> : <Navigate to='/login' />}
+        />
+        <Route
+          path='/restaurants/:resId'
+          element={isLoggedInState ? <Restaurant /> : <Navigate to='/login' />}
         />
       </Routes>
       <footer></footer>
+      <Cart/>
     </Router>
   );
 };

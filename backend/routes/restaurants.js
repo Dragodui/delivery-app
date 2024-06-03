@@ -101,6 +101,25 @@ router.get('/restaurantsMenu/:resId', async (req, res) => {
   }
 });
 
+router.get('/restaurant/:resId', async (req, res) => {
+  try {
+    const { resId } = req.params;
+    console.log(`Fetching restaurant with ID: ${resId}`);
+    
+    const rest = await Restaurant.findOne({ _id: resId });
+    console.log(rest);
+    if (!rest) {
+      return res.status(404).json({ error: 'Restaurant not found' });
+    }
+
+    console.log(`Found restaurant: ${JSON.stringify(rest)}`);
+    res.json(rest);
+  } catch (error) {
+    console.error('Error fetching restaurant:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 
 router.get('/restaurants', async (req, res) => {
