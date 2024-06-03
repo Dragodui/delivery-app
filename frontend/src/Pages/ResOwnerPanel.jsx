@@ -5,7 +5,7 @@ import { useAppSelector } from '../store/store';
 import Button from '../components/UI/Button';
 import axios from 'axios';
 import { baseUrl } from '../config';
-import ListOfItems from '../components/UI/ListOfItems';
+import ListOfItems from '../components/ListOfItems';
 import AddMenuItemsModal from '../components/AddMenuItemsModal';
 import { FaLocationDot } from 'react-icons/fa6';
 import { RiProfileFill } from 'react-icons/ri';

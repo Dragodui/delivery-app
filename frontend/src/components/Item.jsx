@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../store/store';
+import { useAppSelector } from '../store/store';
 import {
   addItemToCart,
   removeItemFromCart,
   fillCart
-} from '../../store/features/cartSlice';
-import { baseUrl } from '../../config';
+} from '../store/features/cartSlice';
+import { baseUrl } from '../config';
 import axios from 'axios';
 
 const Item = ({ item, isAddableToCard }) => {

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { baseUrl } from '../config';
 import Wrapper from '../components/UI/Wrapper';
-import ListOfItems from '../components/UI/ListOfItems';
+import ListOfItems from '../components/ListOfItems';
 import Loader from '../components/UI/Loader';
 import { FaLocationDot } from 'react-icons/fa6';
 

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { baseUrl } from '../../config';
-import { useAppSelector } from '../../store/store';
-import Loader from './Loader';
+import { baseUrl } from '../config';
+import { useAppSelector } from '../store/store';
+import Loader from './UI/Loader';
 import ListOfItems from './ListOfItems';
-import { useAppDispatch } from '../../store/store';
-import { fillCart } from '../../store/features/cartSlice';
-import { changeCartState } from '../../store/features/isCartOpenedSlice';
-import Button from './Button';
+import { useAppDispatch } from '../store/store';
+import { fillCart } from '../store/features/cartSlice';
+import { changeCartState } from '../store/features/isCartOpenedSlice';
+import Button from './UI/Button';
 import { IoMdCloseCircle } from 'react-icons/io';
 import { IconContext } from 'react-icons';
 

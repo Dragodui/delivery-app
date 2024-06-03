@@ -1,6 +1,6 @@
 import React from 'react';
 import Restaurant from './Pages/Restaurant';
-import Cart from './components/UI/Cart';
+import Cart from './components/Cart';
 
 import {
   HashRouter as Router,
