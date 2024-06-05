@@ -16,15 +16,30 @@ const Cart = () => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatchCart = useAppSelector((state) => state.cart.cart);
   const user = useAppSelector((state) => state.user.user);
-  const isCartOpened = useAppSelector((state) => state.isCartOpened.isCartOpened);
+  const isCartOpened = useAppSelector(
+    (state) => state.isCartOpened.isCartOpened,
+  );
   const dispatch = useAppDispatch();
-  console.log(user);
+
+  const createOrder = async () => {
+    try {
+      console.log(cart);
+      const response = await axios.post(`${baseUrl}/orders/makeOrder`, {
+        items: cart,
+        userId: user.id,
+      });
+      console.log(response.data);
+      setCart([]);
+      dispatch(fillCart([]));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const fetchCart = async () => {
       try {
         const response = await axios.get(`${baseUrl}/cart/${user.id}`);
-        console.log(response.data.cart);
         const fetchedCart = response.data.cart;
         setCart(fetchedCart);
         dispatch(fillCart(fetchedCart));
@@ -37,11 +52,18 @@ const Cart = () => {
   }, []);
 
   return (
-    <div className={`max-w-[280px] overflow-auto top-0 bottom-0 items-center flex flex-col shadow-2xl duration-300 ${isCartOpened ? 'right-0' : 'right-[-100%]'} fixed z-10 bg-white`}>
+    <div
+      className={`max-w-[280px] overflow-auto top-0 bottom-0 items-center flex flex-col shadow-2xl duration-300 ${
+        isCartOpened ? 'right-0' : 'right-[-100%]'
+      } fixed z-10 bg-white`}
+    >
       <div className='fixed bg-white w-[260px] py-2 px-3 flex justify-between items-center'>
         <h1 className='font-bold text-3xl'>Cart</h1>
 
-        <button className='mt-[3px]' onClick={() => dispatch(changeCartState(false))}>
+        <button
+          className='mt-[3px]'
+          onClick={() => dispatch(changeCartState(false))}
+        >
           {' '}
           <IconContext.Provider
             value={{ style: { width: '40px', height: '40px' } }}
@@ -59,7 +81,9 @@ const Cart = () => {
           <ListOfItems list={dispatchCart} isAddableToCard={true} />
         )}
       </div>
-      <Button addStyles={'fixed bottom-[10px] w-[220px]'}>Order</Button>
+      <Button onClick={createOrder} addStyles={'fixed bottom-[10px] w-[220px]'}>
+        Order
+      </Button>
     </div>
   );
 };

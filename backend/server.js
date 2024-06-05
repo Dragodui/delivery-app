@@ -8,6 +8,7 @@ const MongoStore = require('connect-mongo');
 const jwt = require('jsonwebtoken');
 const resRoute = require('./routes/restaurants.js');
 const cartRoute = require('./routes/cart.js');
+const ordersRoute = require('./routes/orders.js');
 
 const cors = require('cors');
 
@@ -32,5 +33,6 @@ app.use(cors());
 app.use(authRoutes);
 app.use(resRoute);
 app.use(cartRoute);
+app.use(ordersRoute);
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));

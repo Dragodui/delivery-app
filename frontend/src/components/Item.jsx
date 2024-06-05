@@ -24,8 +24,6 @@ const Item = ({ item, isAddableToCard }) => {
         const fetchedCart = response.data.cart; 
         setCartFromDB(fetchedCart);
         dispatch(fillCart(fetchedCart));
-        console.log(item)
-        console.log(fetchedCart);
       } catch(error) {
         console.log(error);
       };
