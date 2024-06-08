@@ -11,7 +11,6 @@ export const IsCartOpenedSlice = createSlice({
     changeCartState: (state, action) => {
       state.isCartOpened = action.payload;
     },
-   
   },
 });
 

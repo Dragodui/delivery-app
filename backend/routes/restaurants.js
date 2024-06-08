@@ -73,7 +73,7 @@ router.post('/restaurantsMenu', async (req, res) => {
       await newProduct.save();
       productIds.push(newProduct._id);
     }
-    console.log(productIds)
+    console.log(productIds);
 
     restaurant.menu.push(...productIds);
     await restaurant.save();
@@ -105,7 +105,7 @@ router.get('/restaurant/:resId', async (req, res) => {
   try {
     const { resId } = req.params;
     console.log(`Fetching restaurant with ID: ${resId}`);
-    
+
     const rest = await Restaurant.findOne({ _id: resId });
     console.log(rest);
     if (!rest) {
@@ -119,8 +119,6 @@ router.get('/restaurant/:resId', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
-
 
 router.get('/restaurants', async (req, res) => {
   try {
@@ -145,6 +143,5 @@ router.get('/restaurants/:ownerId', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 
 module.exports = router;

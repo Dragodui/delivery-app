@@ -1,7 +1,7 @@
 import React from 'react';
 import Restaurant from './Pages/Restaurant';
 import Cart from './components/Cart';
-
+import Order from './Pages/Order';
 import {
   HashRouter as Router,
   Route,
@@ -21,6 +21,8 @@ import { setIsLoggedIn } from './store/features/isLoggedInSlice';
 import Header from './components/Header';
 import ResOwnerPanel from './Pages/ResOwnerPanel';
 import Restaurants from './Pages/Restaurants';
+import { fillCart } from './store/features/cartSlice';
+import { fillOrders } from './store/features/ordersSlice';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -30,11 +32,14 @@ const App = () => {
   const user = useAppSelector((state) => state.user.user);
 
   useEffect(() => {
-    setIsLoading(true);
-    if (token) {
-      axios
-        .get(`${baseUrl}/currentUser`, { headers: { authorization: token } })
-        .then((response) => {
+    const fetchCurrentUser = async () => {
+      const token = localStorage.getItem('token');
+      setIsLoading(true);
+      if (token) {
+        try {
+          const response = await axios.get(`${baseUrl}/currentUser`, {
+            headers: { authorization: token },
+          });
           const user = response.data;
           let parsedUser = {};
           if (user.role === 'owner') {
@@ -60,22 +65,48 @@ const App = () => {
             };
           }
           dispatch(setUser(parsedUser));
-        })
-        .catch((error) => {
-          console.log('Error fetching current user:');
+        } catch (error) {
+          console.log(`Error fetching current user: ${error}`);
+        }
+      }
+    };
+    const fetchIsLoggedIn = async () => {
+      try {
+        const response = await axios.get(`${baseUrl}/checkAuth`, {
+          headers: { authorization: token },
         });
-      axios
-        .get(`${baseUrl}/checkAuth`, { headers: { authorization: token } })
-        .then((response) => {
-          const isLoggedInFromResponse = response.data.authenticated;
-          dispatch(setIsLoggedIn(isLoggedInFromResponse));
-          setIsLoggedInState(isLoggedInFromResponse);
-        })
-        .catch((error) => {
-          console.log('Error fetching authentication:');
-        });
-    }
-  }, [token]);
+        const isLoggedInFromResponse = response.data.authenticated;
+        dispatch(setIsLoggedIn(isLoggedInFromResponse));
+        setIsLoggedInState(isLoggedInFromResponse);
+      } catch (error) {
+        console.log(`Error fetching login: ${error}`);
+      }
+    };
+    const fetchCart = async () => {
+      try {
+        const response = await axios.get(`${baseUrl}/cart/${user.id}`);
+        const fetchedCart = response.data.cart;
+        dispatch(fillCart(fetchedCart));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get(`${baseUrl}/orders/${user.id}`);
+        const fetchedOrders = response.data.orders;
+        console.log(fetchedOrders);
+        dispatch(fillOrders(fetchedOrders));
+      } catch (error) {
+        console.log(`Error fetching orders: ${error}`);
+      }
+    };
+    fetchCurrentUser();
+    fetchIsLoggedIn();
+    fetchCart();
+    // fetchOrders();
+    setIsLoading(false);
+  }, []);
 
   return (
     <Router>
@@ -112,13 +143,13 @@ const App = () => {
           path='/restaurants/:resId'
           element={isLoggedInState ? <Restaurant /> : <Navigate to='/login' />}
         />
+        <Route
+          path='/orders/:orderId'
+          element={isLoggedInState ? <Order /> : <Navigate to='/login' />}
+        />
       </Routes>
       <footer></footer>
-      {
-        isLoggedInState
-        ? <Cart/>
-        : ''
-      }
+      {isLoggedInState ? <Cart /> : ''}
     </Router>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Wrapper from './UI/Wrapper';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -16,6 +16,9 @@ const Header = () => {
   const token = localStorage.getItem('token');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const user = useAppSelector((state) => state.user.user);
+  const cart = useAppSelector((state) => state.cart.cart);
+  const [cartCount, setCartCount] = useState(cart.length);
+  const header = useRef();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -34,9 +37,12 @@ const Header = () => {
     checkAuth();
   }, []);
 
-  const logOut = () => {
+  useEffect(() => {
+    setCartCount(cart.length);
+  }, [cart]);
+
+  const logOut = async () => {
     const token = localStorage.getItem('token');
-    console.log(token);
     setIsError(false);
     axios
       .post(`${baseUrl}/logout`, { headers: { authorization: token } })
@@ -51,7 +57,7 @@ const Header = () => {
   return (
     <header className='h-[60px] flex justify-center shadow-2xl w-full'>
       <Wrapper>
-        <div className='w-full flex justify-between'>
+        <div ref={header} className='w-full flex justify-between'>
           <nav className='flex items-center gap-3'>
             <Link to='/profile'>Profile</Link>
             <Link to='/restaurants'>Restaurants</Link>
@@ -64,6 +70,9 @@ const Header = () => {
           <div className='flex items-center gap-[40px]'>
             {isLoggedIn ? (
               <>
+                <div className='rounded-full w-[20px] h-[20px] bg-red-500 relative left-[170px] bottom-[10px] flex items-center justify-center text-white'>
+                  {cartCount}
+                </div>
                 <button onClick={logOut}>Log out</button>
                 <button onClick={() => dispatch(changeCartState(true))}>
                   <IconContext.Provider

@@ -14,6 +14,7 @@ import { IconContext } from 'react-icons';
 const Cart = () => {
   const [cart, setCart] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [totalCartSum, setCartSum] = useState(0);
   const dispatchCart = useAppSelector((state) => state.cart.cart);
   const user = useAppSelector((state) => state.user.user);
   const isCartOpened = useAppSelector(
@@ -23,18 +24,40 @@ const Cart = () => {
 
   const createOrder = async () => {
     try {
-      console.log(cart);
       const response = await axios.post(`${baseUrl}/orders/makeOrder`, {
         items: cart,
         userId: user.id,
       });
-      console.log(response.data);
-      setCart([]);
-      dispatch(fillCart([]));
+      console.log(response);
+      try {
+        const clearCartResponse = await axios.post(
+          `${baseUrl}/cart/clearCart`,
+          {
+            userId: user.id,
+          },
+        );
+        console.log(clearCartResponse.data);
+        setCart([]);
+        dispatch(fillCart([]));
+      } catch (error) {
+        console.log(`Error while clearing the cart: ${error}`);
+      }
     } catch (error) {
-      console.log(error);
+      console.log(`Error while order: ${error}`);
     }
   };
+
+  useEffect(() => {
+    setCart(dispatchCart);
+  }, [dispatchCart]);
+
+  useEffect(() => {
+    let sum = 0;
+    for (const item of cart) {
+      sum += item.price;
+    }
+    setCartSum(sum);
+  }, [cart]);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -45,6 +68,7 @@ const Cart = () => {
         dispatch(fillCart(fetchedCart));
         setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         console.log(error);
       }
     };
@@ -57,7 +81,7 @@ const Cart = () => {
         isCartOpened ? 'right-0' : 'right-[-100%]'
       } fixed z-10 bg-white`}
     >
-      <div className='fixed bg-white w-[260px] py-2 px-3 flex justify-between items-center'>
+      <div className='fixed bg-white w-[250px] py-2 px-3 flex justify-between items-center'>
         <h1 className='font-bold text-3xl'>Cart</h1>
 
         <button
@@ -74,16 +98,29 @@ const Cart = () => {
           </IconContext.Provider>
         </button>
       </div>
-      <div className='px-3 py-[60px]'>
+      <div className='px-3 py-[60px] flex items-center justify-center h-full pt-[230px] mb-[360px]'>
         {isLoading ? (
           <Loader />
         ) : (
-          <ListOfItems list={dispatchCart} isAddableToCard={true} />
+          <ListOfItems
+            addStyles={'flex-col'}
+            list={dispatchCart}
+            isAddableToCard={true}
+          />
         )}
       </div>
-      <Button onClick={createOrder} addStyles={'fixed bottom-[10px] w-[220px]'}>
-        Order
-      </Button>
+      <div className='fixed bottom-[10px] w-[220px] flex flex-col gap-2 bg-white py-[10px] px-[10px] rounded-lg'>
+        {cart.length ? (
+          <>
+            <p className='text-xl font-medium'>Total: {totalCartSum}$</p>
+            <Button onClick={createOrder} addStyles={'w-full'}>
+              Order
+            </Button>
+          </>
+        ) : (
+          ''
+        )}
+      </div>
     </div>
   );
 };

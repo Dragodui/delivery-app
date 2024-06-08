@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 const OwnerRegistration = ({ resInfo, setResInfo }) => {
-
-    const [image, setImage] = useState('');
+  const [image, setImage] = useState('');
   return (
     <div className='flex flex-col gap-4'>
       <input
@@ -41,24 +40,24 @@ const OwnerRegistration = ({ resInfo, setResInfo }) => {
         type='text'
         placeholder='Restaurant address'
       />
-      <img src={image} alt="" />
+      <img src={image} alt='' />
       <div>
-      <p className='text-black font-medium '>Logo of restaurant</p>
-      <input
-        value={resInfo.resImage}
-        onChange={(e) =>
-         { setResInfo({
-            ...resInfo,
-            resImage: e.target.value,
-          })
-          setImage(e.target.files[0]);
-        console.log(e.target.files[0])}
-        }
-        className='focus:outline-none py-2'
-        type='file'
-        accept='image/*'
-        placeholder='Restaurant address'
-      />
+        <p className='text-black font-medium '>Logo of restaurant</p>
+        <input
+          value={resInfo.resImage}
+          onChange={(e) => {
+            setResInfo({
+              ...resInfo,
+              resImage: e.target.value,
+            });
+            setImage(e.target.files[0]);
+            console.log(e.target.files[0]);
+          }}
+          className='focus:outline-none py-2'
+          type='file'
+          accept='image/*'
+          placeholder='Restaurant address'
+        />
       </div>
     </div>
   );

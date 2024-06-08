@@ -9,9 +9,6 @@ import { FaEye } from 'react-icons/fa';
 import { baseUrl } from '../config';
 import Input from '../components/UI/Input';
 
-//amogus228@mail.hitler
-//kurwaPojebana
-
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,7 +24,7 @@ const Login = () => {
       .then((res) => {
         const token = res.data.token;
         localStorage.setItem('token', token);
-        dispatch(setIsLoggedIn({isLoggedIn: true}));
+        dispatch(setIsLoggedIn({ isLoggedIn: true }));
         window.location.reload();
         navigate('/profile');
       })

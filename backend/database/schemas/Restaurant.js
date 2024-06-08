@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Product = require('./Product');
 
-
 const RestaurantSchema = new mongoose.Schema({
   name: {
     type: mongoose.SchemaTypes.String,
@@ -35,7 +34,7 @@ const RestaurantSchema = new mongoose.Schema({
   ownerId: {
     type: mongoose.SchemaTypes.String,
     required: true,
-  }
+  },
 });
 
 module.exports = mongoose.model('restaurants', RestaurantSchema);

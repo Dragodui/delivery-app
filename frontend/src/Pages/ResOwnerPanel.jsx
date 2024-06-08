@@ -74,7 +74,7 @@ const ResOwnerPanel = () => {
                   {res.address}
                 </h2>
               </div>
-              <img className='max-w-[150px]' src={res.image} alt="" />
+              <img className='max-w-[150px]' src={res.image} alt='' />
             </div>
             <div className='mt-5 shadow-2xl p-4 rounded-lg'>
               <div className='flex justify-between'>
@@ -85,7 +85,7 @@ const ResOwnerPanel = () => {
                   Add new item
                 </Button>
               </div>
-              <ListOfItems isAddableToCard={false} list={menu}/>
+              <ListOfItems isAddableToCard={false} list={menu} />
             </div>
           </div>
         </>

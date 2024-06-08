@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const resRoute = require('./routes/restaurants.js');
 const cartRoute = require('./routes/cart.js');
 const ordersRoute = require('./routes/orders.js');
+const productRoute = require('./routes/products.js');
 
 const cors = require('cors');
 
@@ -32,7 +33,8 @@ app.use(
 app.use(cors());
 app.use(authRoutes);
 app.use(resRoute);
-app.use(cartRoute);
 app.use(ordersRoute);
+app.use(cartRoute);
+app.use(productRoute);
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));

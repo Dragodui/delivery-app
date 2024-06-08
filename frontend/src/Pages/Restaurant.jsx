@@ -53,7 +53,7 @@ const Restaurant = () => {
           </div>
           <div className='mt-[30px]'>
             <h1 className='text-3xl font-bold'>Menu:</h1>
-            <ListOfItems isAddableToCard={true} list={resMenu}/>
+            <ListOfItems isAddableToCard={true} list={resMenu} />
           </div>
         </div>
       )}

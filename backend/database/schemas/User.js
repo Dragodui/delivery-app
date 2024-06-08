@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
   name: {
     type: mongoose.SchemaTypes.String,
     required: true,
-    unique: false
+    unique: false,
   },
   password: {
     type: mongoose.SchemaTypes.String,
@@ -40,7 +40,7 @@ const UserSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: Order,
       default: [],
-      required: false,  
+      required: false,
     },
   ],
   restaurant: {

@@ -5,10 +5,12 @@ import Button from './UI/Button';
 import axios from 'axios';
 import { baseUrl } from '../config';
 import { useAppSelector } from '../store/store';
-import { MdDeleteOutline } from "react-icons/md";
+import { MdDeleteOutline } from 'react-icons/md';
 
 const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
-  const [rows, setRows] = useState([{id: Date.now(), name: '', description: '', price: null, image: ''}]);
+  const [rows, setRows] = useState([
+    { id: Date.now(), name: '', description: '', price: null, image: '' },
+  ]);
   const user = useAppSelector((state) => state.user.user);
   const ownerId = user.id;
   console.log(rows);
@@ -33,7 +35,7 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
         description: row.description,
         price: row.price,
         image: row.image,
-        restaurantId: res._id
+        restaurantId: res._id,
       }));
 
       console.log(menuItems);
@@ -50,7 +52,7 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
   };
 
   const deleteRow = (id) => {
-    setRows(rows.filter((row) => row.id!== id));
+    setRows(rows.filter((row) => row.id !== id));
   };
 
   return (
@@ -123,7 +125,12 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
                     />
                   </td>
                   <td>
-                    <Button onClick={() => deleteRow(row.id)} addStyles={'bg-red-500'}><MdDeleteOutline /></Button>
+                    <Button
+                      onClick={() => deleteRow(row.id)}
+                      addStyles={'bg-red-500'}
+                    >
+                      <MdDeleteOutline />
+                    </Button>
                   </td>
                 </tr>
               ))}

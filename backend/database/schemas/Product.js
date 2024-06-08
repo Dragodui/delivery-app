@@ -22,12 +22,12 @@ const ProductSchema = new mongoose.Schema({
   description: {
     type: mongoose.SchemaTypes.String,
     required: true,
-    default: ''
+    default: '',
   },
   restaurantId: {
     type: mongoose.SchemaTypes.String,
     required: true,
-  }
+  },
 });
 
 module.exports = mongoose.model('products', ProductSchema);

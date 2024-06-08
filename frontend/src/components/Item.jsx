@@ -4,7 +4,7 @@ import { useAppSelector } from '../store/store';
 import {
   addItemToCart,
   removeItemFromCart,
-  fillCart
+  fillCart,
 } from '../store/features/cartSlice';
 import { baseUrl } from '../config';
 import axios from 'axios';
@@ -18,27 +18,13 @@ const Item = ({ item, isAddableToCard }) => {
   const cart = useAppSelector((state) => state.cart.cart);
 
   useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/cart/${user.id}`);
-        const fetchedCart = response.data.cart; 
-        setCartFromDB(fetchedCart);
-        dispatch(fillCart(fetchedCart));
-      } catch(error) {
-        console.log(error);
-      };
-    };
-    fetchCart();
-  }, []);
-  useEffect(() => {
     if (cart) {
       setIsInCart(cart.some((cartItem) => cartItem._id === item._id));
     }
     if (cart.includes(item)) {
       setIsInCart(true);
-    };
+    }
   }, [cart, item, cartFromDB]);
-
 
   const changeCart = async () => {
     const index = cart.findIndex((itemInCart) => itemInCart._id === item._id);
