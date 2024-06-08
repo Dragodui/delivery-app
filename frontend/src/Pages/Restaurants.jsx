@@ -10,6 +10,7 @@ const Restaurants = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [restaurants, setRestaurants] = useState([]);
 
+
   const fetchRestaurants = async () => {
     try {
       const response = await axios.get(`${baseUrl}/restaurants`);

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Product = require('./Product');
+const Review = require('./Review');
 
 const RestaurantSchema = new mongoose.Schema({
   name: {
@@ -35,6 +36,14 @@ const RestaurantSchema = new mongoose.Schema({
     type: mongoose.SchemaTypes.String,
     required: true,
   },
+  reviews: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: Review,
+      default: [],
+      required: true,
+    }
+  ]
 });
 
 module.exports = mongoose.model('restaurants', RestaurantSchema);

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Product = require('./Product');
 const Order = require('./Order');
 const Restaurant = require('./Restaurant');
+const Review = require('./Review');
 
 const UserSchema = new mongoose.Schema({
   email: {
@@ -49,6 +50,14 @@ const UserSchema = new mongoose.Schema({
     default: null,
     required: false,
   },
+  reviews: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: Review,
+      default: [],
+      required: false,
+    }
+  ]
 });
 
 module.exports = mongoose.model('users', UserSchema);

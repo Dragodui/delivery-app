@@ -1,15 +1,18 @@
 import React from 'react';
 import Item from './Item';
 
-const ListOfItems = ({ list, isAddableToCard, addStyles }) => {
+const ListOfItems = ({ list, isAddableToCard, addStyles, isEditable, setIsEdit, isEdit }) => {
   return (
     <div className={`flex flex-wrap gap-4 items-center ${addStyles}`}>
       {list.length ? (
         list.map((item) => {
           return (
             <Item
+              isEditable={isEditable}
               isAddableToCard={isAddableToCard}
+              setIsEdit={setIsEdit}
               item={item}
+              isEdit={isEdit}
               key={item._id}
             />
           );

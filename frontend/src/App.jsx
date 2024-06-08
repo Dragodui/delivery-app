@@ -94,17 +94,19 @@ const App = () => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(`${baseUrl}/orders/${user.id}`);
-        const fetchedOrders = response.data.orders;
-        console.log(fetchedOrders);
-        dispatch(fillOrders(fetchedOrders));
+        // setOrders(response.data.orders);
+        console.log(response.data);
+        dispatch(fillOrders(response.data.order));
       } catch (error) {
-        console.log(`Error fetching orders: ${error}`);
+        console.log(error);
       }
+      
     };
+    
     fetchCurrentUser();
     fetchIsLoggedIn();
     fetchCart();
-    // fetchOrders();
+    fetchOrders();
     setIsLoading(false);
   }, []);
 

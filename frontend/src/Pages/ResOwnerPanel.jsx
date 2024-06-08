@@ -13,9 +13,12 @@ import { RiProfileFill } from 'react-icons/ri';
 const ResOwnerPanel = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAddItemModalVisible, setIsAddItemModalVisible] = useState(false);
+  const [isEdit, setIsEdit] = useState(true);
   const user = useAppSelector((state) => state.user.user);
   const [res, setRes] = useState(null);
   const [menu, setMenu] = useState([]);
+
+  
 
   const fetchRes = () => {
     axios
@@ -41,6 +44,7 @@ const ResOwnerPanel = () => {
 
   useEffect(() => {
     fetchRes();
+    fetchMenu();
   }, []);
 
   useEffect(() => {
@@ -49,11 +53,11 @@ const ResOwnerPanel = () => {
 
   useEffect(() => {
     fetchMenu();
-  }, [res]);
+  }, [isEdit]);
 
   useEffect(() => {
     fetchMenu();
-  }, [isAddItemModalVisible]);
+  }, [res, isAddItemModalVisible]);
 
   return (
     <Wrapper>
@@ -85,7 +89,7 @@ const ResOwnerPanel = () => {
                   Add new item
                 </Button>
               </div>
-              <ListOfItems isAddableToCard={false} list={menu} />
+              <ListOfItems isEdit={isEdit} setIsEdit={setIsEdit} isEditable={true} isAddableToCard={false} list={menu} />
             </div>
           </div>
         </>

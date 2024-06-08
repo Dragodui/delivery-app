@@ -96,7 +96,7 @@ const Profile = () => {
               </div>
             </div>
             {user.role === 'owner' ? (
-              <div className='mt-[40px] shadow-2xl py-3 min-h-[250px] px-5 rounded-xl w-full max-w-[300px]'>
+              <div className='shadow-2xl py-3 min-h-[250px] px-5 rounded-xl w-full  max-h-[300px] max-w-full  md:max-w-[300px]'>
                 <h1 className='font-bold text-2xl'>Your restaurant</h1>
                 <div className='flex justify-center mt-[20px]'>
                   {res === null ? (

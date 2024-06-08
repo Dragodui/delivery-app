@@ -8,9 +8,6 @@ import { baseUrl } from '../config';
 import Input from '../components/UI/Input';
 import OwnerRegistration from '../components/UI/OwnerRegistration';
 
-//amogus228@mail.hitler
-//kurwaPojebana
-
 const Register = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');

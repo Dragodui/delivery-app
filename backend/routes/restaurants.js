@@ -3,6 +3,7 @@ const Restaurant = require('../database/schemas/Restaurant');
 const Product = require('../database/schemas/Product');
 const multer = require('multer');
 const fs = require('fs');
+const Reviews = require('../database/schemas/Review');
 
 const router = Router();
 
@@ -141,6 +142,23 @@ router.get('/restaurants/:ownerId', async (req, res) => {
   } catch (error) {
     console.error('Error fetching restaurant:', error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.get('/restaurant/getReviews/:resId', async (req, res) => {
+  try {
+    const { resId } = req.params;
+    const restaurant = await Restaurant.findOne({ _id: resId });
+    if (!restaurant) {
+      return res.status(404).json({ message: 'Restaurant not found' });
+    };
+    const reviews = await Reviews.find({resId});
+    console.log(reviews);
+    if (reviews.length) {
+      res.status(200).json(reviews);
+    }
+  } catch (error) {
+    res.status(500).json({ message: `Error while getting reviews` });
   }
 });
 
