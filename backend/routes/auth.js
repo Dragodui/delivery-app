@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const { body, validationResult } = require('express-validator');
 const User = require('../database/schemas/User');
 const { hashPassword, comparePassword } = require('../utils/helpers');
 const jwt = require('jsonwebtoken');
@@ -20,6 +21,7 @@ const verifyToken = (req, res, next) => {
     next();
   });
 };
+
 const verifyTokenForLogin = (req, res, next) => {
   const token = req.headers['authorization'];
   if (!token) {
@@ -28,26 +30,44 @@ const verifyTokenForLogin = (req, res, next) => {
   next();
 };
 
-router.post('/register', async (req, res) => {
+router.post('/register', [
+  body('email').isEmail(),
+  body('name').notEmpty(),
+  body('password').isLength({ min: 3 }),
+  body('role').notEmpty(),
+], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { email, name, role } = req.body;
   const userDB = await User.findOne({ email });
   if (userDB) {
-    res.status(400).send({ msg: 'user already exist' });
+    res.status(400).send({ msg: 'User already exists' });
   } else {
     const password = hashPassword(req.body.password);
 
     const newUser = await User.create({ email, name, password, role });
     await newUser.save();
-    res.send(201);
+    res.sendStatus(201);
   }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', [
+  // Валидация данных
+  body('email').isEmail(),
+  body('password').notEmpty(),
+], async (req, res) => {
+  // Проверка наличия ошибок валидации
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { email, password } = req.body;
-  if (!email || !password)
-    return res.status(400).send('Email or password are not given');
   const userDB = await User.findOne({ email });
-  if (!userDB) return res.status(401).send('User does not exists');
+  if (!userDB) return res.status(401).send('User does not exist');
   const isValid = comparePassword(password, userDB.password);
 
   if (isValid) {

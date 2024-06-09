@@ -19,41 +19,34 @@ const Profile = () => {
   const [orders, setOrders] = useState([]);
   const dispatchOrders = useAppSelector((state) => state.orders.orders);
   const [isLoading, setIsLoading] = useState(true);
-  const [res, setRes] = useState(null);
+  const [reses, setReses] = useState([]);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setOrders([]);
-  }, []);
-
-  useEffect(() => {
-    if (user.role === 'owner') {
-      axios
-        .get(`${baseUrl}/restaurants/${user.id}`)
-        .then((res) => {
-          console.log(res.data);
-          setRes(res.data);
-          setIsLoading(false);
-        })
-        .catch((err) => console.log(err));
-    }
-    setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
+    const fetchReses = async () => {
+      if (user.role === 'owner') {
+        try {
+          const response = await axios.get(`${baseUrl}/restaurants/${user.id}`);
+          setReses(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
     const fetchOrders = async () => {
       try {
         const response = await axios.get(`${baseUrl}/orders/${user.id}`);
         setOrders(response.data.orders);
-        console.log(response.data);
         dispatch(fillOrders(response.data.order));
       } catch (error) {
         console.log(error);
       }
     };
     fetchOrders();
-  }, []);
+    fetchReses();
 
+    setIsLoading(false);
+  }, []);
   return (
     <Wrapper>
       {isLoading ? (
@@ -96,35 +89,38 @@ const Profile = () => {
               </div>
             </div>
             {user.role === 'owner' ? (
-              <div className='shadow-2xl py-3 min-h-[250px] px-5 rounded-xl w-full  max-h-[300px] max-w-full  md:max-w-[300px]'>
+              <div className='shadow-2xl py-3 min-h-[250px] px-5 rounded-xl w-full overflow-auto max-h-[300px] max-w-full  md:max-w-[300px]'>
                 <h1 className='font-bold text-2xl'>Your restaurant</h1>
-                <div className='flex justify-center mt-[20px]'>
-                  {res === null ? (
-                    <button
-                      onClick={() => setIsAddResModalVisible(true)}
-                      className='text-center mt-[70px] flex justify-center hover:translate-y-[-10px] duration-300 shadow-2xl bg-gray-300 text-white py-3 px-5 rounded-xl text-xl font-medium'
-                    >
-                      <IconContext.Provider
-                        value={{ style: { width: '60px', height: '60px' } }}
+                <div className='flex justify-center mt-[20px] flex-col gap-5 items-center'>
+                  {reses.map((res) => (
+                    <div key={res._id} className='shadow-2xl p-5 rounded-xl'>
+                      <Link
+                        to={`/my_restaurant/${res._id}`}
+                        className='flex flex-col items-center'
                       >
-                        <div>
-                          <CiCirclePlus />
-                        </div>
-                      </IconContext.Provider>
-                    </button>
-                  ) : (
-                    <Link
-                      to='/my_restaurant'
-                      className='flex flex-col items-center'
+                        <h2 className='font-medium text-2xl mb-3'>
+                          {res.name}
+                        </h2>
+                        <img
+                          className='w-[100px] h-[100px]'
+                          src={res.image}
+                          alt=''
+                        />
+                      </Link>
+                    </div>
+                  ))}
+                  <button
+                    onClick={() => setIsAddResModalVisible(true)}
+                    className='text-center flex w-[100px] h-[100px] items-center justify-center hover:translate-y-[-10px] duration-300 shadow-2xl bg-gray-300 text-white py-3 px-5 rounded-xl text-xl font-medium'
+                  >
+                    <IconContext.Provider
+                      value={{ style: { width: '60px', height: '60px' } }}
                     >
-                      <h2 className='font-medium text-2xl mb-3'>{res.name}</h2>
-                      <img
-                        className='w-[100px] h-[100px]'
-                        src={res.image}
-                        alt=''
-                      />
-                    </Link>
-                  )}
+                      <div>
+                        <CiCirclePlus />
+                      </div>
+                    </IconContext.Provider>
+                  </button>
                 </div>
               </div>
             ) : (

@@ -6,19 +6,24 @@ import { MdDeleteOutline } from 'react-icons/md';
 import { MdEdit } from 'react-icons/md';
 import EditProductModal from './Modals/EditProductModal';
 import DeleteProductModal from './Modals/DeleteProductModal';
-import {
-  addItemToCart,
-  removeItemFromCart,
-  fillCart,
-} from '../store/features/cartSlice';
+import { addItemToCart, removeItemFromCart } from '../store/features/cartSlice';
 import { baseUrl } from '../config';
 import axios from 'axios';
 
-const Item = ({ item, isAddableToCard, isEditable, setIsEdit, isEdit }) => {
+const Item = ({
+  item,
+  isAddableToCard,
+  isEditable,
+  setIsEdit,
+  isEdit,
+  handleQuantityChange,
+  isInCartPage
+}) => {
   const [isInCart, setIsInCart] = useState(false);
   const [cartFromDB, setCartFromDB] = useState([]);
   const [isEditVisible, setIsEditVisible] = useState(false);
   const [isDeleteVisible, setIsDeleteVisible] = useState(false);
+  const [quantity, setQuantity] = useState(item.quantity || 1);
 
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user.user);
@@ -38,7 +43,7 @@ const Item = ({ item, isAddableToCard, isEditable, setIsEdit, isEdit }) => {
     if (index === -1) {
       dispatch(addItemToCart(item));
       try {
-        const response = await axios.post(`${baseUrl}/cart/addToCart`, {
+        await axios.post(`${baseUrl}/cart/addToCart`, {
           userId: user.id,
           productId: item._id,
         });
@@ -48,7 +53,7 @@ const Item = ({ item, isAddableToCard, isEditable, setIsEdit, isEdit }) => {
     } else {
       dispatch(removeItemFromCart(item));
       try {
-        const response = await axios.post(`${baseUrl}/cart/removeFromCart`, {
+        await axios.post(`${baseUrl}/cart/removeFromCart`, {
           userId: user.id,
           productId: item._id,
         });
@@ -56,6 +61,11 @@ const Item = ({ item, isAddableToCard, isEditable, setIsEdit, isEdit }) => {
         console.log(error);
       }
     }
+  };
+
+  const handleQuantityChangeLocal = (newQuantity) => {
+    setQuantity(newQuantity);
+    handleQuantityChange(item, newQuantity);
   };
 
   return (
@@ -80,13 +90,41 @@ const Item = ({ item, isAddableToCard, isEditable, setIsEdit, isEdit }) => {
         <p>{item.name}</p>
         <p>{item.price} $</p>
       </div>
+
       {isAddableToCard && (
-        <button
-          onClick={changeCart}
-          className='bg-black text-white py-2 px-4 rounded-xl'
-        >
-          {isInCart ? 'Remove from cart' : 'Add to cart'}
-        </button>
+        <>
+          {isInCartPage ? (
+            <>
+            <div className='flex items-center gap-3 bg-slate-400 p-1 max-w-[100px] justify-between rounded-full my-2'>
+              <button
+                onClick={() => {
+                  if (quantity > 1) {
+                    handleQuantityChangeLocal(quantity - 1);
+                  }
+                }}
+                className='flex items-center justify-center p-3 rounded-full w-[10px] h-[10px] bg-white'
+              >
+                <p className='font-bold relative bottom-[1px]'>-</p>
+              </button>
+              <p>{quantity}</p>
+              <button
+                onClick={() => handleQuantityChangeLocal(quantity + 1)}
+                className='flex items-center justify-center p-3 rounded-full w-[10px] h-[10px] bg-white'
+              >
+                <p className='font-bold relative left-[1px] bottom-[1px]'>+</p>
+              </button>
+            </div></>
+          ) : (
+            ''
+          )}
+            <p>quantity: {item.quantity}</p>
+          <button
+            onClick={changeCart}
+            className='bg-black text-white py-2 px-4 rounded-xl'
+          >
+            {isInCart ? 'Remove from cart' : 'Add to cart'}
+          </button>
+        </>
       )}
       {isDeleteVisible ? (
         <DeleteProductModal
@@ -102,10 +140,10 @@ const Item = ({ item, isAddableToCard, isEditable, setIsEdit, isEdit }) => {
       {isEditVisible ? (
         <EditProductModal
           productId={item._id}
-          isEditVisible={isEditVisible}
+          isVisible={isEditVisible}
+          setIsVisible={setIsEditVisible}
           setIsEdit={setIsEdit}
           isEdit={isEdit}
-          setIsEditVisible={setIsEditVisible}
         />
       ) : (
         ''

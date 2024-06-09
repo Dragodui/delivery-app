@@ -4,6 +4,7 @@ const Product = require('../database/schemas/Product');
 const multer = require('multer');
 const fs = require('fs');
 const Reviews = require('../database/schemas/Review');
+const User = require('../database/schemas/User');
 
 const router = Router();
 
@@ -39,29 +40,13 @@ const upload = multer({ storage: storage });
 //   res.send(201);
 // });
 
-router.post('/restaurants', async (req, res) => {
-  const { name, address, description, ownerId, image } = req.body;
-  const resDB = await Restaurant.findOne({ name: name });
-  if (resDB) {
-    res.status(400).send({ msg: 'restaurant already exist' });
-  }
-  const newRestaurant = await Restaurant.create({
-    name,
-    address,
-    description,
-    image,
-    ownerId,
-  });
-  await newRestaurant.save();
-  // fs.unlinkSync(req.file.path);
-  res.send(201);
-});
 
 router.post('/restaurantsMenu', async (req, res) => {
   try {
-    const { ownerId, menuItems } = req.body;
+    const { resId, menuItems } = req.body;
 
-    const restaurant = await Restaurant.findOne({ ownerId: ownerId });
+    const restaurant = await Restaurant.findById(resId);
+    console.log(resId);
 
     if (!restaurant) {
       return res.status(404).json({ message: 'Restaurant not found' });
@@ -86,6 +71,27 @@ router.post('/restaurantsMenu', async (req, res) => {
   }
 });
 
+router.post('/restaurants', async (req, res) => {
+  const { name, address, description, ownerId, image } = req.body;
+  const user = await User.findById(ownerId);
+  const resDB = await Restaurant.findOne({ name: name });
+  if (resDB) {
+    res.status(400).send({ msg: 'restaurant already exist' });
+  }
+  const newRestaurant = await Restaurant.create({
+    name,
+    address,
+    description,
+    image,
+    ownerId,
+  });
+  await newRestaurant.save();
+  await user.restaurants.push(newRestaurant);
+  await user.save();
+  // fs.unlinkSync(req.file.path);
+  res.send(201);
+});
+
 router.get('/restaurantsMenu/:resId', async (req, res) => {
   try {
     const { resId } = req.params;
@@ -93,7 +99,7 @@ router.get('/restaurantsMenu/:resId', async (req, res) => {
     const products = await Product.find({ restaurantId: resId });
     console.log(products);
     if (products.length === 0) {
-      return res.status(404).json({ message: 'Restaurant not found' });
+      return res.status(200).json([]);
     }
     res.json(products);
   } catch (error) {
@@ -107,7 +113,7 @@ router.get('/restaurant/:resId', async (req, res) => {
     const { resId } = req.params;
     console.log(`Fetching restaurant with ID: ${resId}`);
 
-    const rest = await Restaurant.findOne({ _id: resId });
+    const rest = await Restaurant.findById(resId);
     console.log(rest);
     if (!rest) {
       return res.status(404).json({ error: 'Restaurant not found' });
@@ -134,16 +140,17 @@ router.get('/restaurants', async (req, res) => {
 router.get('/restaurants/:ownerId', async (req, res) => {
   try {
     const { ownerId } = req.params;
-    const restaurant = await Restaurant.findOne({ ownerId: ownerId });
-    if (!restaurant) {
-      return res.status(404).json({ message: 'Restaurant not found' });
+    const restaurants = await Restaurant.find({ ownerId: ownerId });
+    if (restaurants.length === 0) {
+      return res.status(404).json({ message: 'No restaurants found' });
     }
-    res.json(restaurant);
+    res.json(restaurants);
   } catch (error) {
-    console.error('Error fetching restaurant:', error);
+    console.error('Error fetching restaurants:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 router.get('/restaurant/getReviews/:resId', async (req, res) => {
   try {
@@ -156,6 +163,8 @@ router.get('/restaurant/getReviews/:resId', async (req, res) => {
     console.log(reviews);
     if (reviews.length) {
       res.status(200).json(reviews);
+    } else {
+      res.status(200).json([]);
     }
   } catch (error) {
     res.status(500).json({ message: `Error while getting reviews` });

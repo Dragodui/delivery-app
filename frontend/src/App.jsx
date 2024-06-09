@@ -10,7 +10,6 @@ import {
   Navigate,
 } from 'react-router-dom';
 import Login from './Pages/Login';
-import HomePage from './Pages/HomePage';
 import Register from './Pages/Register';
 import Profile from './Pages/Profile';
 import { useEffect, useState } from 'react';
@@ -52,7 +51,7 @@ const App = () => {
               orders: user.orders,
               id: user._id,
               createdAt: user.createdAt,
-              restaurant: user.restaurant,
+              restaurants: user.restaurants,
             };
           } else {
             parsedUser = {
@@ -115,7 +114,6 @@ const App = () => {
     <Router>
       <Header />
       <Routes>
-        <Route path='/' element={<HomePage />} />
         <Route
           path='/login'
           element={isLoggedInState ? <Navigate to='/profile' /> : <Login />}
@@ -129,7 +127,7 @@ const App = () => {
           element={isLoggedInState ? <Profile /> : <Navigate to='/login' />}
         />
         <Route
-          path='/my_restaurant'
+          path='/my_restaurant/:resId'
           element={
             isLoggedInState && user.role === 'owner' ? (
               <ResOwnerPanel />

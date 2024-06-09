@@ -11,8 +11,6 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
   const [rows, setRows] = useState([
     { id: Date.now(), name: '', description: '', price: null, image: '' },
   ]);
-  const user = useAppSelector((state) => state.user.user);
-  const ownerId = user.id;
   console.log(rows);
 
   const addRow = () => {
@@ -41,7 +39,7 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
       console.log(menuItems);
 
       const response = await axios.post(`${baseUrl}/restaurantsMenu`, {
-        ownerId,
+        resId: res._id,
         menuItems,
       });
       console.log('Menu items added successfully:', response.data);

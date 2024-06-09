@@ -1,7 +1,7 @@
 import React from 'react';
 import Item from './Item';
 
-const ListOfItems = ({ list, isAddableToCard, addStyles, isEditable, setIsEdit, isEdit }) => {
+const ListOfItems = ({ list, isAddableToCard, addStyles, isEditable, setIsEdit, isEdit,handleQuantityChange, isInCartPage }) => {
   return (
     <div className={`flex flex-wrap gap-4 items-center ${addStyles}`}>
       {list.length ? (
@@ -14,6 +14,8 @@ const ListOfItems = ({ list, isAddableToCard, addStyles, isEditable, setIsEdit, 
               item={item}
               isEdit={isEdit}
               key={item._id}
+              handleQuantityChange={handleQuantityChange}
+              isInCartPage={isInCartPage}
             />
           );
         })

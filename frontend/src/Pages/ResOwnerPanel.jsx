@@ -9,6 +9,7 @@ import ListOfItems from '../components/ListOfItems';
 import AddMenuItemsModal from '../components/Modals/AddMenuItemsModal';
 import { FaLocationDot } from 'react-icons/fa6';
 import { RiProfileFill } from 'react-icons/ri';
+import { useParams } from 'react-router-dom';
 
 const ResOwnerPanel = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,25 +18,22 @@ const ResOwnerPanel = () => {
   const user = useAppSelector((state) => state.user.user);
   const [res, setRes] = useState(null);
   const [menu, setMenu] = useState([]);
+  const {resId} = useParams();
 
-  
-
-  const fetchRes = () => {
-    axios
-      .get(`${baseUrl}/restaurants/${user.id}`)
-      .then((res) => {
-        console.log(res.data);
-        setRes(res.data);
-        setIsLoading(false);
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
+  const fetchRes = async () => {
+    try {
+      const response = await axios.get(`${baseUrl}/restaurant/${resId}`);
+      console.log(response.data);
+      setRes(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const fetchMenu = async () => {
     try {
-      console.log(res._id);
-      const response = await axios.get(`${baseUrl}/restaurantsMenu/${res._id}`);
+      const response = await axios.get(`${baseUrl}/restaurantsMenu/${resId}`);
       setMenu(response.data);
     } catch (error) {
       console.error('Error getting menu items:', error);

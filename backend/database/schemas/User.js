@@ -44,12 +44,12 @@ const UserSchema = new mongoose.Schema({
       required: false,
     },
   ],
-  restaurant: {
+  restaurants: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: Restaurant,
     default: null,
     required: false,
-  },
+  }],
   reviews: [
     {
       type: mongoose.Schema.Types.ObjectId,

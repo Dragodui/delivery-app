@@ -14,7 +14,6 @@ router.post('/orders/makeOrder', async (req, res) => {
     const user = await User.findById(userId);
     const restaurant = await Restaurant.findById(items[0].restaurantId);
     const restaurantName = restaurant.name;
-    console.log(restaurant);
     if (!user) {
       return res.status(400).json({ message: 'User not found' });
     }

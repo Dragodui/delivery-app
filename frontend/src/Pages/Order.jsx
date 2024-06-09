@@ -19,28 +19,17 @@ const Order = () => {
       try {
         const response = await axios.get(`${baseUrl}/orders/order/${orderId}`);
         const order = response.data.order;
+        let sum = 0;
         setOrder(order);
-        for (const productId of order.products) {
-          const exists = products.some((obj) => obj._id === productId);
-          if (!exists) {
-            fetchProduct(productId);
-          }
-        }
+        setProducts(order.products);
+        for (const product of order.products) {
+          const cost = product.price*product.quantity;
+          sum+=cost;
+        };
+        setTotalPrice(sum);
         setIsLoading(false);
       } catch (error) {
         console.log(`Error while fetching order: ${error}`);
-      }
-    };
-    const fetchProduct = async (productId) => {
-      try {
-        const response = await axios.get(`${baseUrl}/products/${productId}`);
-        const fetchedProduct = response.data;
-        setProducts((prevProducts) => [...prevProducts, fetchedProduct]);
-        setTotalPrice(
-          (prevTotalPrice) => prevTotalPrice + fetchedProduct.price,
-        );
-      } catch (error) {
-        console.log(`Error while fetching product: ${error}`);
       }
     };
     fetchOrder();

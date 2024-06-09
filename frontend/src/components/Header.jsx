@@ -61,11 +61,6 @@ const Header = () => {
           <nav className='flex items-center gap-3'>
             <Link to='/profile'>Profile</Link>
             <Link to='/restaurants'>Restaurants</Link>
-            {user.role === 'owner' ? (
-              <Link to='/my_restaurant'>My restaurants</Link>
-            ) : (
-              ''
-            )}
           </nav>
           <div className='flex items-center gap-[40px]'>
             {isLoggedIn ? (

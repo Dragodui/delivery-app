@@ -24,8 +24,8 @@ const Restaurant = () => {
     const fetchRestaurant = async () => {
       try {
         const response = await axios.get(`${baseUrl}/restaurant/${resId}`);
-        setRes(response.data);
         console.log(response.data);
+        setRes(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -45,6 +45,7 @@ const Restaurant = () => {
         const response = await axios.get(
           `${baseUrl}/restaurant/getReviews/${resId}`,
         );
+        console.log(response.data);
         const reviews = response.data;
         setReviews(reviews);
 
@@ -100,7 +101,7 @@ const Restaurant = () => {
           </div>
           <div className='mt-[30px]'>
             <h1 className='text-3xl font-bold mb-[20px]'>Reviews:</h1>
-            {reviews.map((review) => (
+            {reviews.length ? reviews.map((review) => (
               <div key={review._id} className='shadow-2xl rounded-xl py-3 px-3'>
                 <div className='flex gap-3 items-center mb-3'>
                   <div className='flex items-center gap-1'>
@@ -123,7 +124,7 @@ const Restaurant = () => {
                   {review.opinion}
                 </p>
               </div>
-            ))}
+            )) : <p className='text-left mt-[30px] text-gray-500 text-xl font-medium'>No reviews yet</p>}
           </div>
         </div>
       )}
