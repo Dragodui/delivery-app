@@ -29,7 +29,7 @@ const verifyTokenForLogin = (req, res, next) => {
   }
   next();
 };
-//api запрос по пути регистр сервер работает на хосте 
+//api запрос по пути регистр сервер работает на хосте создание пользователя 
 router.post('/register', [
   body('email').isEmail(),
   body('name').notEmpty(),
@@ -53,7 +53,7 @@ router.post('/register', [
     res.sendStatus(201);
   }
 });
-
+//login
 router.post('/login', [
   body('email').isEmail(),
   body('password').notEmpty(),
@@ -68,7 +68,7 @@ router.post('/login', [
   if (!userDB) return res.status(401).send('User does not exist');
   const isValid = comparePassword(password, userDB.password);
 
-  if (isValid) {
+  if (isValid) {//новая сессия 
     console.log('success');
     req.session.user = userDB;
     const token = jwt.sign({ userId: req.session.user._id }, secret, {
@@ -80,16 +80,16 @@ router.post('/login', [
     return res.status(401).send('Password is incorrect');
   }
 });
-
+//log out
 router.post('/logout', verifyTokenForLogin, (req, res) => {
   res.status(200).json({ message: 'Logout successful' });
 });
-
+//проверка авторизации
 router.get('/checkAuth', verifyTokenForLogin, (req, res) => {
   console.log('auth check');
   res.status(200).json({ authenticated: true });
 });
-
+//понять какой сейчас юзер
 router.get('/currentUser', verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
