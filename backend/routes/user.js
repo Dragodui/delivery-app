@@ -26,7 +26,7 @@ router.get('/user/getUser/:userId', async (req, res) => {
 router.post('/user/newReview/:resId', async (req, res) => {
   try {
     const { resId } = req.params;
-    const { userId, rate, opinion } = req.body;
+    const { userId, opinion, rate } = req.body;
 
     if (!resId) {
       return res.status(400).json({ message: 'Restaurant ID is required' });
@@ -41,8 +41,10 @@ router.post('/user/newReview/:resId', async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: 'User not found' });
     }
+    
+    const resIdAndUserId = `${resId}${userId}`;
 
-    const newReview = new Review({ rate, opinion, resId, userId });
+    const newReview = new Review({ rate, opinion, resId, userId, resIdAndUserId });
     await newReview.save();
 
     restaurant.reviews.push(newReview);
@@ -53,7 +55,11 @@ router.post('/user/newReview/:resId', async (req, res) => {
 
     res.status(200).json({message: 'Review successfully created'});
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    if (error.code === 11000) {
+      res.status(400).json({ message: 'You already have reviewed this restaurant' });
+    } else {
+      res.status(500).json({ message: 'Server error', error });
+    }
   }
 });
 

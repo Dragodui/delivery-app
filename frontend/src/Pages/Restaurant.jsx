@@ -7,7 +7,7 @@ import ListOfItems from '../components/ListOfItems';
 import Loader from '../components/UI/Loader';
 import { FaLocationDot } from 'react-icons/fa6';
 import { FaUserCircle } from 'react-icons/fa';
-import AddReviewModal from '../components/AddReviewModal';
+import AddReviewModal from '../components/Modals/AddReviewModal';
 import Button from '../components/UI/Button';
 import { IconContext } from 'react-icons';
 

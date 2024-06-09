@@ -1,6 +1,7 @@
 import React from 'react';
 import Restaurant from './Pages/Restaurant';
 import Cart from './components/Cart';
+import CartPage from './Pages/CartPage';
 import Order from './Pages/Order';
 import {
   HashRouter as Router,
@@ -148,6 +149,10 @@ const App = () => {
         <Route
           path='/orders/:orderId'
           element={isLoggedInState ? <Order /> : <Navigate to='/login' />}
+        />
+         <Route
+          path='/cart'
+          element={isLoggedInState ? <CartPage /> : <Navigate to='/login' />}
         />
       </Routes>
       <footer></footer>

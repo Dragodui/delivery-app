@@ -6,6 +6,7 @@ import Loader from './UI/Loader';
 import ListOfItems from './ListOfItems';
 import { useAppDispatch } from '../store/store';
 import { fillCart } from '../store/features/cartSlice';
+import OrderNotificationModal from './Modals/OrderNotificationModal';
 import { changeCartState } from '../store/features/isCartOpenedSlice';
 import Button from './UI/Button';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -15,6 +16,7 @@ const Cart = () => {
   const [cart, setCart] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalCartSum, setCartSum] = useState(0);
+  const [isOrderNotificationModalVisible, setIsOrderNotificationModalVisible] = useState(false);
   const dispatchCart = useAppSelector((state) => state.cart.cart);
   const user = useAppSelector((state) => state.user.user);
   const isCartOpened = useAppSelector(
@@ -29,6 +31,7 @@ const Cart = () => {
         userId: user.id,
       });
       console.log(response);
+      setIsOrderNotificationModalVisible(true);
       try {
         const clearCartResponse = await axios.post(
           `${baseUrl}/cart/clearCart`,
@@ -121,6 +124,10 @@ const Cart = () => {
           ''
         )}
       </div>
+      <OrderNotificationModal
+        isVisible={isOrderNotificationModalVisible}
+        setIsVisible={setIsOrderNotificationModalVisible}
+      />
     </div>
   );
 };

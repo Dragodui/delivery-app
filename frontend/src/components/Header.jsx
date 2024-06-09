@@ -74,7 +74,7 @@ const Header = () => {
                   {cartCount}
                 </div>
                 <button onClick={logOut}>Log out</button>
-                <button onClick={() => dispatch(changeCartState(true))}>
+                <Link to='/cart'>
                   <IconContext.Provider
                     value={{ style: { width: '24px', height: '24px' } }}
                   >
@@ -82,7 +82,7 @@ const Header = () => {
                       <FaShoppingCart />
                     </div>
                   </IconContext.Provider>
-                </button>
+                </Link>
               </>
             ) : (
               ''

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Input from './UI/Input';
-import { useAppSelector } from '../store/store';
-import { baseUrl } from '../config';
-import Button from './UI/Button';
+import Input from '../UI/Input';
+import { useAppSelector } from '../../store/store';
+import { baseUrl } from '../../config';
+import Button from '../UI/Button';
 import axios from 'axios';
 
 const AddResModal = ({ isVisible, setIsVisible }) => {

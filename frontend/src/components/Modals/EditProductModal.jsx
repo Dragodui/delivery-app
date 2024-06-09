@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import Input from './UI/Input';
+import Input from '../UI/Input';
 import { useState } from 'react';
-import Button from './UI/Button';
+import Button from '../UI/Button';
 import axios from 'axios';
-import { baseUrl } from '../config';
+import { baseUrl } from '../../config';
 
 const EditProductModal = ({ productId, isVisible, setIsVisible, setIsEdit, isEdit }) => {
   const [row, setRow] = useState({

@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
-import Input from './UI/Input';
+import Input from '../UI/Input';
 import { useState } from 'react';
-import Button from './UI/Button';
+import Button from '../UI/Button';
 import axios from 'axios';
-import { baseUrl } from '../config';
-import { useAppSelector } from '../store/store';
+import { baseUrl } from '../../config';
+import { useAppSelector } from '../../store/store';
 
 const AddReviewModal = ({ resId, isVisible, setIsVisible }) => {
   const userId = useAppSelector((state) => state.user.user).id;
+  const [error, setError] = useState('');
   const [row, setRow] = useState({
     rate: 0,
     opinion: '',
@@ -24,8 +25,10 @@ const AddReviewModal = ({ resId, isVisible, setIsVisible }) => {
         rate: parseInt(row.rate),
         userId: userId,
       });
+      console.log(response.data);
       setIsVisible(false);
     } catch (error) {
+      setError('You already reviewed this restaurant')
       console.log(`Error while editing product ${error}`);
     }
   };
@@ -77,6 +80,7 @@ const AddReviewModal = ({ resId, isVisible, setIsVisible }) => {
             </tbody>
           </table>
         </div>
+        <p className='text-red-500'>{error}</p>
         <Button onClick={addReview}>Add review</Button>
       </form>
     </div>

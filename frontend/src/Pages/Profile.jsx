@@ -4,7 +4,7 @@ import Wrapper from '../components/UI/Wrapper';
 import { FaUserCircle } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 import { CiCirclePlus } from 'react-icons/ci';
-import AddResModal from '../components/AddResModal';
+import AddResModal from '../components/Modals/AddResModal';
 import axios from 'axios';
 import { baseUrl } from '../config';
 import { format } from 'date-fns';

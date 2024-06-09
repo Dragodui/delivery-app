@@ -4,7 +4,8 @@ import { useAppSelector } from '../store/store';
 import Button from './UI/Button';
 import { MdDeleteOutline } from 'react-icons/md';
 import { MdEdit } from 'react-icons/md';
-import EditProductModal from './EditProductModal';
+import EditProductModal from './Modals/EditProductModal';
+import DeleteProductModal from './Modals/DeleteProductModal';
 import {
   addItemToCart,
   removeItemFromCart,
@@ -16,7 +17,8 @@ import axios from 'axios';
 const Item = ({ item, isAddableToCard, isEditable, setIsEdit, isEdit }) => {
   const [isInCart, setIsInCart] = useState(false);
   const [cartFromDB, setCartFromDB] = useState([]);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isEditVisible, setIsEditVisible] = useState(false);
+  const [isDeleteVisible, setIsDeleteVisible] = useState(false);
 
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user.user);
@@ -60,10 +62,13 @@ const Item = ({ item, isAddableToCard, isEditable, setIsEdit, isEdit }) => {
     <div className='mt-4 rounded-xl flex flex-col justify-between min-h-[230px] shadow-2xl px-3 py-2'>
       {isEditable ? (
         <div className='flex items-center justify-between'>
-          <Button addStyles={'bg-red-500'}>
+          <Button
+            onClick={() => setIsDeleteVisible(!isDeleteVisible)}
+            addStyles={'bg-red-500'}
+          >
             <MdDeleteOutline />
           </Button>
-          <Button onClick={() => setIsVisible(!isVisible)}>
+          <Button onClick={() => setIsEditVisible(!isEditVisible)}>
             <MdEdit />
           </Button>
         </div>
@@ -83,8 +88,25 @@ const Item = ({ item, isAddableToCard, isEditable, setIsEdit, isEdit }) => {
           {isInCart ? 'Remove from cart' : 'Add to cart'}
         </button>
       )}
-      {isVisible ? (
-        <EditProductModal productId={item._id} isVisible={isVisible} setIsEdit={setIsEdit} isEdit={isEdit} setIsVisible={setIsVisible} />
+      {isDeleteVisible ? (
+        <DeleteProductModal
+          productId={item._id}
+          isVisible={isDeleteVisible}
+          setIsVisible={setIsDeleteVisible}
+          setIsEdit={setIsEdit}
+          isEdit={isEdit}
+        />
+      ) : (
+        ''
+      )}
+      {isEditVisible ? (
+        <EditProductModal
+          productId={item._id}
+          isEditVisible={isEditVisible}
+          setIsEdit={setIsEdit}
+          isEdit={isEdit}
+          setIsEditVisible={setIsEditVisible}
+        />
       ) : (
         ''
       )}

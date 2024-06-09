@@ -50,7 +50,7 @@ router.post('/products/edit/:productId', async (req, res) => {
   }
 });
 
-router.delete('/products/:productId', async (req, res) => {
+router.delete('/products/delete/:productId', async (req, res) => {
   try {
     const { productId } = req.params;
 

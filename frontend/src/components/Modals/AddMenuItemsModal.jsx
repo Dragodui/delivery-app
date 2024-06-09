@@ -1,10 +1,10 @@
 import React from 'react';
-import Input from './UI/Input';
+import Input from '../UI/Input';
 import { useState } from 'react';
-import Button from './UI/Button';
+import Button from '../UI/Button';
 import axios from 'axios';
-import { baseUrl } from '../config';
-import { useAppSelector } from '../store/store';
+import { baseUrl } from '../../config';
+import { useAppSelector } from '../../store/store';
 import { MdDeleteOutline } from 'react-icons/md';
 
 const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
