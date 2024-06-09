@@ -29,7 +29,7 @@ const verifyTokenForLogin = (req, res, next) => {
   }
   next();
 };
-
+//api запрос по пути регистр сервер работает на хосте 
 router.post('/register', [
   body('email').isEmail(),
   body('name').notEmpty(),

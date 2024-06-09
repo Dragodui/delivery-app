@@ -29,7 +29,7 @@ const Register = () => {
       resInfo.resName === ''
         ? { email, name, role, password }
         : { email, name, role, password, resInfo };
-    axios
+    axios // lib для запросов
       .post(`${baseUrl}/register`, sendUser)
       .then((res) => {
         console.log(res.data);

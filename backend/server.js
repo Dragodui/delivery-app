@@ -14,7 +14,7 @@ const userRoute = require('./routes/user.js');
 
 const cors = require('cors');
 
-const app = express();
+const app = express();// pril
 const PORT = process.env.PORT || 5000;
 app.use(express.json());
 const mongoStore = MongoStore.create({
@@ -30,9 +30,9 @@ app.use(
     cookie: { secure: true },
   }),
 );
-
-app.use(cors());
-app.use(authRoutes);
+//api маршруты
+app.use(cors());//
+app.use(authRoutes);// 
 app.use(resRoute);
 app.use(ordersRoute);
 app.use(cartRoute);
