@@ -10,7 +10,7 @@ const AddReviewModal = ({ resId, isVisible, setIsVisible }) => {
   const userId = useAppSelector((state) => state.user.user).id;
   const [error, setError] = useState('');
   const [row, setRow] = useState({
-    rate: 0,
+    rate: 1,
     opinion: '',
   });
 
