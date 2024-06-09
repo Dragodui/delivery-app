@@ -10,6 +10,21 @@ import { FaUserCircle } from 'react-icons/fa';
 import AddReviewModal from '../components/Modals/AddReviewModal';
 import Button from '../components/UI/Button';
 import { IconContext } from 'react-icons';
+import { FaStar } from "react-icons/fa";
+
+const StarRating = ({ rate }) => {
+  const stars = Array.from({ length: rate }, (_, index) => (
+    
+    <IconContext.Provider
+    value={{ style: { color: '#f1c232' } }}
+  >
+    <div>
+      <FaStar key={index} />
+    </div>
+  </IconContext.Provider>
+  ));
+  return <div className="flex">{stars}</div>;
+};
 
 const Restaurant = () => {
   const { resId } = useParams();
@@ -118,9 +133,7 @@ const Restaurant = () => {
                       {reviewUsers[review.userId]?.name || 'Loading...'}
                     </p>
                   </div>
-                  <p className='flex items-center justify-center font-bold w-[30px] h-[30px] rounded-full bg-yellow-300 text-red-500'>
-                    {review.rate}
-                  </p>
+                    <StarRating rate={review.rate}/>
                 </div>
                 <p className='text-xl bg-gray-200 rounded-xl py-2 px-3'>
                   {review.opinion}
