@@ -53,9 +53,9 @@ const Profile = () => {
         <Loader />
       ) : (
         <>
-          <div className='w-full flex gap-3 flex-wrap justify-center md:justify-normal'>
-            <div className=' shadow-2xl min-h-[250px] py-3 px-5 rounded-xl w-full max-w-full  md:max-w-[300px]'>
-              <h1 className='font-bold text-2xl mb-4'>Profile</h1>
+          <div className='w-full flex border-2 border-text gap-3 bg-secondary flex-wrap items-center p-[30px] rounded-[30px] font-body'>
+            <div className='border-2 border-text min-h-[250px] max-h-[300px] flex-1 py-3 px-5 rounded-[24px]  w-20 bg-secondary text-textWhite'>
+              <h1 className='font-bold text-4xl mb-4 font-heading'>Profile</h1>
               <div className='flex items-center gap-3'>
                 <IconContext.Provider
                   value={{ style: { width: '60px', height: '60px' } }}
@@ -64,23 +64,26 @@ const Profile = () => {
                     <FaUserCircle />
                   </div>
                 </IconContext.Provider>
-                <div className='text-2xl'>{user.name}</div>
+                <p className='text-2xl'>{user.name}</p>
               </div>
               <div className='mt-3'>
                 <p className='text-lg font-medium'>Email: {user.email}</p>
-                <p className='text-lg font-medium'>Role: {user.role}</p>
               </div>
             </div>
-            <div className='shadow-2xl py-3 min-h-[250px] px-5 rounded-xl w-full overflow-auto max-h-[300px] max-w-full  md:max-w-[300px]'>
-              <h1 className='font-bold text-2xl mb-4'>Orders</h1>
+            <div className='border-2 border-text py-3 min-h-[250px] px-5 bg-secondary text-textWhite rounded-[24px] overflow-auto no-scrollbar max-h-[250px] flex-auto w-80'>
+              <h1 className='font-bold text-4xl mb-4 font-heading text-center'>Orders</h1>
               <div className='flex flex-col gap-3'>
                 {user.orders === undefined || user.orders.length === 0 ? (
-                  <p className='text-center mt-[90px] text-gray-500 text-xl font-medium'>
+                  <p className='text-center mt-[40px] text-gray-500 text-xl font-medium'>
                     You have no orders yet
                   </p>
                 ) : (
                   orders.map((order, index) => (
-                    <Link to={`/orders/${order._id}`} key={order._id}>
+                    <Link
+                      className='bg-primary px-4 rounded-2xl py-3'
+                      to={`/orders/${order._id}`}
+                      key={order._id}
+                    >
                       {index + 1}. Order from {order.restaurantName} on{' '}
                       {format(order.date, 'dd.MM.yyyy HH:mm:ss')}
                     </Link>
@@ -89,11 +92,16 @@ const Profile = () => {
               </div>
             </div>
             {user.role === 'owner' ? (
-              <div className='shadow-2xl py-3 min-h-[250px] px-5 rounded-xl w-full overflow-auto max-h-[300px] max-w-full  md:max-w-[300px]'>
-                <h1 className='font-bold text-2xl'>Your restaurant</h1>
-                <div className='flex justify-center mt-[20px] flex-col gap-5 items-center'>
+              <div className='border-2 border-text py-3 px-5 bg-secondary text-textWhite rounded-[24px] w-full overflow-auto no-scrollbar max-w-full'>
+                <h1 className='font-bold text-4xl font-heading'>
+                  Your restaurants
+                </h1>
+                <div className='flex justify-start mt-[20px] gap-5 items-center'>
                   {reses.map((res) => (
-                    <div key={res._id} className='shadow-2xl p-5 rounded-xl'>
+                    <div
+                      key={res._id}
+                      className='border-2 border-text p-5 rounded-2xl'
+                    >
                       <Link
                         to={`/my_restaurant/${res._id}`}
                         className='flex flex-col items-center'
@@ -111,7 +119,7 @@ const Profile = () => {
                   ))}
                   <button
                     onClick={() => setIsAddResModalVisible(true)}
-                    className='text-center flex w-[100px] h-[100px] items-center justify-center hover:translate-y-[-10px] duration-300 shadow-2xl bg-gray-300 text-white py-3 px-5 rounded-xl text-xl font-medium'
+                    className='text-center text-text flex w-[100px] h-[100px] items-center justify-center hover:translate-y-[-10px] duration-300 border-2 border-text bg-gray-300 text-white py-3 px-5 rounded-2xl text-xl font-medium'
                   >
                     <IconContext.Provider
                       value={{ style: { width: '60px', height: '60px' } }}

@@ -88,8 +88,8 @@ const CartPage = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <>
-          <h1 className='text-4xl font-bold mb-[30px]'>Cart</h1>
+        <div className='w-full flex border-2 border-text gap-3 bg-secondary flex-wrap flex-col text-textWhite p-[30px] rounded-[30px] font-body'>
+          <h1 className='text-4xl font-bold mb-[10px] font-heading'>Cart</h1>
           <div className='flex flex-col gap-3'>
             <ListOfItems list={cart} isAddableToCard={true} handleQuantityChange={handleQuantityChange} isInCartPage={true}/>
             {cart.length ? (
@@ -103,7 +103,7 @@ const CartPage = () => {
               ''
             )}
           </div>
-        </>
+        </div>
       )}
      
     </Wrapper>

@@ -81,12 +81,11 @@ const Restaurant = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className='mt-[50px] shadow-2xl rounded-xl py-4 px-3'>
+        <div className='mt-[50px] shadow-2xl rounded-xl py-4 px-3 font-body'>
           <div>
             <div className='flex items-center gap-4 justify-between'>
               <div className='flex items-center gap-2'>
-                <p className='text-3xl font-medium'>{res.name}</p>
-                <Button onClick={() => setIsVisible(true)}>Add review</Button>
+                <p className='text-3xl font-medium font-heading'>{res.name}</p>
               </div>
               <img className='max-w-[80px]' src={res.image} alt='' />
             </div>
@@ -96,11 +95,14 @@ const Restaurant = () => {
             </div>
           </div>
           <div className='mt-[30px]'>
-            <h1 className='text-3xl font-bold'>Menu:</h1>
+            <h1 className='text-3xl font-bold font-heading'>Menu</h1>
             <ListOfItems isAddableToCard={true} list={resMenu} />
           </div>
           <div className='mt-[30px]'>
-            <h1 className='text-3xl font-bold mb-[20px]'>Reviews:</h1>
+            <div className='flex items-center gap-3'>
+            <h1 className='text-3xl font-bold font-heading'>Reviews</h1>
+                <Button onClick={() => setIsVisible(true)}>Add review</Button>
+              </div>
             {reviews.length ? reviews.map((review) => (
               <div key={review._id} className='shadow-2xl rounded-xl py-3 px-3'>
                 <div className='flex gap-3 items-center mb-3'>

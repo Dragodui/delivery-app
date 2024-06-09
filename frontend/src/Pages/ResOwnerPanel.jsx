@@ -63,8 +63,8 @@ const ResOwnerPanel = () => {
         <Loader />
       ) : (
         <>
-          <h1 className='text-3xl font-bold mt-[40px]'>Your restaurant</h1>
-          <div className='flex flex-col shadow-2xl px-4 py-3 rounded-2xl mt-[20px]'>
+          <h1 className='text-4xl font-heading font-bold mt-[40px]'>Your restaurant</h1>
+          <div className='flex font-body font-normal flex-col border-2 border-text px-4 py-3 rounded-[20px] mt-[20px]'>
             <div className='flex justify-between items-center'>
               <div>
                 <h2 className='flex text-2xl items-center gap-3'>
@@ -76,11 +76,11 @@ const ResOwnerPanel = () => {
                   {res.address}
                 </h2>
               </div>
-              <img className='max-w-[150px]' src={res.image} alt='' />
+              <img className='max-w-[150px] rounded-2xl' src={res.image} alt='' />
             </div>
-            <div className='mt-5 shadow-2xl p-4 rounded-lg'>
+            <div className='mt-5 border-2 border-text p-4 rounded-2xl'>
               <div className='flex justify-between'>
-                <h2 className='flex text-2xl items-center font-bold gap-3'>
+                <h2 className='flex text-2xl items-center font-bold gap-3 font-heading'>
                   Menu
                 </h2>
                 <Button onClick={() => setIsAddItemModalVisible(true)}>

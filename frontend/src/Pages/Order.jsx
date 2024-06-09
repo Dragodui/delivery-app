@@ -40,6 +40,7 @@ const Order = () => {
         <Loader />
       ) : (
         <>
+        <div className='w-full flex border-2 border-text gap-3 bg-secondary flex-wrap flex-col text-textWhite p-[30px] rounded-[30px] font-body'>
           <h1 className='text-3xl font-bold mb-[30px]'>
             {' '}
             Order from {order.restaurantName} on{' '}
@@ -47,6 +48,7 @@ const Order = () => {
           </h1>
           <ListOfItems list={products} isAddableToCard={true} />
           <p className='font-medium text-xl mt-[20px]'>Total: {totalPrice}$</p>
+          </div>
         </>
       )}
     </Wrapper>

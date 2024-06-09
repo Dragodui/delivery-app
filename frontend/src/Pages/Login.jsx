@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa';
 import { baseUrl } from '../config';
 import Input from '../components/UI/Input';
+import Wrapper from '../components/UI/Wrapper';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -32,9 +33,9 @@ const Login = () => {
   };
 
   return (
-    <main className='flex items-center justify-center w-full px-3'>
-      <form className='flex flex-col w-full max-w-[400px] gap-4 px-4 py-6 shadow-2xl rounded-xl mt-[100px]'>
-        <p className='text-3xl font-bold'>Log in</p>
+    <Wrapper>
+      <form className='flex flex-col w-full max-w-[400px] items-center gap-4 bg-modalBg px-4 py-6 border-2 border-text rounded-xl mt-[100px] font-body'>
+        <p className='text-3xl font-bold font-heading'>Log in</p>
         <Input
           onChange={(e) => {
             setEmail(e.target.value);
@@ -50,18 +51,17 @@ const Login = () => {
             setIsError(false);
           }}
           value={password}
-          className='focus:outline-none py-2 border-b-2 border-b-black'
           placeholder='Password'
           type={isPasswordShown ? 'text' : 'password'}
         />{' '}
         <div>
           <button
-            className={`flex rounded-full py-1 px-2 border-2 border-black items-center gap-1 ${
-              isPasswordShown ? 'bg-black text-white' : 'bg-white text-black'
+            className={`flex rounded-full py-1 px-2 border-text border-2 items-center gap-1 ${
+              isPasswordShown ? 'bg-black text-white ' : 'bg-primary text-textWhite'
             }`}
             onClick={() => setIsPasswordShown(!isPasswordShown)}
           >
-            <p className='relative top-[-2px]'>show password</p>
+            <p>show password</p>
             <FaEye />
           </button>
         </div>
@@ -76,13 +76,11 @@ const Login = () => {
             register
           </Link>
         </p>
-        <div>
-          <Button type='submit' onClick={fetchLogin}>
+          <Button type='submit' addStyles={'w-full'} onClick={fetchLogin}>
             Log in
           </Button>
-        </div>
       </form>
-    </main>
+    </Wrapper>
   );
 };
 

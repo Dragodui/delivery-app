@@ -55,11 +55,9 @@ router.post('/register', [
 });
 
 router.post('/login', [
-  // Валидация данных
   body('email').isEmail(),
   body('password').notEmpty(),
 ], async (req, res) => {
-  // Проверка наличия ошибок валидации
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });

@@ -10,7 +10,6 @@ const Restaurants = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [restaurants, setRestaurants] = useState([]);
 
-
   const fetchRestaurants = async () => {
     try {
       const response = await axios.get(`${baseUrl}/restaurants`);
@@ -29,21 +28,21 @@ const Restaurants = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <>
-          <h1 className='text-3xl font-bold'>All restaurants</h1>
-          <div className='flex flex-wrap gap-3 mt-[30px]'>
+        <div className='w-full flex border-2 border-text text-textWhite gap-3 flex-col bg-secondary flex-wrap p-[30px] rounded-[30px] font-body'>
+          <h1 className='text-4xl font-bold font-heading'>All restaurants</h1>
+          <div className='flex font-body flex-wrap gap-3 mt-[30px]'>
             {restaurants.map((res) => (
               <Link
                 key={res._id}
                 to={`/restaurants/${res._id}`}
-                className='shadow-2xl text-center rounded-xl px-3 py-3'
+                className='shadow-2xl text-center rounded-2xl border-2 border-text px-3 py-3'
               >
-                <img src={res.image} alt='' className='max-w-[150px]' />
+                <img src={res.image} alt='' className='max-w-[150px] rounded-xl' />
                 <h1 className='font-bold text-2xl'>{res.name}</h1>
               </Link>
             ))}
           </div>
-        </>
+        </div>
       )}
     </Wrapper>
   );

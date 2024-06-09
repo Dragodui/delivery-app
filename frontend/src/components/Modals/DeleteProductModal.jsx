@@ -40,7 +40,7 @@ const EditProductModal = ({ productId, isVisible, setIsVisible, isEdit, setIsEdi
       className={`fixed flex items-center justify-center top-0 left-0 px-3 right-0 bottom-0 bg-[#0000004d]`}
     >
       <form
-        className='bg-white px-10 flex flex-col w-full gap-4 max-w-[800px] py-8 rounded-xl'
+        className='bg-modalBg px-10 border-2 border-text flex flex-col w-full gap-4 max-w-[800px] py-8 rounded-2xl'
         onClick={(e) => e.stopPropagation()}
       >
         <p className='text-center text-2xl font-medium'>You sure you wanna delete {productName}?</p>

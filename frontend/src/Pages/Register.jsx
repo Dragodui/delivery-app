@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa';
 import { baseUrl } from '../config';
 import Input from '../components/UI/Input';
-import OwnerRegistration from '../components/UI/OwnerRegistration';
+import Wrapper from '../components/UI/Wrapper';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -39,9 +39,9 @@ const Register = () => {
   };
 
   return (
-    <main className='flex items-center justify-center w-full px-3'>
-      <form className='flex flex-col w-full max-w-[400px] gap-4 px-4 py-6 shadow-2xl rounded-xl mt-[100px]'>
-        <p className='text-3xl font-bold'>Register</p>
+    <Wrapper>
+      <form className='items-center flex flex-col w-full max-w-[400px] gap-4 px-4 py-6 shadow-2xl rounded-xl bg-modalBg font-body'>
+        <p className='text-3xl font-bold font-heading'>Register</p>
         <Input
           onChange={(e) => {
             setEmail(e.target.value);
@@ -84,27 +84,29 @@ const Register = () => {
           </button>
         </div>
         <div>
-          <p className='text-xl font-bold mb-2'>You are:</p>
+          <p className='text-xl text-center font-bold mb-2'>You are:</p>
           <div className='flex gap-4'>
-            <div className='flex items-center justify-center gap-2'>
+            <div className='flex items-center justify-center gap-1'>
               <Input
                 onChange={(e) => setRole(e.target.value)}
                 value='user'
                 name='uniqueGroup'
                 id='user'
                 type='radio'
+                className='w-[20px]'
               />
               <label className='text-lg top-[-2px] relative' htmlFor='user'>
                 user
               </label>
             </div>
-            <div className='flex items-center justify-center gap-2'>
+            <div className='flex items-center justify-center gap-1'>
               <Input
                 onChange={(e) => setRole(e.target.value)}
                 value='owner'
                 name='uniqueGroup'
                 id='owner'
                 type='radio'
+                className='w-[20px]'
               />
               <label className='text-lg top-[-2px] relative' htmlFor='owner'>
                 restaurant owner
@@ -130,13 +132,11 @@ const Register = () => {
             log in
           </Link>
         </p>
-        <div>
-          <Button type='submit' onClick={fetchRegister}>
+          <Button addStyles={'w-full'} type='submit' onClick={fetchRegister}>
             Register
           </Button>
-        </div>
       </form>
-    </main>
+    </Wrapper>
   );
 };
 
