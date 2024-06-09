@@ -115,6 +115,10 @@ const App = () => {
       <Header />
       <Routes>
         <Route
+          path="/"
+          element={<Navigate to='/login'/>}
+        />
+        <Route
           path='/login'
           element={isLoggedInState ? <Navigate to='/profile' /> : <Login />}
         />
