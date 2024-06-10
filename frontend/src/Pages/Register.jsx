@@ -30,6 +30,7 @@ const Register = () => {
       resInfo.resName === ''
         ? { email, name, role, password }
         : { email, name, role, password, resInfo };
+<<<<<<< HEAD
     try {
       const response = await axios.post(`${baseUrl}/register`, sendUser);
       console.log(response);
@@ -41,6 +42,15 @@ const Register = () => {
       });
       setErrors(validationErrors);
     }
+=======
+    axios // lib для запросов
+      .post(`${baseUrl}/register`, sendUser)
+      .then((res) => {
+        console.log(res.data);
+        navigate('/login');
+      })
+      .catch((err) => setIsError(true));
+>>>>>>> 6c2e15a7435634c5316adc585197a4d7695f6c78
   };
 
   return (
