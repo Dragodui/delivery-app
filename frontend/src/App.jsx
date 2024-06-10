@@ -91,6 +91,7 @@ const App = () => {
         console.log(error);
       }
     };
+
     const fetchOrders = async () => {
       try {
         const response = await axios.get(`${baseUrl}/orders/${user.id}`);
@@ -100,8 +101,7 @@ const App = () => {
       } catch (error) {
         console.log(error);
       }
-      
-    };
+    }; 
     
     fetchCurrentUser();
     fetchIsLoggedIn();

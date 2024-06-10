@@ -31,10 +31,10 @@ const verifyTokenForLogin = (req, res, next) => {
 };
 
 router.post('/register', [
-  body('email').isEmail(),
-  body('name').notEmpty(),
-  body('password').isLength({ min: 3 }),
-  body('role').notEmpty(),
+  body('email').isEmail().withMessage('Email is invalid'),
+  body('name').notEmpty().withMessage('Name is required'),
+  body('password').isLength({ min: 3 }).withMessage('Password must be at least 3 characters long'),
+  body('role').notEmpty().withMessage('Role is required'),
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -55,8 +55,9 @@ router.post('/register', [
 });
 
 router.post('/login', [
-  body('email').isEmail(),
-  body('password').notEmpty(),
+  body('email').isEmail().withMessage('Email is invalid'),
+  body('password').notEmpty().withMessage('Password is required'),
+  body('password').isLength({ min: 3 }).withMessage('Password must be at least 3 characters long')
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

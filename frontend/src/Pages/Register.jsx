@@ -20,22 +20,27 @@ const Register = () => {
   });
   const [password, setPassword] = useState('');
   const [isPasswordShown, setIsPasswordShown] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const fetchRegister = () => {
-    setIsError(false);
+  const fetchRegister = async (e) => {
+    e.preventDefault();
+    setErrors({});
     const sendUser =
       resInfo.resName === ''
         ? { email, name, role, password }
         : { email, name, role, password, resInfo };
-    axios
-      .post(`${baseUrl}/register`, sendUser)
-      .then((res) => {
-        console.log(res.data);
-        navigate('/login');
-      })
-      .catch((err) => setIsError(true));
+    try {
+      const response = await axios.post(`${baseUrl}/register`, sendUser);
+      console.log(response);
+      navigate('/login');
+    } catch (error) {
+      const validationErrors = {};
+      error.response.data.errors.forEach((err) => {
+        validationErrors[err.path] = err.msg;
+      });
+      setErrors(validationErrors);
+    }
   };
 
   return (
@@ -45,30 +50,33 @@ const Register = () => {
         <Input
           onChange={(e) => {
             setEmail(e.target.value);
-            setIsError(false);
+            setErrors({});
           }}
           value={email}
           placeholder='Email'
           type='text'
         />
+        {errors.email && <p className='text-left w-full text-red-500'>{errors.email}</p>}
         <Input
           onChange={(e) => {
             setName(e.target.value);
-            setIsError(false);
+            setErrors({});
           }}
           value={name}
           placeholder='Your name'
           type='text'
         />
+        {errors.name && <p className='text-left text-red-500 w-full'>{errors.name}</p>}
         <Input
           onChange={(e) => {
             setPassword(e.target.value);
-            setIsError(false);
+            setErrors({});
           }}
           value={password}
           placeholder='Password'
           type={isPasswordShown ? 'text' : 'password'}
         />
+        {errors.password && <p className='text-left text-red-500 w-full'>{errors.password}</p>}
         <div>
           <button
             className={`flex rounded-full py-1 px-2 border-2 border-black items-center gap-1 ${
@@ -113,6 +121,8 @@ const Register = () => {
               </label>
             </div>
           </div>
+          
+        {errors.role && <p className='text-center w-full text-red-500'>{errors.role}</p>}
         </div>
         {/* {
           role === 'owner'? (
@@ -124,7 +134,13 @@ const Register = () => {
             ''
           )
         } */}
-        {isError ? <p className='text-red-600'>Incorrect values</p> : ''}
+        {/* <div className='flex flex-col'>
+          {Object.values(errors).map((error, index) => (
+            <p key={index} className='text-red-500'>
+              {error}
+            </p>
+          ))}
+        </div> */}
 
         <p>
           Have an account?{' '}
@@ -132,9 +148,13 @@ const Register = () => {
             log in
           </Link>
         </p>
-          <Button addStyles={'w-full'} type='submit' onClick={fetchRegister}>
-            Register
-          </Button>
+        <Button
+          addStyles={'w-full'}
+          type='submit'
+          onClick={(e) => fetchRegister(e)}
+        >
+          Register
+        </Button>
       </form>
     </Wrapper>
   );

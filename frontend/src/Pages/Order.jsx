@@ -41,7 +41,7 @@ const Order = () => {
       ) : (
         <>
         <div className='w-full flex border-2 border-text gap-3 bg-secondary flex-wrap flex-col text-textWhite p-[30px] rounded-[30px] font-body'>
-          <h1 className='text-3xl font-bold mb-[30px]'>
+          <h1 className='text-3xl font-bold mb-[30px] font-heading'>
             {' '}
             Order from {order.restaurantName} on{' '}
             {format(order.date, 'dd.MM.yyyy HH:mm:ss')}

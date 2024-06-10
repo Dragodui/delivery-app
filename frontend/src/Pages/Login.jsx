@@ -13,23 +13,30 @@ import Wrapper from '../components/UI/Wrapper';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isError, setIsError] = useState(false);
+  const [errors, setErrors] = useState({});
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const fetchLogin = () => {
-    setIsError(false);
-    axios
-      .post(`${baseUrl}/login`, { email, password })
-      .then((res) => {
-        const token = res.data.token;
-        localStorage.setItem('token', token);
-        dispatch(setIsLoggedIn({ isLoggedIn: true }));
-        window.location.reload();
-        navigate('/profile');
-      })
-      .catch((err) => setIsError(true));
+  const fetchLogin = async () => {
+    setErrors({});
+    try {
+      const response = await axios.post(`${baseUrl}/login`, {
+        email,
+        password,
+      });
+      const token = response.data.token;
+      dispatch(setIsLoggedIn({ isLoggedIn: true }));
+      localStorage.setItem('token', token);
+      window.location.reload();
+      navigate('/profile');
+    } catch (error) {
+      const validationErrors = {};
+      error.response.data.errors.forEach((err) => {
+        validationErrors[err.path] = err.msg;
+      });
+      setErrors(validationErrors);
+    }
   };
 
   return (
@@ -39,25 +46,29 @@ const Login = () => {
         <Input
           onChange={(e) => {
             setEmail(e.target.value);
-            setIsError(false);
+            setErrors(false);
           }}
           value={email}
           placeholder='Email'
           type='text'
         />
+        {errors.email && <p className='text-left text-red-500 w-full'>{errors.email}</p>}
         <Input
           onChange={(e) => {
             setPassword(e.target.value);
-            setIsError(false);
+            setErrors(false);
           }}
           value={password}
           placeholder='Password'
           type={isPasswordShown ? 'text' : 'password'}
-        />{' '}
+        />
+        {errors.password && <p className='text-left text-red-500 w-full'>{errors.password}</p>}
         <div>
           <button
             className={`flex rounded-full py-1 px-2 border-text border-2 items-center gap-1 ${
-              isPasswordShown ? 'bg-black text-white ' : 'bg-primary text-textWhite'
+              isPasswordShown
+                ? 'bg-black text-white '
+                : 'bg-primary text-textWhite'
             }`}
             onClick={() => setIsPasswordShown(!isPasswordShown)}
           >
@@ -65,20 +76,18 @@ const Login = () => {
             <FaEye />
           </button>
         </div>
-        {isError ? (
-          <p className='text-red-600'>Incorrect login or password</p>
-        ) : (
-          ''
-        )}
+        <div className='flex flex-col'>
+          {errors.length ? errors.map((error) => <p>{error.msg}</p>) : ''}
+        </div>
         <p>
           Don`t have account?{' '}
           <Link className='underline' to='/register'>
             register
           </Link>
         </p>
-          <Button type='submit' addStyles={'w-full'} onClick={fetchLogin}>
-            Log in
-          </Button>
+        <Button type='submit' addStyles={'w-full'} onClick={fetchLogin}>
+          Log in
+        </Button>
       </form>
     </Wrapper>
   );
