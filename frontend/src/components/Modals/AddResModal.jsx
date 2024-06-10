@@ -7,7 +7,6 @@ import axios from 'axios';
 
 const AddResModal = ({ isVisible, setIsVisible }) => {
   const user = useAppSelector((state) => state.user.user);
-  // console.log(user);
 
   const [resInfo, setResInfo] = useState({
     name: '',
@@ -18,14 +17,13 @@ const AddResModal = ({ isVisible, setIsVisible }) => {
   });
   console.log(resInfo);
 
-  const registerRes = () => {
-    axios
-      .post(`${baseUrl}/restaurants`, resInfo)
-      .then((res) => {
-        console.log(res);
-        setIsVisible(false);
-      })
-      .catch((err) => console.log(err));
+  const registerRes = async () => {
+    try {
+      const response = await axios.post(`${baseUrl}/restaurants`, resInfo);
+      setIsVisible(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -37,7 +35,9 @@ const AddResModal = ({ isVisible, setIsVisible }) => {
         className='bg-modalBg px-10 flex border-2 border-text flex-col w-full gap-4 max-w-[600px] py-8 rounded-xl'
         onClick={(e) => e.stopPropagation()}
       >
-        <h1 className='text-3xl font-bold font-heading'>Register new restaurant</h1>
+        <h1 className='text-3xl font-bold font-heading'>
+          Register new restaurant
+        </h1>
         <Input
           value={resInfo.name}
           onChange={(e) =>

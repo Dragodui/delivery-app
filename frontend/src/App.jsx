@@ -101,8 +101,8 @@ const App = () => {
       } catch (error) {
         console.log(error);
       }
-    }; 
-    
+    };
+
     fetchCurrentUser();
     fetchIsLoggedIn();
     fetchCart();
@@ -114,10 +114,7 @@ const App = () => {
     <Router>
       <Header />
       <Routes>
-        <Route
-          path="/"
-          element={<Navigate to='/login'/>}
-        />
+        <Route path='/' element={<Navigate to='/login' />} />
         <Route
           path='/login'
           element={isLoggedInState ? <Navigate to='/profile' /> : <Login />}
@@ -152,7 +149,7 @@ const App = () => {
           path='/orders/:orderId'
           element={isLoggedInState ? <Order /> : <Navigate to='/login' />}
         />
-         <Route
+        <Route
           path='/cart'
           element={isLoggedInState ? <CartPage /> : <Navigate to='/login' />}
         />

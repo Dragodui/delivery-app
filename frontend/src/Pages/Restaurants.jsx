@@ -37,7 +37,11 @@ const Restaurants = () => {
                 to={`/restaurants/${res._id}`}
                 className='shadow-2xl text-center rounded-2xl border-2 border-text px-3 py-3'
               >
-                <img src={res.image} alt='' className='max-w-[150px] rounded-xl' />
+                <img
+                  src={res.image}
+                  alt=''
+                  className='max-w-[150px] rounded-xl'
+                />
                 <h1 className='font-bold text-2xl'>{res.name}</h1>
               </Link>
             ))}

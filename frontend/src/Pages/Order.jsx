@@ -23,9 +23,9 @@ const Order = () => {
         setOrder(order);
         setProducts(order.products);
         for (const product of order.products) {
-          const cost = product.price*product.quantity;
-          sum+=cost;
-        };
+          const cost = product.price * product.quantity;
+          sum += cost;
+        }
         setTotalPrice(sum);
         setIsLoading(false);
       } catch (error) {
@@ -40,14 +40,16 @@ const Order = () => {
         <Loader />
       ) : (
         <>
-        <div className='w-full flex border-2 border-text gap-3 bg-secondary flex-wrap flex-col text-textWhite p-[30px] rounded-[30px] font-body'>
-          <h1 className='text-3xl font-bold mb-[30px] font-heading'>
-            {' '}
-            Order from {order.restaurantName} on{' '}
-            {format(order.date, 'dd.MM.yyyy HH:mm:ss')}
-          </h1>
-          <ListOfItems list={products} isAddableToCard={true} />
-          <p className='font-medium text-xl mt-[20px]'>Total: {totalPrice}$</p>
+          <div className='w-full flex border-2 border-text gap-3 bg-secondary flex-wrap flex-col text-textWhite p-[30px] rounded-[30px] font-body'>
+            <h1 className='text-3xl font-bold mb-[30px] font-heading'>
+              {' '}
+              Order from {order.restaurantName} on{' '}
+              {format(order.date, 'dd.MM.yyyy HH:mm:ss')}
+            </h1>
+            <ListOfItems list={products} isAddableToCard={true} />
+            <p className='font-medium text-xl mt-[20px]'>
+              Total: {totalPrice}$
+            </p>
           </div>
         </>
       )}

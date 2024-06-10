@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Button from '../components/UI/Button';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -52,7 +52,9 @@ const Login = () => {
           placeholder='Email'
           type='text'
         />
-        {errors.email && <p className='text-left text-red-500 w-full'>{errors.email}</p>}
+        {errors.email && (
+          <p className='text-left text-error w-full'>{errors.email}</p>
+        )}
         <Input
           onChange={(e) => {
             setPassword(e.target.value);
@@ -62,7 +64,9 @@ const Login = () => {
           placeholder='Password'
           type={isPasswordShown ? 'text' : 'password'}
         />
-        {errors.password && <p className='text-left text-red-500 w-full'>{errors.password}</p>}
+        {errors.password && (
+          <p className='text-left text-error w-full'>{errors.password}</p>
+        )}
         <div>
           <button
             className={`flex rounded-full py-1 px-2 border-text border-2 items-center gap-1 ${

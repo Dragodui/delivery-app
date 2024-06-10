@@ -56,7 +56,7 @@ const Register = () => {
           placeholder='Email'
           type='text'
         />
-        {errors.email && <p className='text-left w-full text-red-500'>{errors.email}</p>}
+        {errors.email && <p className='text-left w-full text-error'>{errors.email}</p>}
         <Input
           onChange={(e) => {
             setName(e.target.value);
@@ -66,7 +66,7 @@ const Register = () => {
           placeholder='Your name'
           type='text'
         />
-        {errors.name && <p className='text-left text-red-500 w-full'>{errors.name}</p>}
+        {errors.name && <p className='text-left text-error w-full'>{errors.name}</p>}
         <Input
           onChange={(e) => {
             setPassword(e.target.value);
@@ -76,7 +76,7 @@ const Register = () => {
           placeholder='Password'
           type={isPasswordShown ? 'text' : 'password'}
         />
-        {errors.password && <p className='text-left text-red-500 w-full'>{errors.password}</p>}
+        {errors.password && <p className='text-left text-error w-full'>{errors.password}</p>}
         <div>
           <button
             className={`flex rounded-full py-1 px-2 border-2 border-black items-center gap-1 ${
@@ -122,7 +122,7 @@ const Register = () => {
             </div>
           </div>
           
-        {errors.role && <p className='text-center w-full text-red-500'>{errors.role}</p>}
+        {errors.role && <p className='text-center w-full text-error'>{errors.role}</p>}
         </div>
         {/* {
           role === 'owner'? (
@@ -136,7 +136,7 @@ const Register = () => {
         } */}
         {/* <div className='flex flex-col'>
           {Object.values(errors).map((error, index) => (
-            <p key={index} className='text-red-500'>
+            <p key={index} className='text-error'>
               {error}
             </p>
           ))}

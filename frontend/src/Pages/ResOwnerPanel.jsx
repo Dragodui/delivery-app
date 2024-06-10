@@ -18,7 +18,7 @@ const ResOwnerPanel = () => {
   const user = useAppSelector((state) => state.user.user);
   const [res, setRes] = useState(null);
   const [menu, setMenu] = useState([]);
-  const {resId} = useParams();
+  const { resId } = useParams();
 
   const fetchRes = async () => {
     try {
@@ -63,7 +63,9 @@ const ResOwnerPanel = () => {
         <Loader />
       ) : (
         <>
-          <h1 className='text-4xl font-heading font-bold mt-[40px]'>Your restaurant</h1>
+          <h1 className='text-4xl font-heading font-bold mt-[40px]'>
+            Your restaurant
+          </h1>
           <div className='flex font-body font-normal flex-col border-2 border-text px-4 py-3 rounded-[20px] mt-[20px]'>
             <div className='flex justify-between items-center'>
               <div>
@@ -76,7 +78,11 @@ const ResOwnerPanel = () => {
                   {res.address}
                 </h2>
               </div>
-              <img className='max-w-[150px] rounded-2xl' src={res.image} alt='' />
+              <img
+                className='max-w-[150px] rounded-2xl'
+                src={res.image}
+                alt=''
+              />
             </div>
             <div className='mt-5 border-2 border-text p-4 rounded-2xl'>
               <div className='flex justify-between'>
@@ -87,7 +93,13 @@ const ResOwnerPanel = () => {
                   Add new item
                 </Button>
               </div>
-              <ListOfItems isEdit={isEdit} setIsEdit={setIsEdit} isEditable={true} isAddableToCard={false} list={menu} />
+              <ListOfItems
+                isEdit={isEdit}
+                setIsEdit={setIsEdit}
+                isEditable={true}
+                isAddableToCard={false}
+                list={menu}
+              />
             </div>
           </div>
         </>

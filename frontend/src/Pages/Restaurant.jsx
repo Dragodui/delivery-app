@@ -10,20 +10,17 @@ import { FaUserCircle } from 'react-icons/fa';
 import AddReviewModal from '../components/Modals/AddReviewModal';
 import Button from '../components/UI/Button';
 import { IconContext } from 'react-icons';
-import { FaStar } from "react-icons/fa";
+import { FaStar } from 'react-icons/fa';
 
 const StarRating = ({ rate }) => {
   const stars = Array.from({ length: rate }, (_, index) => (
-    
-    <IconContext.Provider
-    value={{ style: { color: '#f1c232' } }}
-  >
-    <div>
-      <FaStar key={index} />
-    </div>
-  </IconContext.Provider>
+    <IconContext.Provider value={{ style: { color: '#f1c232' } }}>
+      <div>
+        <FaStar key={index} />
+      </div>
+    </IconContext.Provider>
   ));
-  return <div className="flex">{stars}</div>;
+  return <div className='flex'>{stars}</div>;
 };
 
 const Restaurant = () => {
@@ -115,39 +112,52 @@ const Restaurant = () => {
           </div>
           <div className='mt-[30px]'>
             <div className='flex items-center gap-3'>
-            <h1 className='text-3xl font-bold font-heading'>Reviews</h1>
-                <Button onClick={() => setIsVisible(true)}>Add review</Button>
-              </div>
-            {reviews.length ? reviews.map((review) => (
-              <div key={review._id} className='shadow-2xl rounded-xl py-3 px-3'>
-                <div className='flex gap-3 items-center mb-3'>
-                  <div className='flex items-center gap-1'>
-                    <IconContext.Provider
-                      value={{ style: { width: '30px', height: '30px' } }}
-                    >
-                      <div>
-                        <FaUserCircle />
-                      </div>
-                    </IconContext.Provider>
-                    <p className='text-2xl'>
-                      {reviewUsers[review.userId]?.name || 'Loading...'}
-                    </p>
+              <h1 className='text-3xl font-bold font-heading'>Reviews</h1>
+              <Button onClick={() => setIsVisible(true)}>Add review</Button>
+            </div>
+            {reviews.length ? (
+              reviews.map((review) => (
+                <div
+                  key={review._id}
+                  className='shadow-2xl rounded-xl py-3 px-3'
+                >
+                  <div className='flex gap-3 items-center mb-3'>
+                    <div className='flex items-center gap-1'>
+                      <IconContext.Provider
+                        value={{ style: { width: '30px', height: '30px' } }}
+                      >
+                        <div>
+                          <FaUserCircle />
+                        </div>
+                      </IconContext.Provider>
+                      <p className='text-2xl'>
+                        {reviewUsers[review.userId]?.name || 'Loading...'}
+                      </p>
+                    </div>
+                    <StarRating rate={review.rate} />
                   </div>
-                    <StarRating rate={review.rate}/>
+                  <p className='text-xl bg-gray-200 rounded-xl py-2 px-3'>
+                    {review.opinion}
+                  </p>
                 </div>
-                <p className='text-xl bg-gray-200 rounded-xl py-2 px-3'>
-                  {review.opinion}
-                </p>
-              </div>
-            )) : <p className='text-left mt-[30px] text-gray-500 text-xl font-medium'>No reviews yet</p>}
+              ))
+            ) : (
+              <p className='text-left mt-[30px] text-gray-500 text-xl font-medium'>
+                No reviews yet
+              </p>
+            )}
           </div>
         </div>
       )}
-      {
-        isVisible
-        ? <AddReviewModal isVisible={isVisible} setIsVisible={setIsVisible} resId={resId}/>
-        : ""
-      }
+      {isVisible ? (
+        <AddReviewModal
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+          resId={resId}
+        />
+      ) : (
+        ''
+      )}
     </Wrapper>
   );
 };

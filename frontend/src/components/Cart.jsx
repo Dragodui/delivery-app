@@ -16,7 +16,8 @@ const Cart = () => {
   const [cart, setCart] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalCartSum, setCartSum] = useState(0);
-  const [isOrderNotificationModalVisible, setIsOrderNotificationModalVisible] = useState(false);
+  const [isOrderNotificationModalVisible, setIsOrderNotificationModalVisible] =
+    useState(false);
   const dispatchCart = useAppSelector((state) => state.cart.cart);
   const user = useAppSelector((state) => state.user.user);
   const isCartOpened = useAppSelector(

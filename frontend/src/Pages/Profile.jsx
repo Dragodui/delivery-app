@@ -17,7 +17,6 @@ const Profile = () => {
   const user = useAppSelector((state) => state.user.user);
   const [isAddResModalVisible, setIsAddResModalVisible] = useState(false);
   const [orders, setOrders] = useState([]);
-  const dispatchOrders = useAppSelector((state) => state.orders.orders);
   const [isLoading, setIsLoading] = useState(true);
   const [reses, setReses] = useState([]);
   const dispatch = useAppDispatch();
@@ -71,7 +70,9 @@ const Profile = () => {
               </div>
             </div>
             <div className='border-2 border-text py-3 min-h-[250px] px-5 bg-secondary text-textWhite rounded-[24px] overflow-auto no-scrollbar max-h-[250px] flex-auto w-80'>
-              <h1 className='font-bold text-4xl mb-4 font-heading text-center'>Orders</h1>
+              <h1 className='font-bold text-4xl mb-4 font-heading text-center'>
+                Orders
+              </h1>
               <div className='flex flex-col gap-3'>
                 {user.orders === undefined || user.orders.length === 0 ? (
                   <p className='text-center mt-[40px] text-gray-500 text-xl font-medium'>

@@ -11,7 +11,8 @@ module.exports = {
       'primary': '#7854ba',
       'secondary': '#a98ce0',
       'accent': '#9060e6',
-      'modalBg': '#ddcbff'
+      'modalBg': '#ddcbff',
+      'error': '#f44336',
      },
      fontSize: {
       sm: '0.750rem',

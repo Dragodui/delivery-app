@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Input from '../UI/Input';
 import { useState } from 'react';
 import Button from '../UI/Button';
@@ -25,10 +25,9 @@ const AddReviewModal = ({ resId, isVisible, setIsVisible }) => {
         rate: parseInt(row.rate),
         userId: userId,
       });
-      console.log(response.data);
       setIsVisible(false);
     } catch (error) {
-      setError('Error: You already reviewed this restaurant')
+      setError('Error: You already reviewed this restaurant');
       console.log(`Error while editing product ${error}`);
     }
   };
@@ -43,7 +42,7 @@ const AddReviewModal = ({ resId, isVisible, setIsVisible }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className='table-container table-class w-full'>
-        <h1 className='text-3xl font-heading mb-[30px]'>Add new review</h1>
+          <h1 className='text-3xl font-heading mb-[30px]'>Add new review</h1>
           <table className='w-full table'>
             <thead>
               <tr className='font-heading'>
@@ -55,11 +54,9 @@ const AddReviewModal = ({ resId, isVisible, setIsVisible }) => {
               <tr>
                 <td>
                   <select
-                  className='rounded-full px-3 py-1 bg-primary text-textWhite'
+                    className='rounded-full px-3 py-1 bg-primary text-textWhite'
                     value={row.rate}
-                    onChange={(e) =>
-                      handleInputChange('rate', e.target.value)
-                    }
+                    onChange={(e) => handleInputChange('rate', e.target.value)}
                   >
                     <option value={1}>1</option>
                     <option value={2}>2</option>

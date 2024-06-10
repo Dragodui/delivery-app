@@ -17,7 +17,7 @@ const Item = ({
   setIsEdit,
   isEdit,
   handleQuantityChange,
-  isInCartPage
+  isInCartPage,
 }) => {
   const [isInCart, setIsInCart] = useState(false);
   const [cartFromDB, setCartFromDB] = useState([]);
@@ -85,7 +85,11 @@ const Item = ({
       ) : (
         ''
       )}
-      <img src={item.image} alt='' className='rounded-2xl max-w-[200px] max-h-[140px]' />
+      <img
+        src={item.image}
+        alt=''
+        className='rounded-2xl max-w-[200px] max-h-[140px]'
+      />
       <div className='flex w-full mt-2 justify-between'>
         <p>{item.name}</p>
         <p>{item.price}$</p>
@@ -95,32 +99,31 @@ const Item = ({
         <>
           {isInCartPage ? (
             <>
-            <div className='flex items-center gap-3 bg-slate-400 p-1 max-w-[100px] justify-between rounded-full my-2'>
-              <button
-                onClick={() => {
-                  if (quantity > 1) {
-                    handleQuantityChangeLocal(quantity - 1);
-                  }
-                }}
-                className='flex items-center justify-center p-3 rounded-full w-[10px] h-[10px] bg-background'
-              >
-                <p className='font-bold text-text relative bottom-[1px]'>-</p>
-              </button>
-              <p>{quantity}</p>
-              <button
-                onClick={() => handleQuantityChangeLocal(quantity + 1)}
-                className='flex items-center justify-center p-3 rounded-full w-[10px] h-[10px] bg-background'
-              >
-                <p className='font-bold text-text relative bottom-[1px]'>+</p>
-              </button>
-            </div></>
+              <div className='flex items-center gap-3 bg-slate-400 p-1 max-w-[100px] justify-between rounded-full my-2'>
+                <button
+                  onClick={() => {
+                    if (quantity > 1) {
+                      handleQuantityChangeLocal(quantity - 1);
+                    }
+                  }}
+                  className='flex items-center justify-center p-3 rounded-full w-[10px] h-[10px] bg-background'
+                >
+                  <p className='font-bold text-text relative bottom-[1px]'>-</p>
+                </button>
+                <p>{quantity}</p>
+                <button
+                  onClick={() => handleQuantityChangeLocal(quantity + 1)}
+                  className='flex items-center justify-center p-3 rounded-full w-[10px] h-[10px] bg-background'
+                >
+                  <p className='font-bold text-text relative bottom-[1px]'>+</p>
+                </button>
+              </div>
+            </>
           ) : (
             ''
           )}
-            <p className='mb-2'>quantity: {item.quantity}</p>
-          <Button
-            onClick={changeCart}
-          >
+          <p className='mb-2'>quantity: {item.quantity}</p>
+          <Button onClick={changeCart}>
             {isInCart ? 'Remove from cart' : 'Add to cart'}
           </Button>
         </>

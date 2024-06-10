@@ -7,21 +7,17 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../store/store';
 import { FaShoppingCart } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
-import { changeCartState } from '../store/features/isCartOpenedSlice';
-import { useAppDispatch } from '../store/store';
 import Button from './UI/Button';
-import { MdLogout } from "react-icons/md";
+import { MdLogout } from 'react-icons/md';
 
 const Header = () => {
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const user = useAppSelector((state) => state.user.user);
   const cart = useAppSelector((state) => state.cart.cart);
   const [cartCount, setCartCount] = useState(cart.length);
   const header = useRef();
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const checkAuth = () => {
@@ -61,8 +57,12 @@ const Header = () => {
       <Wrapper>
         <div ref={header} className='w-full flex justify-between'>
           <nav className='flex items-center gap-3'>
-            <Link className='text-xl' to='/profile'>Profile</Link>
-            <Link className='text-xl' to='/restaurants'>Restaurants</Link>
+            <Link className='text-xl' to='/profile'>
+              Profile
+            </Link>
+            <Link className='text-xl' to='/restaurants'>
+              Restaurants
+            </Link>
           </nav>
           <div className='flex items-center gap-[40px]'>
             {isLoggedIn ? (
@@ -79,7 +79,9 @@ const Header = () => {
                     </div>
                   </IconContext.Provider>
                 </Link>
-                <Button addStyles={'flex items-center gap-1'} onClick={logOut}>Log out <MdLogout /></Button>
+                <Button addStyles={'flex items-center gap-1'} onClick={logOut}>
+                  Log out <MdLogout />
+                </Button>
               </>
             ) : (
               ''
