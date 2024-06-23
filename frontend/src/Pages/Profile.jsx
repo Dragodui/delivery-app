@@ -52,8 +52,8 @@ const Profile = () => {
         <Loader />
       ) : (
         <>
-          <div className='w-full flex border-2 border-text gap-3 bg-secondary flex-wrap items-center p-[30px] rounded-[30px] font-body'>
-            <div className='border-2 border-text min-h-[250px] max-h-[300px] flex-1 py-3 px-5 rounded-[24px]  w-20 bg-secondary text-textWhite'>
+          <div className='w-full flex gap-3 flex-wrap items-center py-[30px] font-body'>
+            <div className=' min-h-[250px] min-w-[300px] max-h-[300px] flex-1 py-3 px-5 rounded-lg  w-20 bg-main text-text'>
               <h1 className='font-bold text-4xl mb-4 font-heading'>Profile</h1>
               <div className='flex items-center gap-3'>
                 <IconContext.Provider
@@ -69,8 +69,8 @@ const Profile = () => {
                 <p className='text-lg font-medium'>Email: {user.email}</p>
               </div>
             </div>
-            <div className='border-2 border-text py-3 min-h-[250px] px-5 bg-secondary text-textWhite rounded-[24px] overflow-auto no-scrollbar max-h-[250px] flex-auto w-80'>
-              <h1 className='font-bold text-4xl mb-4 font-heading text-center'>
+            <div className=' py-3 min-h-[250px] px-5 bg-main text-text rounded-lg overflow-auto no-scrollbar max-h-[250px] flex-auto w-80'>
+              <h1 className='font-bold text-4xl mb-4 font-heading text-left'>
                 Orders
               </h1>
               <div className='flex flex-col gap-3'>
@@ -81,7 +81,7 @@ const Profile = () => {
                 ) : (
                   orders.map((order, index) => (
                     <Link
-                      className='bg-primary px-4 rounded-2xl py-3'
+                      className='bg-mainLight px-4 rounded-2xl py-3'
                       to={`/orders/${order._id}`}
                       key={order._id}
                     >
@@ -93,15 +93,15 @@ const Profile = () => {
               </div>
             </div>
             {user.role === 'owner' ? (
-              <div className='border-2 border-text py-3 px-5 bg-secondary text-textWhite rounded-[24px] w-full overflow-auto no-scrollbar max-w-full'>
+              <div className=' py-3 px-5 bg-main text-text rounded-lg w-full overflow-auto no-scrollbar max-w-full'>
                 <h1 className='font-bold text-4xl font-heading'>
                   Your restaurants
                 </h1>
-                <div className='flex justify-start mt-[20px] gap-5 items-center'>
+                <div className='flex justify-start flex-wrap mt-[20px] gap-5 items-center'>
                   {reses.map((res) => (
                     <div
                       key={res._id}
-                      className='border-2 border-text p-5 rounded-2xl'
+                      className='p-5 bg-textWhite rounded-lg'
                     >
                       <Link
                         to={`/my_restaurant/${res._id}`}

@@ -46,7 +46,6 @@ router.post('/restaurantsMenu', async (req, res) => {
     const { resId, menuItems } = req.body;
 
     const restaurant = await Restaurant.findById(resId);
-    console.log(resId);
 
     if (!restaurant) {
       return res.status(404).json({ message: 'Restaurant not found' });
@@ -59,7 +58,6 @@ router.post('/restaurantsMenu', async (req, res) => {
       await newProduct.save();
       productIds.push(newProduct._id);
     }
-    console.log(productIds);
 
     restaurant.menu.push(...productIds);
     await restaurant.save();
@@ -95,9 +93,7 @@ router.post('/restaurants', async (req, res) => {
 router.get('/restaurantsMenu/:resId', async (req, res) => {
   try {
     const { resId } = req.params;
-    console.log(resId);
     const products = await Product.find({ restaurantId: resId });
-    console.log(products);
     if (products.length === 0) {
       return res.status(200).json([]);
     }
@@ -114,7 +110,6 @@ router.get('/restaurant/:resId', async (req, res) => {
     console.log(`Fetching restaurant with ID: ${resId}`);
 
     const rest = await Restaurant.findById(resId);
-    console.log(rest);
     if (!rest) {
       return res.status(404).json({ error: 'Restaurant not found' });
     }
@@ -160,7 +155,6 @@ router.get('/restaurant/getReviews/:resId', async (req, res) => {
       return res.status(404).json({ message: 'Restaurant not found' });
     };
     const reviews = await Reviews.find({resId});
-    console.log(reviews);
     if (reviews.length) {
       res.status(200).json(reviews);
     } else {

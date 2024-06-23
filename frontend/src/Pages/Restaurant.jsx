@@ -97,9 +97,9 @@ const Restaurant = () => {
           <div>
             <div className='flex items-center gap-4 justify-between'>
               <div className='flex items-center gap-2'>
-                <p className='text-3xl font-medium font-heading'>{res.name}</p>
+                <p className='text-4xl font-bold font-heading'>{res.name}</p>
               </div>
-              <img className='max-w-[80px]' src={res.image} alt='' />
+              <img className='max-w-[100px]' src={res.image} alt='' />
             </div>
             <div className='flex gap-3 items-center'>
               <FaLocationDot />
@@ -119,7 +119,7 @@ const Restaurant = () => {
               reviews.map((review) => (
                 <div
                   key={review._id}
-                  className='shadow-2xl rounded-xl py-3 px-3'
+                  className='shadow-2xl rounded-lg py-3 px-3'
                 >
                   <div className='flex gap-3 items-center mb-3'>
                     <div className='flex items-center gap-1'>

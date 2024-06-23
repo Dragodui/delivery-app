@@ -13,6 +13,8 @@ module.exports = {
       'accent': '#9060e6',
       'modalBg': '#ddcbff',
       'error': '#f44336',
+      'main': '#30ff68',
+      'mainLight': '#8cffab'
      },
      fontSize: {
       sm: '0.750rem',
@@ -24,7 +26,7 @@ module.exports = {
       '5xl': '4.210rem',
     },
     fontFamily: {
-      heading: 'Capriola',
+      heading: 'Poppins',
       body: 'Tilt Warp',
     },
     fontWeight: {

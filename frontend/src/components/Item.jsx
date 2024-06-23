@@ -69,7 +69,7 @@ const Item = ({
   };
 
   return (
-    <div className='mt-4 rounded-2xl flex flex-col justify-center items-center min-h-[230px] border-2 border-text bg-modalBg text-text px-3 py-2'>
+    <div className='mt-4 rounded-lg flex flex-col justify-center items-center min-h-[230px] shadow-2xl  text-text px-3 py-2'>
       {isEditable ? (
         <div className='flex items-center w-full mb-3 justify-between'>
           <Button
@@ -88,7 +88,7 @@ const Item = ({
       <img
         src={item.image}
         alt=''
-        className='rounded-2xl max-w-[200px] max-h-[140px]'
+        className='rounded-lg max-w-[200px] max-h-[140px]'
       />
       <div className='flex w-full mt-2 justify-between'>
         <p>{item.name}</p>
@@ -106,16 +106,16 @@ const Item = ({
                       handleQuantityChangeLocal(quantity - 1);
                     }
                   }}
-                  className='flex items-center justify-center p-3 rounded-full w-[10px] h-[10px] bg-background'
+                  className='flex items-center justify-center p-3 rounded-full w-[10px] h-[10px] bg-main'
                 >
-                  <p className='font-bold text-text relative bottom-[1px]'>-</p>
+                  <p className='font-bold text-text'>-</p>
                 </button>
                 <p>{quantity}</p>
                 <button
                   onClick={() => handleQuantityChangeLocal(quantity + 1)}
-                  className='flex items-center justify-center p-3 rounded-full w-[10px] h-[10px] bg-background'
+                  className='flex items-center justify-center p-3 rounded-full w-[10px] h-[10px] bg-main'
                 >
-                  <p className='font-bold text-text relative bottom-[1px]'>+</p>
+                  <p className='font-bold text-text'>+</p>
                 </button>
               </div>
             </>

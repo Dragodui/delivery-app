@@ -63,11 +63,11 @@ const ResOwnerPanel = () => {
         <Loader />
       ) : (
         <>
-          <h1 className='text-4xl font-heading font-bold mt-[40px]'>
+          <h1 className='text-4xl text-center sm:text-left w-full font-heading font-bold mt-[40px]'>
             Your restaurant
           </h1>
-          <div className='flex font-body font-normal flex-col border-2 border-text px-4 py-3 rounded-[20px] mt-[20px]'>
-            <div className='flex justify-between items-center'>
+          <div className='w-full flex font-body font-normal flex-col py-3'>
+            <div className='flex justify-between items-center flex-col sm:flex-row'>
               <div>
                 <h2 className='flex text-2xl items-center gap-3'>
                   <RiProfileFill />
@@ -84,8 +84,8 @@ const ResOwnerPanel = () => {
                 alt=''
               />
             </div>
-            <div className='mt-5 border-2 border-text p-4 rounded-2xl'>
-              <div className='flex justify-between'>
+            <div className='mt-5 py-4 rounded-2xl'>
+              <div className='flex gap-3 w-full md:w-auto'>
                 <h2 className='flex text-2xl items-center font-bold gap-3 font-heading'>
                   Menu
                 </h2>

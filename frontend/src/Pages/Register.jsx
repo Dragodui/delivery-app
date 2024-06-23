@@ -45,7 +45,7 @@ const Register = () => {
 
   return (
     <Wrapper>
-      <form className='items-center flex flex-col w-full max-w-[400px] gap-4 px-4 py-6 shadow-2xl rounded-xl bg-modalBg font-body'>
+      <form className='items-center flex flex-col w-full max-w-[400px] gap-4 px-4 py-6 shadow-2xl rounded-xl font-body'>
         <p className='text-3xl font-bold font-heading'>Register</p>
         <Input
           onChange={(e) => {
@@ -79,8 +79,8 @@ const Register = () => {
         {errors.password && <p className='text-left text-error w-full'>{errors.password}</p>}
         <div>
           <button
-            className={`flex rounded-full py-1 px-2 border-2 border-black items-center gap-1 ${
-              isPasswordShown ? 'bg-black text-white' : 'bg-white text-black'
+            className={`flex rounded-md py-1 px-2 text-text shadow-2xl items-center gap-1 ${
+              isPasswordShown ? 'bg-white' : 'bg-main'
             }`}
             onClick={(e) => {
               setIsPasswordShown(!isPasswordShown);

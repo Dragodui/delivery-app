@@ -28,14 +28,14 @@ const Restaurants = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className='w-full flex border-2 border-text text-textWhite gap-3 flex-col bg-secondary flex-wrap p-[30px] rounded-[30px] font-body'>
+        <div className='w-full flex text-text gap-3 flex-col flex-wrap py-[30px] font-body'>
           <h1 className='text-4xl font-bold font-heading'>All restaurants</h1>
           <div className='flex font-body flex-wrap gap-3 mt-[30px]'>
             {restaurants.map((res) => (
               <Link
                 key={res._id}
                 to={`/restaurants/${res._id}`}
-                className='shadow-2xl text-center rounded-2xl border-2 border-text px-3 py-3'
+                className='shadow-2xl text-center rounded-lg  px-3 py-3'
               >
                 <img
                   src={res.image}

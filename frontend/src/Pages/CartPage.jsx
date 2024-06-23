@@ -91,7 +91,7 @@ const CartPage = () => {
         {isLoading ? (
           <Loader />
         ) : (
-          <div className='w-full flex border-2 border-text gap-3 bg-secondary flex-wrap flex-col text-textWhite p-[30px] rounded-[30px] font-body'>
+          <div className='w-full flex gap-3 flex-wrap flex-col text-text py-[30px] rounded-[30px] font-body'>
             <h1 className='text-4xl font-bold mb-[10px] font-heading'>Cart</h1>
             <div className='flex flex-col gap-3'>
               <ListOfItems
