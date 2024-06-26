@@ -122,7 +122,7 @@ const Item = ({
           ) : (
             ''
           )}
-          <p className='mb-2'>quantity: {item.quantity}</p>
+          <p className='mb-2'>quantit: {item.quantity}</p>
           <Button onClick={changeCart}>
             {isInCart ? 'Remove from cart' : 'Add to cart'}
           </Button>

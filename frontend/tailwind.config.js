@@ -2,6 +2,8 @@
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.html",
+    "./src/**/*.vue",
   ],
   theme: {
     colors: {
@@ -14,7 +16,8 @@ module.exports = {
       'modalBg': '#ddcbff',
       'error': '#f44336',
       'main': '#30ff68',
-      'mainLight': '#8cffab'
+      'mainLight': '#8cffab',
+      'main2' : '#f0f0f0'
      },
      fontSize: {
       sm: '0.750rem',

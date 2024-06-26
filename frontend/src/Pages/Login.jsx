@@ -75,10 +75,10 @@ const Login = () => {
         )}
         <div>
           <button
-            className={`flex rounded-md py-1 px-2 shadow-2xl items-center gap-1 ${
+            className={`flex rounded-md bg-main py-1 px-2 shadow-2xl items-center gap-1 ${
               isPasswordShown
-                ? 'bg-black text-white '
-                : 'bg-main text-text'
+                // ? 'bg-black text-white '
+                // : 'bg-main text-text '
             }`}
             onClick={() => setIsPasswordShown(!isPasswordShown)}
           >
