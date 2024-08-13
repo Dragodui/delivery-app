@@ -54,4 +54,22 @@ router.get('/orders/order/:orderId', async (req, res) => {
   }
 });
 
+router.post('/orders/finishOrder/:orderId', async (req, res) => {
+  try {
+    const {orderId} = req.params;
+    if (!orderId) {
+      return res.status(400).json({ message: 'orderId required' });
+    }
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+    order.status = 'Delivered';
+    await order.save();
+    res.status(200).json({ message: 'Order has been delivered successfully' });
+  } catch(error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+});
+
 module.exports = router;

@@ -15,7 +15,6 @@ const AddResModal = ({ isVisible, setIsVisible }) => {
     image: '',
     ownerId: user.id,
   });
-  console.log(resInfo);
 
   const registerRes = async () => {
     try {

@@ -82,11 +82,11 @@ router.post('/login', [
   }
 });
 //log out
-router.post('/logout', verifyTokenForLogin, (req, res) => {
+router.post('/logout', verifyToken, (req, res) => {
   res.status(200).json({ message: 'Logout successful' });
 });
 //проверка авторизации
-router.get('/checkAuth', verifyTokenForLogin, (req, res) => {
+router.get('/checkAuth', verifyToken, (req, res) => {
   console.log('auth check');
   res.status(200).json({ authenticated: true });
 });

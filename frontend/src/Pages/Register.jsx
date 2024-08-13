@@ -109,6 +109,19 @@ const Register = () => {
             </div>
             <div className='flex items-center justify-center gap-1'>
               <Input
+                  onChange={(e) => setRole(e.target.value)}
+                  value='deliveryman'
+                  name='uniqueGroup'
+                  id='deliveryman'
+                  type='radio'
+                  className='w-[20px]'
+              />
+              <label className='text-lg top-[-2px] relative' htmlFor='deliveryman'>
+                deliveryman
+              </label>
+            </div>
+            <div className='flex items-center justify-center gap-1'>
+              <Input
                 onChange={(e) => setRole(e.target.value)}
                 value='owner'
                 name='uniqueGroup'

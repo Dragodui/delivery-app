@@ -10,7 +10,6 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
   const [rows, setRows] = useState([
     { id: Date.now(), name: '', description: '', price: null, image: '' },
   ]);
-  console.log(rows);
 
   const addRow = () => {
     setRows([
@@ -34,8 +33,6 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
         image: row.image,
         restaurantId: res._id,
       }));
-
-      console.log(menuItems);
 
       const response = await axios.post(`${baseUrl}/restaurantsMenu`, {
         resId: res._id,
@@ -62,7 +59,9 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className='table-container table-class w-full font-body'>
-          <h1 className='text-3xl font-bold font-heading mb-[30px]'>Add new products</h1>
+          <h1 className='text-3xl font-bold font-heading mb-[30px]'>
+            Add new products
+          </h1>
           <table className='w-full table'>
             <thead>
               <tr className='font-heading'>

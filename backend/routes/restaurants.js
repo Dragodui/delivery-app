@@ -113,8 +113,6 @@ router.get('/restaurant/:resId', async (req, res) => {
     if (!rest) {
       return res.status(404).json({ error: 'Restaurant not found' });
     }
-
-    console.log(`Found restaurant: ${JSON.stringify(rest)}`);
     res.json(rest);
   } catch (error) {
     console.error('Error fetching restaurant:', error);
@@ -135,7 +133,7 @@ router.get('/restaurants', async (req, res) => {
 router.get('/restaurants/:ownerId', async (req, res) => {
   try {
     const { ownerId } = req.params;
-    const restaurants = await Restaurant.find({ ownerId: ownerId });
+    const restaurants = await Restaurant.find({ ownerId });
     if (restaurants.length === 0) {
       return res.status(404).json({ message: 'No restaurants found' });
     }

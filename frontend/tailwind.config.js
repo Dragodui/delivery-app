@@ -27,7 +27,7 @@ module.exports = {
     },
     fontFamily: {
       heading: 'Poppins',
-      body: 'Tilt Warp',
+      body: 'Poppins',
     },
     fontWeight: {
       normal: '400',

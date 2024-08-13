@@ -9,6 +9,7 @@ import DeleteProductModal from './Modals/DeleteProductModal';
 import { addItemToCart, removeItemFromCart } from '../store/features/cartSlice';
 import { baseUrl } from '../config';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Item = ({
   item,
@@ -69,7 +70,7 @@ const Item = ({
   };
 
   return (
-    <div className='mt-4 rounded-lg flex flex-col justify-center items-center min-h-[230px] shadow-2xl  text-text px-3 py-2'>
+    <Link onClick={e => e.preventDefault()} to={`/products/${item._id}`} className='mt-4 rounded-lg flex flex-col justify-center items-center min-h-[230px] shadow-2xl  text-text px-3 py-2'>
       {isEditable ? (
         <div className='flex items-center w-full mb-3 justify-between'>
           <Button
@@ -122,7 +123,7 @@ const Item = ({
           ) : (
             ''
           )}
-          <p className='mb-2'>quantity: {item.quantity}</p>
+          <p className='mb-2'>quantity: {quantity}</p>
           <Button onClick={changeCart}>
             {isInCart ? 'Remove from cart' : 'Add to cart'}
           </Button>
@@ -150,7 +151,7 @@ const Item = ({
       ) : (
         ''
       )}
-    </div>
+    </Link>
   );
 };
 

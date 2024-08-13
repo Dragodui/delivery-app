@@ -4,8 +4,14 @@ import Button from '../UI/Button';
 import axios from 'axios';
 import { baseUrl } from '../../config';
 
-const DeleteProductModal = ({ productId, isVisible, setIsVisible, isEdit, setIsEdit }) => {
- const [productName, setProductName] = useState('')
+const DeleteProductModal = ({
+  productId,
+  isVisible,
+  setIsVisible,
+  isEdit,
+  setIsEdit,
+}) => {
+  const [productName, setProductName] = useState('');
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -20,11 +26,10 @@ const DeleteProductModal = ({ productId, isVisible, setIsVisible, isEdit, setIsE
     fetchProduct();
   }, []);
 
-
   const deleteProduct = async () => {
     try {
       const response = await axios.delete(
-        `${baseUrl}/products/delete/${productId}`
+        `${baseUrl}/products/delete/${productId}`,
       );
       setIsEdit(!isEdit);
       setIsVisible(false);
@@ -42,8 +47,12 @@ const DeleteProductModal = ({ productId, isVisible, setIsVisible, isEdit, setIsE
         className='bg-textWhite px-10 border-2 border-text flex flex-col w-full gap-4 max-w-[800px] py-8 rounded-2xl'
         onClick={(e) => e.stopPropagation()}
       >
-        <p className='text-center font-bold text-2xl font-medium font-heading'>You sure you wanna delete {productName}?</p>
-        <Button addStyles={'bg-red-500'} onClick={deleteProduct}>Delete</Button>
+        <p className='text-center font-bold text-2xl font-medium font-heading'>
+          You sure you wanna delete {productName}?
+        </p>
+        <Button addStyles={'bg-red-500'} onClick={deleteProduct}>
+          Delete
+        </Button>
       </form>
     </div>
   );

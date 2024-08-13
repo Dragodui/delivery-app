@@ -10,6 +10,7 @@ import {
   Navigate,
 } from 'react-router-dom';
 import Login from './Pages/Login';
+import Product from './Pages/Product';
 import Register from './Pages/Register';
 import Profile from './Pages/Profile';
 import { useEffect, useState } from 'react';
@@ -64,6 +65,7 @@ const App = () => {
               createdAt: user.createdAt,
             };
           }
+          console.log(parsedUser);
           dispatch(setUser(parsedUser));
         } catch (error) {
           console.log(`Error fetching current user: ${error}`);
@@ -76,6 +78,7 @@ const App = () => {
           headers: { authorization: token },
         });
         const isLoggedInFromResponse = response.data.authenticated;
+        console.log(`Is logged: ${isLoggedInFromResponse}`)
         dispatch(setIsLoggedIn(isLoggedInFromResponse));
         setIsLoggedInState(isLoggedInFromResponse);
       } catch (error) {
@@ -103,8 +106,8 @@ const App = () => {
       }
     };
 
-    fetchCurrentUser();
     fetchIsLoggedIn();
+    fetchCurrentUser();
     fetchCart();
     fetchOrders();
     setIsLoading(false);
@@ -113,6 +116,7 @@ const App = () => {
   return (
     <Router>
       <Header />
+      <Cart/>
       <Routes>
         <Route path='/' element={<Navigate to='/login' />} />
         <Route
@@ -148,6 +152,10 @@ const App = () => {
         <Route
           path='/orders/:orderId'
           element={isLoggedInState ? <Order /> : <Navigate to='/login' />}
+        />
+         <Route
+          path='/products/:productId'
+          element={isLoggedInState ? <Product /> : <Navigate to='/login' />}
         />
         <Route
           path='/cart'

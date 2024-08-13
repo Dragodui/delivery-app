@@ -28,7 +28,7 @@ const OrderNotificationModal = ({ isVisible, setIsVisible }) => {
         </div>
       </IconContext.Provider>
       <p className='font-medium text-xl'>
-        Your order has been successfully placed
+        Your order has been successfully updated
       </p>
     </div>
   );

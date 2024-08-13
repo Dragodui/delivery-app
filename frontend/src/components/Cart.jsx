@@ -56,11 +56,14 @@ const Cart = () => {
   }, [dispatchCart]);
 
   useEffect(() => {
-    let sum = 0;
-    for (const item of cart) {
-      sum += item.price;
-    }
-    setCartSum(sum);
+    const calculateCartSum = () => {
+      let sum = 0;
+      for (const item of cart) {
+        sum += item.price * item.quantity;
+      }
+      setCartSum(sum);
+    };
+    calculateCartSum();
   }, [cart]);
 
   useEffect(() => {
@@ -79,13 +82,23 @@ const Cart = () => {
     fetchCart();
   }, []);
 
+  const handleQuantityChange = (item, newQuantity) => {
+    setCart((prevCart) =>
+      prevCart.map((cartItem) =>
+        cartItem._id === item._id
+          ? { ...cartItem, quantity: newQuantity }
+          : cartItem,
+      ),
+    );
+  };
+
   return (
     <div
-      className={`max-w-[280px] overflow-auto top-0 bottom-0 items-center flex flex-col shadow-2xl duration-300 ${
+      className={`max-w-[280px] w-full bg-textWhite overflow-auto top-0 bottom-0 items-center flex flex-col shadow-2xl duration-300 ${
         isCartOpened ? 'right-0' : 'right-[-100%]'
       } fixed z-10 bg-white`}
     >
-      <div className='fixed bg-white w-[250px] py-2 px-3 flex justify-between items-center'>
+      <div className='fixed bg-textWhite w-[250px] py-2 px-3 flex justify-between items-center'>
         <h1 className='font-bold text-3xl'>Cart</h1>
 
         <button
@@ -102,7 +115,7 @@ const Cart = () => {
           </IconContext.Provider>
         </button>
       </div>
-      <div className='px-3 py-[60px] flex items-center justify-center h-full pt-[230px] mb-[360px]'>
+      <div className='px-3 py-[60px] font-medium flex items-center justify-center h-full pt-[230px] mb-[100px]'>
         {isLoading ? (
           <Loader />
         ) : (
@@ -110,10 +123,12 @@ const Cart = () => {
             addStyles={'flex-col'}
             list={dispatchCart}
             isAddableToCard={true}
+            handleQuantityChange={handleQuantityChange}
+            isInCartPage={true}
           />
         )}
       </div>
-      <div className='fixed bottom-[10px] w-[220px] flex flex-col gap-2 bg-white py-[10px] px-[10px] rounded-lg'>
+      <div className='fixed bottom-[10px] w-[220px] flex flex-col gap-2 bg-textWhite py-[10px] px-[10px] rounded-lg'>
         {cart.length ? (
           <>
             <p className='text-xl font-medium'>Total: {totalCartSum}$</p>

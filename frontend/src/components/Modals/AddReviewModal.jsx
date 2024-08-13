@@ -42,7 +42,9 @@ const AddReviewModal = ({ resId, isVisible, setIsVisible }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className='table-container table-class w-full'>
-          <h1 className='text-3xl font-bold font-heading mb-[30px]'>Add new review</h1>
+          <h1 className='text-3xl font-bold font-heading mb-[30px]'>
+            Add new review
+          </h1>
           <table className='w-full table'>
             <thead>
               <tr className='font-heading'>

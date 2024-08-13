@@ -11,6 +11,7 @@ const cartRoute = require('./routes/cart.js');
 const ordersRoute = require('./routes/orders.js');
 const productRoute = require('./routes/products.js');
 const userRoute = require('./routes/user.js');
+const deliveryRoute = require('./routes/delivery.js');
 
 const cors = require('cors');
 
@@ -31,12 +32,13 @@ app.use(
   }),
 );
 //api маршруты
-app.use(cors());//
-app.use(authRoutes);// 
+app.use(cors());
+app.use(authRoutes);
 app.use(resRoute);
 app.use(ordersRoute);
 app.use(cartRoute);
 app.use(productRoute);
 app.use(userRoute);
+app.use(deliveryRoute);
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));
