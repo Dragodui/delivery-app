@@ -93,7 +93,7 @@ const Restaurant = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className='mt-[50px] shadow-2xl rounded-xl py-4 px-3 font-body'>
+        <div className='mt-[50px] shadow-2xl rounded-xl py-4 px-3 font-body w-full'>
           <div>
             <div className='flex items-center gap-4 justify-between'>
               <div className='flex items-center gap-2'>
