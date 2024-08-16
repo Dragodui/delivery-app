@@ -29,7 +29,7 @@ module.exports = {
       '5xl': '4.210rem',
     },
     fontFamily: {
-      heading: 'Poppins',
+      heading: 'Lato',
       body: 'Poppins',
     },
     fontWeight: {

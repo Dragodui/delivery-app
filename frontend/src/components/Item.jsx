@@ -93,7 +93,6 @@ const Item = ({
       />
       <div className='flex w-full mt-2 justify-between'>
         <p>{item.name}</p>
-        <p>{item.price}$</p>
       </div>
 
       {isAddableToCard && (
@@ -112,6 +111,7 @@ const Item = ({
                   <p className='font-bold text-text'>-</p>
                 </button>
                 <p>{quantity}</p>
+                
                 <button
                   onClick={() => handleQuantityChangeLocal(quantity + 1)}
                   className='flex items-center justify-center p-3 rounded-full w-[10px] h-[10px] bg-main'
@@ -123,7 +123,11 @@ const Item = ({
           ) : (
             ''
           )}
-          <p className='mb-2'>quantit: {item.quantity}</p>
+         <div className='flex justify-between w-full mt-2'>
+         <p className='mb-2'>quantity: {item.quantity}</p>
+          
+          <p>{item.price}$</p>
+         </div>
           <Button onClick={changeCart}>
             {isInCart ? 'Remove from cart' : 'Add to cart'}
           </Button>

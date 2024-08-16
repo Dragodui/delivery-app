@@ -88,7 +88,7 @@ const Header = () => {
                   </div>
                 </button>
                 <Button
-                  addStyles={'text-xl w-[30px] h-[30px] px-0 py-0'}
+                  addStyles={'text-xl flex items-center gap-1 px-0 py-0'}
                   onClick={logOut}
                 >
                   <p className='items-center gap-1 sm:flex hidden'>Log out </p>
