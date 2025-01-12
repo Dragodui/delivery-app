@@ -1,7 +1,7 @@
 const { Router } = require('express');
-const Restaurant = require('../database/schemas/Restaurant');
-const User = require('../database/schemas/User');
-const Review = require('../database/schemas/Review');
+const Restaurant = require('../database/mySQL/schemas/Restaurant');
+const User = require('../database/mySQL/schemas/User');
+const Review = require('../database/mySQL/schemas/Review');
 
 const router = Router();
 
@@ -12,7 +12,7 @@ router.get('/user/getUser/:userId', async (req, res) => {
     if (!userId) {
         return res.status(400).json({ message: 'userId required' });
     };
-    const user = await User.findById(userId);
+    const user = await User.findByPk(userId);
     if (!user) {
         return res.status(404).json({ message: 'User not found' });
     }
@@ -32,26 +32,19 @@ router.post('/user/newReview/:resId', async (req, res) => {
       return res.status(400).json({ message: 'Restaurant ID is required' });
     }
 
-    const restaurant = await Restaurant.findById(resId);
+    const restaurant = await Restaurant.findByPk(resId);
     if (!restaurant) {
       return res.status(400).json({ message: 'Restaurant not found' });
     }
 
-    const user = await User.findById(userId);
+    const user = await User.findByPk(userId);
     if (!user) {
       return res.status(400).json({ message: 'User not found' });
     }
     
     const resIdAndUserId = `${resId}${userId}`;
 
-    const newReview = new Review({ rate, opinion, resId, userId, resIdAndUserId });
-    await newReview.save();
-
-    restaurant.reviews.push(newReview);
-    await restaurant.save();
-
-    user.reviews.push(newReview);
-    await user.save();
+    await Review.create({ rate, opinion, resId, userId, resIdAndUserId });
 
     res.status(200).json({message: 'Review successfully created'});
   } catch (error) {

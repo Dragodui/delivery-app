@@ -85,7 +85,7 @@ const Cart = () => {
   const handleQuantityChange = (item, newQuantity) => {
     setCart((prevCart) =>
       prevCart.map((cartItem) =>
-        cartItem._id === item._id
+        cartItem.id === item.id
           ? { ...cartItem, quantity: newQuantity }
           : cartItem,
       ),

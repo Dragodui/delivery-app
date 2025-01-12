@@ -18,6 +18,7 @@ const AddResModal = ({ isVisible, setIsVisible }) => {
 
   const registerRes = async () => {
     try {
+      console.log(resInfo)
       const response = await axios.post(`${baseUrl}/restaurants`, resInfo);
       setIsVisible(false);
     } catch (error) {

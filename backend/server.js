@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const session = require('express-session');
-require('./database/index.js');
+require('./database/mySQL/index.js');
 const authRoutes = require('./routes/auth.js');
 const MongoStore = require('connect-mongo');
 const jwt = require('jsonwebtoken');
@@ -13,13 +13,15 @@ const productRoute = require('./routes/products.js');
 const userRoute = require('./routes/user.js');
 const deliveryRoute = require('./routes/delivery.js');
 
+require('dotenv').config();
+
 const cors = require('cors');
 
 const app = express();// pril
 const PORT = process.env.PORT || 5000;
 app.use(express.json());
 const mongoStore = MongoStore.create({
-  mongoUrl: 'mongodb://localhost:27017/todos-test-app',
+  mongoUrl: 'mongodb://127.0.0.1:27017/todos-test-app',
 });
 
 app.use(

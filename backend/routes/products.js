@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const Product = require('../database/schemas/Product');
+const Product = require('../database/mySQL/schemas/Product');
 
 const router = Router();
 
@@ -10,7 +10,7 @@ router.get('/products/:productId', async (req, res) => {
     if (!productId) {
       res.status(404).json({ message: 'Product id is required.' });
     }
-    const product = await Product.findById(productId);
+    const product = await Product.findByPk(productId);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
@@ -24,7 +24,6 @@ router.post('/products/edit/:productId', async (req, res) => {
   try {
     const { productId } = req.params;
     const updateData = req.body;
-    console.log(updateData);
 
     if (!productId) {
       return res.status(404).json({ message: 'Product id is required.' });
@@ -34,11 +33,10 @@ router.post('/products/edit/:productId', async (req, res) => {
       return res.status(400).json({ message: 'No update data provided.' });
     }
 
-    const updatedProduct = await Product.findByIdAndUpdate(
+    const updatedProduct = await Product.findByPkAndUpdate(
       productId,
-      updateData,
-      { new: true, runValidators: true },
     );
+    await updatedProduct.update(updateData);
 
     if (!updatedProduct) {
       return res.status(404).json({ message: 'Product not found' });
@@ -58,7 +56,8 @@ router.delete('/products/delete/:productId', async (req, res) => {
       return res.status(404).json({ message: 'Product id is required.' });
     }
 
-    const deletedProduct = await Product.findByIdAndDelete(productId);
+    const deletedProduct = await Product.findByPk(productId);
+    await deletedProduct.destroy();
     if (!deletedProduct) {
       return res.status(404).json({ message: 'Product not found' });
     }

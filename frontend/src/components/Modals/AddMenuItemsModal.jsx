@@ -31,11 +31,11 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
         description: row.description,
         price: row.price,
         image: row.image,
-        restaurantId: res._id,
+        restaurantId: res.id,
       }));
 
       const response = await axios.post(`${baseUrl}/restaurantsMenu`, {
-        resId: res._id,
+        resId: res.id,
         menuItems,
       });
       console.log('Menu items added successfully:', response.data);

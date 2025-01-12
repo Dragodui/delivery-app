@@ -31,7 +31,7 @@ const Reviews = ({ setIsVisible, resId }) => {
       const users = await Promise.all(userPromises);
 
       const usersMap = users.reduce((acc, user) => {
-        acc[user.data._id] = user.data;
+        acc[user.data.id] = user.data;
         return acc;
       }, {});
 
@@ -58,7 +58,7 @@ const Reviews = ({ setIsVisible, resId }) => {
           </div>
           {reviews.length ? (
             reviews.map((review) => (
-              <div key={review._id} className='shadow-2xl rounded-lg py-3 px-3'>
+              <div key={review.id} className='shadow-2xl rounded-lg py-3 px-3'>
                 <div className='flex gap-3 items-center mb-3'>
                   <div className='flex items-center gap-1'>
                     <IconContext.Provider
