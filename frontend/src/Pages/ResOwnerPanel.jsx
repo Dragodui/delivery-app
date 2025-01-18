@@ -106,6 +106,7 @@ const ResOwnerPanel = () => {
       )}
       {isAddItemModalVisible ? (
         <AddMenuItemsModal
+        onClick={e => e.stopPropagation()}
           res={res}
           isVisible={isAddItemModalVisible}
           setIsVisible={setIsAddItemModalVisible}

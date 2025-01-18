@@ -74,7 +74,7 @@ const Profile = () => {
     try {
       const response = await axios.post(`${baseUrl}/delivery/takeOrder`, {
         userId: user.id,
-        orderId: order._id,
+        orderId: order.id,
       });
       console.log(response.data.message);
     } catch (error) {
@@ -157,8 +157,8 @@ const Profile = () => {
                   orders.map((order, index) => (
                     <Link
                       className='bg-mainLight px-4 rounded-2xl py-3 flex justify-between'
-                      to={`/orders/${order._id}`}
-                      key={order._id}
+                      to={`/orders/${order.id}`}
+                      key={order.id}
                     >
                       <div>
                         {index + 1}. Order from {order.restaurantName} on{' '}
@@ -173,7 +173,7 @@ const Profile = () => {
                       )}
                       {user.role === 'user' &&
                       order.status === 'Delivered for deliveryman' ? (
-                        <Button onClick={(e) => finishOrder(order._id, e)}>
+                        <Button onClick={(e) => finishOrder(order.id, e)}>
                           Accept delivery
                         </Button>
                       ) : (
@@ -188,9 +188,9 @@ const Profile = () => {
               <ProfileBlockWrapper title={'Your restaurants'}>
                 <div className='flex justify-start flex-wrap mt-[20px] gap-5 items-center'>
                   {reses.map((res) => (
-                    <div key={res._id} className='p-5 bg-textWhite rounded-lg'>
+                    <div key={res.id} className='p-5 bg-textWhite rounded-lg'>
                       <Link
-                        to={`/my_restaurant/${res._id}`}
+                        to={`/my_restaurant/${res.id}`}
                         className='flex flex-col items-center'
                       >
                         <h2 className='font-medium text-2xl mb-3'>
@@ -241,7 +241,7 @@ const Profile = () => {
                         ))}
                       </div>
                       <Button
-                        onClick={(e) => finishOrder(deliverymanOrder._id, e)}
+                        onClick={(e) => finishOrder(deliverymanOrder.id, e)}
                         addStyles={'bg-mainLight text-xl mt-3'}
                       >
                         Mark as delivered
@@ -256,8 +256,8 @@ const Profile = () => {
                  {deliverymanCompletedOrders.map((order, index) => (
                     <Link
                       className='bg-mainLight px-4 rounded-2xl py-3 flex justify-between'
-                      to={`/orders/${order._id}`}
-                      key={order._id}
+                      to={`/orders/${order.id}`}
+                      key={order.id}
                     >
                       {' '}
                       <div>

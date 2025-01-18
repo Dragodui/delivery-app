@@ -33,8 +33,8 @@ const Restaurants = () => {
           <div className='flex font-body flex-wrap gap-3 mt-[30px]'>
             {restaurants.map((res) => (
               <Link
-                key={res._id}
-                to={`/restaurants/${res._id}`}
+                key={res.id}
+                to={`/restaurants/${res.id}`}
                 className='shadow-2xl text-center rounded-lg  px-3 py-3'
               >
                 <img

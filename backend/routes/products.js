@@ -1,16 +1,15 @@
 const { Router } = require('express');
-const Product = require('../database/schemas/Product');
+const {Product} = require('../database/my-sql/schemas/index');
 
 const router = Router();
 
 router.get('/products/:productId', async (req, res) => {
   try {
     const { productId } = req.params;
-
     if (!productId) {
       res.status(404).json({ message: 'Product id is required.' });
     }
-    const product = await Product.findById(productId);
+    const product = await Product.findOne({where: {id:productId}});
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
@@ -24,7 +23,6 @@ router.post('/products/edit/:productId', async (req, res) => {
   try {
     const { productId } = req.params;
     const updateData = req.body;
-    console.log(updateData);
 
     if (!productId) {
       return res.status(404).json({ message: 'Product id is required.' });
@@ -34,17 +32,17 @@ router.post('/products/edit/:productId', async (req, res) => {
       return res.status(400).json({ message: 'No update data provided.' });
     }
 
-    const updatedProduct = await Product.findByIdAndUpdate(
-      productId,
-      updateData,
-      { new: true, runValidators: true },
-    );
+    const updatedProduct = await Product.update(updateData, {
+      where: { id: productId },
+      returning: true,
+      plain: true,
+    });
 
     if (!updatedProduct) {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    res.status(200).json(updatedProduct);
+    res.status(200).json(updatedProduct[1]);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
   }
@@ -58,7 +56,7 @@ router.delete('/products/delete/:productId', async (req, res) => {
       return res.status(404).json({ message: 'Product id is required.' });
     }
 
-    const deletedProduct = await Product.findByIdAndDelete(productId);
+    const deletedProduct = await Product.destroy({ where: { id: productId } });
     if (!deletedProduct) {
       return res.status(404).json({ message: 'Product not found' });
     }

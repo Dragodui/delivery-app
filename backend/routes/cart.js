@@ -1,30 +1,36 @@
 const { Router } = require('express');
-const User = require('../database/schemas/User');
-const Product = require('../database/schemas/Product');
+const { User, Product } = require('../database/my-sql/schemas/index');
 
 const router = Router();
 
 router.post('/cart/addToCart', async (req, res) => {
   try {
     const { userId, productId } = req.body;
+    console.log(req.body);
     if (!userId || !productId) {
       return res
         .status(400)
         .json({ message: 'User ID and Product ID are required' });
     }
-    const user = await User.findById(userId);
+
+    const user = await User.findByPk(userId);
     if (!user) {
-      return res.status(400).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found' });
     }
-    const product = await Product.findById(productId);
+
+    const product = await Product.findByPk(productId);
     if (!product) {
-      return res.status(400).json({ message: 'Product not found' });
+      return res.status(404).json({ message: 'Product not found' });
     }
-    user.cart.push(product._id);
-    await user.save();
-    res
-      .status(200)
-      .json({ message: 'Product added to cart successfully', cart: user.cart });
+    console.log(user);
+    console.log(product);
+    await user.addProduct(product);
+
+    const updatedCart = await user.getProducts(); 
+    res.status(200).json({ 
+      message: 'Product added to cart successfully', 
+      cart: updatedCart 
+    });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
   }
@@ -34,12 +40,14 @@ router.get('/cart/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const user = await User.findById(userId).populate('cart');
+    console.log(req.params);
+    const user = await User.findByPk(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    res.status(200).json({ cart: user.cart });
+    const products = await user.getProducts();
+    console.log(products);
+    res.status(200).json({ cart: products });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
   }
@@ -50,21 +58,27 @@ router.post('/cart/removeFromCart', async (req, res) => {
     const { userId, productId } = req.body;
 
     if (!userId || !productId) {
-      res.json({ message: 'User ID and Product ID are required' });
+      return res
+        .status(400)
+        .json({ message: 'User ID and Product ID are required' });
     }
-    const user = await User.findById(userId);
+
+    const user = await User.findByPk(userId);
     if (!user) {
-      res.json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found' });
     }
-    const productIndex = user.cart.indexOf(productId);
-    if (productIndex === -1) {
-      res.status(400).json({ message: 'Product not found' });
+
+    const product = await Product.findByPk(productId);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
     }
-    user.cart.splice(productIndex, 1);
-    await user.save();
-    res.status(200).json({
-      message: 'Product removed from cart successfully',
-      cart: user.cart,
+
+    await user.removeProduct(product);
+
+    const updatedCart = await user.getProducts();
+    res.status(200).json({ 
+      message: 'Product removed from cart successfully', 
+      cart: updatedCart 
     });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
@@ -78,15 +92,15 @@ router.post('/cart/clearCart', async (req, res) => {
     if (!userId) {
       return res.status(400).json({ message: 'User ID is required' });
     }
-    const user = await User.findById(userId);
+
+    const user = await User.findByPk(userId);
     if (!user) {
-      return res.status(400).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found' });
     }
-    user.cart = [];
-    await user.save();
-    res
-      .status(200)
-      .json({ message: 'Cart cleared successfully', cart: user.cart });
+
+    await user.setProducts([]);
+
+    res.status(200).json({ message: 'Cart cleared successfully', cart: [] });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
   }

@@ -40,7 +40,10 @@ const DeleteProductModal = ({
 
   return (
     <div
-      onClick={() => setIsVisible(false)}
+      onClick={e => {
+        setIsVisible(false);
+        e.preventDefault();
+      }}
       className={`fixed flex items-center justify-center top-0 left-0 px-3 right-0 bottom-0 bg-[#0000004d]`}
     >
       <form

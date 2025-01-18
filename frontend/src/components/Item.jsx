@@ -32,7 +32,7 @@ const Item = ({
 
   useEffect(() => {
     if (cart) {
-      setIsInCart(cart.some((cartItem) => cartItem._id === item._id));
+      setIsInCart(cart.some((cartItem) => cartItem.id === item.id));
     }
     if (cart.includes(item)) {
       setIsInCart(true);
@@ -40,13 +40,13 @@ const Item = ({
   }, [cart, item, cartFromDB]);
 
   const changeCart = async () => {
-    const index = cart.findIndex((itemInCart) => itemInCart._id === item._id);
+    const index = cart.findIndex((itemInCart) => itemInCart.id === item.id);
     if (index === -1) {
       dispatch(addItemToCart(item));
       try {
         await axios.post(`${baseUrl}/cart/addToCart`, {
           userId: user.id,
-          productId: item._id,
+          productId: item.id,
         });
       } catch (error) {
         console.log(error);
@@ -56,7 +56,7 @@ const Item = ({
       try {
         await axios.post(`${baseUrl}/cart/removeFromCart`, {
           userId: user.id,
-          productId: item._id,
+          productId: item.id,
         });
       } catch (error) {
         console.log(error);
@@ -69,8 +69,8 @@ const Item = ({
     handleQuantityChange(item, newQuantity);
   };
 
-  return (
-    <Link onClick={e => e.preventDefault()} to={`/products/${item._id}`} className='mt-4 rounded-lg flex flex-col justify-center items-center min-h-[230px] shadow-2xl  text-text px-3 py-2'>
+  return (<>
+    <Link onClick={e => e.preventDefault()} to={`/products/${item.id}`} className='mt-4 rounded-lg flex flex-col justify-center items-center min-h-[230px] shadow-2xl  text-text px-3 py-2'>
       {isEditable ? (
         <div className='flex items-center w-full mb-3 justify-between'>
           <Button
@@ -133,29 +133,31 @@ const Item = ({
           </Button>
         </>
       )}
-      {isDeleteVisible ? (
-        <DeleteProductModal
-          productId={item._id}
-          isVisible={isDeleteVisible}
-          setIsVisible={setIsDeleteVisible}
-          setIsEdit={setIsEdit}
-          isEdit={isEdit}
-        />
-      ) : (
-        ''
-      )}
-      {isEditVisible ? (
-        <EditProductModal
-          productId={item._id}
-          isVisible={isEditVisible}
-          setIsVisible={setIsEditVisible}
-          setIsEdit={setIsEdit}
-          isEdit={isEdit}
-        />
-      ) : (
-        ''
-      )}
+     
     </Link>
+     {isDeleteVisible ? (
+      <DeleteProductModal
+        productId={item.id}
+        isVisible={isDeleteVisible}
+        setIsVisible={setIsDeleteVisible}
+        setIsEdit={setIsEdit}
+        isEdit={isEdit}
+      />
+    ) : (
+      ''
+    )}
+    {isEditVisible ? (
+      <EditProductModal
+        productId={item.id}
+        isVisible={isEditVisible}
+        setIsVisible={setIsEditVisible}
+        setIsEdit={setIsEdit}
+        isEdit={isEdit}
+      />
+    ) : (
+      ''
+    )}
+    </>
   );
 };
 

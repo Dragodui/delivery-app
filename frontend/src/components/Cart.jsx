@@ -69,8 +69,10 @@ const Cart = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
+        console.log(user)
         const response = await axios.get(`${baseUrl}/cart/${user.id}`);
         const fetchedCart = response.data.cart;
+        console.log(fetchedCart)
         setCart(fetchedCart);
         dispatch(fillCart(fetchedCart));
         setIsLoading(false);
@@ -80,12 +82,12 @@ const Cart = () => {
       }
     };
     fetchCart();
-  }, []);
+  }, [user, dispatch]);
 
   const handleQuantityChange = (item, newQuantity) => {
     setCart((prevCart) =>
       prevCart.map((cartItem) =>
-        cartItem._id === item._id
+        cartItem.id === item.id
           ? { ...cartItem, quantity: newQuantity }
           : cartItem,
       ),

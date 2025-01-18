@@ -1,12 +1,12 @@
 const { Router } = require('express');
-const Order = require('../database/schemas/Order');
+const { Order } = require('../database/my-sql/schemas/index'); 
 
 const router = Router();
 
 router.get('/delivery/availableOrders', async (req, res) => {
   try {
-    const ordersToDeliver = await Order.find({
-      status: 'waiting for deliveryman',
+    const ordersToDeliver = await Order.findAll({
+      where: { status: 'waiting for deliveryman' },
     });
     res.json({ orders: ordersToDeliver });
   } catch (error) {
@@ -18,13 +18,19 @@ router.get('/delivery/availableOrders', async (req, res) => {
 router.post('/delivery/takeOrder', async (req, res) => {
   try {
     const { userId, orderId } = req.body;
-    const orderToDeliver = await Order.findById(orderId);
+    const orderToDeliver = await Order.findByPk(orderId);
+
+    if (!orderToDeliver) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
     orderToDeliver.status = 'On the way';
     orderToDeliver.deliverymanId = userId;
-    orderToDeliver.save();
+
+    await orderToDeliver.save();
     res.status(200).json({ message: 'Order has been taken successfully' });
   } catch (error) {
-    console.log(`Error while taking order ${error}`);
+    console.log(`Error while taking order: ${error}`);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -35,30 +41,34 @@ router.get(
     try {
       const { deliverymanId } = req.params;
       const order = await Order.findOne({
-        deliverymanId,
-        status: 'On the way',
+        where: { deliverymanId, status: 'On the way' },
       });
+
       if (!order) {
         return res
           .status(404)
           .json({ message: 'No order found for this deliveryman' });
       }
+
       return res.status(200).json({ order });
     } catch (error) {
       return res.status(500).json({ error: 'Internal server error' });
     }
-  },
+  }
 );
 
 router.post('/delivery/finishOrder/:orderId', async (req, res) => {
   try {
     const { orderId } = req.params;
-    const order = await Order.findById(orderId);
+    const order = await Order.findByPk(orderId);
+
     if (!order) {
-      res.status(404).json({ message: 'Order not found' });
+      return res.status(404).json({ message: 'Order not found' });
     }
+
     order.status = 'Delivered for deliveryman';
-    order.save();
+    await order.save();
+
     res.status(200).json({ message: 'Order has been delivered successfully' });
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
@@ -67,16 +77,19 @@ router.post('/delivery/finishOrder/:orderId', async (req, res) => {
 
 router.get('/delivery/completedOrders/:deliverymanId', async (req, res) => {
   try {
-    const {deliverymanId} = req.params;
-    console.log(deliverymanId)
+    const { deliverymanId } = req.params;
+
     if (!deliverymanId) {
-      res.status(400).json({message: 'DeliverymanId must be provided'});
+      return res.status(400).json({ message: 'DeliverymanId must be provided' });
     }
-    const orders = await Order.find({deliverymanId});
-    res.status(200).json({orders});
-    
+
+    const orders = await Order.findAll({
+      where: { deliverymanId, status: 'Delivered for deliveryman' },
+    });
+
+    res.status(200).json({ orders });
   } catch (error) {
-    res.status(500).json({error: 'Internal server error'});
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 

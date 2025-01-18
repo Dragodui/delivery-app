@@ -7,6 +7,7 @@ import axios from 'axios';
 
 const AddResModal = ({ isVisible, setIsVisible }) => {
   const user = useAppSelector((state) => state.user.user);
+  console.log(user)
 
   const [resInfo, setResInfo] = useState({
     name: '',

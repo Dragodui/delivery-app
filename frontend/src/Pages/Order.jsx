@@ -18,11 +18,13 @@ const Order = () => {
     const fetchOrder = async () => {
       try {
         const response = await axios.get(`${baseUrl}/orders/order/${orderId}`);
+        console.log(response.data);
         const order = response.data.order;
+        const products = response.data.products;  
         let sum = 0;
         setOrder(order);
-        setProducts(order.products);
-        for (const product of order.products) {
+        setProducts(products);
+        for (const product of products) {
           const cost = product.price * product.quantity;
           sum += cost;
         }

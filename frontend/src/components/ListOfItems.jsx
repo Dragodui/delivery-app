@@ -22,7 +22,7 @@ const ListOfItems = ({
               setIsEdit={setIsEdit}
               item={item}
               isEdit={isEdit}
-              key={item._id}
+              key={item.id}
               handleQuantityChange={handleQuantityChange}
               isInCartPage={isInCartPage}
             />

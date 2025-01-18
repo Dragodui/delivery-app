@@ -50,7 +50,7 @@ const App = () => {
               role: user.role,
               cart: user.cart,
               orders: user.orders,
-              id: user._id,
+              id: user.id,
               createdAt: user.createdAt,
               restaurants: user.restaurants,
             };
@@ -61,12 +61,12 @@ const App = () => {
               role: user.role,
               cart: user.cart,
               orders: user.orders,
-              id: user._id,
+              id: user.id,
               createdAt: user.createdAt,
             };
           }
-          console.log(parsedUser);
           dispatch(setUser(parsedUser));
+          console.log(parsedUser);
         } catch (error) {
           console.log(`Error fetching current user: ${error}`);
         }
