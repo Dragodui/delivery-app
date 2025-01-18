@@ -13,6 +13,8 @@ const userRoute = require('./routes/user.js');
 const deliveryRoute = require('./routes/delivery.js');
 require('./database/my-sql/index.js');
 
+require('dotenv').config();
+
 const cors = require('cors');
 
 const app = express();// pril

@@ -34,7 +34,11 @@ const App = () => {
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
+      console.log(
+        "fetchCurrentUser"
+      )
       const token = localStorage.getItem('token');
+      console.log(token);
       setIsLoading(true);
       if (token) {
         try {
@@ -42,6 +46,7 @@ const App = () => {
             headers: { authorization: token },
           });
           const user = response.data;
+          console.log(user);
           let parsedUser = {};
           if (user.role === 'owner') {
             parsedUser = {

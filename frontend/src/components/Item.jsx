@@ -33,6 +33,7 @@ const Item = ({
   useEffect(() => {
     if (cart) {
       setIsInCart(cart.some((cartItem) => cartItem.id === item.id));
+      setIsInCart(cart.some((cartItem) => cartItem.id === item.id));
     }
     if (cart.includes(item)) {
       setIsInCart(true);

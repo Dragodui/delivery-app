@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { User, Order, Restaurant } = require('../database/my-sql/schemas/index');
 
+
 const router = Router();
 
 router.post('/orders/makeOrder', async (req, res) => {
@@ -50,8 +51,10 @@ router.get('/orders/order/:orderId', async (req, res) => {
       return res.status(400).json({ message: 'orderId required' });
     }
     const order = await Order.findByPk(orderId);
+
     const products = await order.getProducts();
     res.status(200).json({ order, products });
+
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
   }
@@ -67,8 +70,7 @@ router.post('/orders/finishOrder/:orderId', async (req, res) => {
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
-    order.status = 'Delivered';
-    await order.save();
+    await order.update({ status: 'Delivered' });
     res.status(200).json({ message: 'Order has been delivered successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });

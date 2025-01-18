@@ -7,6 +7,7 @@ import { baseUrl } from '../../config';
 import { useAppSelector } from '../../store/store';
 
 const AddReviewModal = ({ resId, isVisible, setIsVisible }) => {
+  console.log(useAppSelector((state) => state.user.user))
   const userId = useAppSelector((state) => state.user.user).id;
   const [error, setError] = useState('');
   const [row, setRow] = useState({
