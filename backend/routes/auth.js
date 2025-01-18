@@ -5,11 +5,6 @@ const { User } = require('../database/my-sql/schemas/index');
 const { hashPassword, comparePassword } = require('../utils/helpers');
 const jwt = require('jsonwebtoken');
 const { secret } = require('../config');
-const User = require('../database/mySQL/schemas/User.js');
-const Order = require('../database/mySQL/schemas/Order.js');
-const Restaurant = require('../database/mySQL/schemas/Restaurant.js');
-const Cart = require('../database/mySQL/schemas/Cart.js');
-const CartItem = require('../database/mySQL/schemas/CartItem.js');
 
 const router = Router();
 
