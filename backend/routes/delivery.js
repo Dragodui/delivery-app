@@ -1,6 +1,5 @@
 const { Router } = require('express');
-const { Order } = require('../database/my-sql/schemas/index'); 
-
+const { Order } = require('../database/my-sql/schemas/index');
 
 const router = Router();
 
@@ -47,7 +46,6 @@ router.get(
         where: { deliverymanId, status: 'On the way' },
       });
 
-
       if (!order) {
         return res
           .status(404)
@@ -72,7 +70,6 @@ router.post('/delivery/finishOrder/:orderId', async (req, res) => {
     order.status = 'Delivered for deliveryman';
     await order.save();
 
-
     res.status(200).json({ message: 'Order has been delivered successfully' });
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
@@ -83,9 +80,10 @@ router.get('/delivery/completedOrders/:deliverymanId', async (req, res) => {
   try {
     const { deliverymanId } = req.params;
 
-
     if (!deliverymanId) {
-      return res.status(400).json({ message: 'DeliverymanId must be provided' });
+      return res
+        .status(400)
+        .json({ message: 'DeliverymanId must be provided' });
     }
 
     const orders = await Order.findAll({
@@ -93,7 +91,6 @@ router.get('/delivery/completedOrders/:deliverymanId', async (req, res) => {
     });
 
     res.status(200).json({ orders });
-
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
   }

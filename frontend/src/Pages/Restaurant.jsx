@@ -21,21 +21,20 @@ const Restaurant = () => {
     const fetchRestaurant = async () => {
       try {
         const response = await axios.get(`${baseUrl}/restaurant/${resId}`);
-              await log(response);
-        console.log(response.data);
+        await log(response);
         setRes(response.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
     const fetchResMenu = async () => {
       try {
         const response = await axios.get(`${baseUrl}/restaurantsMenu/${resId}`);
-              await log(response);
+        await log(response);
         setResMenu(response.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
@@ -52,21 +51,21 @@ const Restaurant = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className='mt-[50px] font-body w-full'>
+        <div className="mt-[50px] font-body w-full">
           <div>
-            <div className='flex items-center gap-4 justify-between'>
-              <div className='flex items-center gap-2'>
-                <p className='text-4xl font-bold font-heading'>{res.name}</p>
+            <div className="flex items-center gap-4 justify-between">
+              <div className="flex items-center gap-2">
+                <p className="text-4xl font-bold font-heading">{res.name}</p>
               </div>
-              <img className='max-w-[100px]' src={res.image} alt='' />
+              <img className="max-w-[100px]" src={res.image} alt="" />
             </div>
-            <div className='flex gap-3 items-center'>
+            <div className="flex gap-3 items-center">
               <FaLocationDot />
-              <p className='text-lg'>{res.address}</p>
+              <p className="text-lg">{res.address}</p>
             </div>
           </div>
-          <div className='mt-[30px]'>
-            <h1 className='text-3xl font-bold font-heading'>Menu</h1>
+          <div className="mt-[30px]">
+            <h1 className="text-3xl font-bold font-heading">Menu</h1>
             <ListOfItems isAddableToCard={true} list={resMenu} />
           </div>
           <Reviews setIsVisible={setIsVisible} resId={resId} />

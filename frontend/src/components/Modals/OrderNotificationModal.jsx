@@ -27,8 +27,8 @@ const OrderNotificationModal = ({ isVisible, setIsVisible }) => {
           <IoCheckmarkDoneSharp />
         </div>
       </IconContext.Provider>
-      <p className='font-medium text-xl'>
-        Your order has been successfully placed 
+      <p className="font-medium text-xl">
+        Your order has been successfully placed
       </p>
     </div>
   );

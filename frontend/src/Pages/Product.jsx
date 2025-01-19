@@ -8,7 +8,6 @@ import { log } from '../utils';
 
 const Product = () => {
   const { productId } = useParams();
-  console.log(productId);
   const [product, setProduct] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -19,7 +18,7 @@ const Product = () => {
         setProduct(response.data);
         setIsLoading(false);
       } catch (error) {
-        console.log(`Error while fetching product ${error}`);
+        console.error(`Error while fetching product ${error}`);
       }
     };
     fetchProduct();
@@ -30,11 +29,15 @@ const Product = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className='w-full'>
-            <h1 className='text-text text-4xl font-bold'>{product.name}</h1>
-            <img className='max-w-[400px] rounded-md' src={product.image} alt='' />
-            <p className='text-xl mt-[30px]'>{product.description}</p>
-            <p className='text-xl'>{product.price}$</p>
+        <div className="w-full">
+          <h1 className="text-text text-4xl font-bold">{product.name}</h1>
+          <img
+            className="max-w-[400px] rounded-md"
+            src={product.image}
+            alt=""
+          />
+          <p className="text-xl mt-[30px]">{product.description}</p>
+          <p className="text-xl">{product.price}$</p>
         </div>
       )}
     </Wrapper>

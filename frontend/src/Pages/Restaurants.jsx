@@ -14,11 +14,11 @@ const Restaurants = () => {
   const fetchRestaurants = async () => {
     try {
       const response = await axios.get(`${baseUrl}/restaurants`);
-            await log(response);
+      await log(response);
       setRestaurants(response.data);
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
   useEffect(() => {
@@ -30,21 +30,21 @@ const Restaurants = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className='w-full flex text-text gap-3 flex-col flex-wrap py-[30px] font-body'>
-          <h1 className='text-4xl font-bold font-heading'>All restaurants</h1>
-          <div className='flex font-body flex-wrap gap-3 mt-[30px]'>
+        <div className="w-full flex text-text gap-3 flex-col flex-wrap py-[30px] font-body">
+          <h1 className="text-4xl font-bold font-heading">All restaurants</h1>
+          <div className="flex font-body flex-wrap gap-3 mt-[30px]">
             {restaurants.map((res) => (
               <Link
                 key={res.id}
                 to={`/restaurants/${res.id}`}
-                className='shadow-2xl text-center rounded-lg  px-3 py-3'
+                className="shadow-2xl text-center rounded-lg  px-3 py-3"
               >
                 <img
                   src={res.image}
-                  alt=''
-                  className='max-w-[150px] rounded-xl'
+                  alt=""
+                  className="max-w-[150px] rounded-xl"
                 />
-                <h1 className='font-bold text-2xl'>{res.name}</h1>
+                <h1 className="font-bold text-2xl">{res.name}</h1>
               </Link>
             ))}
           </div>

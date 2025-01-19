@@ -22,7 +22,7 @@ const Cart = () => {
   const dispatchCart = useAppSelector((state) => state.cart.cart);
   const user = useAppSelector((state) => state.user.user);
   const isCartOpened = useAppSelector(
-    (state) => state.isCartOpened.isCartOpened,
+    (state) => state.isCartOpened.isCartOpened
   );
   const dispatch = useAppDispatch();
 
@@ -32,7 +32,6 @@ const Cart = () => {
         items: cart,
         userId: user.id,
       });
-      console.log(response);
       setIsOrderNotificationModalVisible(true);
       await log(response);
       try {
@@ -40,17 +39,16 @@ const Cart = () => {
           `${baseUrl}/cart/clearCart`,
           {
             userId: user.id,
-          },
+          }
         );
-        console.log(clearCartResponse.data);
         setCart([]);
         dispatch(fillCart([]));
         await log(response);
       } catch (error) {
-        console.log(`Error while clearing the cart: ${error}`);
+        console.error(`Error while clearing the cart: ${error}`);
       }
     } catch (error) {
-      console.log(`Error while order: ${error}`);
+      console.error(`Error while order: ${error}`);
     }
   };
 
@@ -72,17 +70,15 @@ const Cart = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        console.log(user)
         const response = await axios.get(`${baseUrl}/cart/${user.id}`);
         const fetchedCart = response.data.cart;
-        console.log(fetchedCart)
         setCart(fetchedCart);
         dispatch(fillCart(fetchedCart));
         setIsLoading(false);
         await log(response);
       } catch (error) {
         setIsLoading(false);
-        console.log(error);
+        console.error(error);
       }
     };
     fetchCart();
@@ -93,8 +89,8 @@ const Cart = () => {
       prevCart.map((cartItem) =>
         cartItem.id === item.id
           ? { ...cartItem, quantity: newQuantity }
-          : cartItem,
-      ),
+          : cartItem
+      )
     );
   };
 
@@ -104,11 +100,11 @@ const Cart = () => {
         isCartOpened ? 'right-0' : 'right-[-100%]'
       } fixed z-10 bg-white`}
     >
-      <div className='fixed bg-textWhite w-[250px] py-2 px-3 flex justify-between items-center'>
-        <h1 className='font-bold text-3xl'>Cart</h1>
+      <div className="fixed bg-textWhite w-[250px] py-2 px-3 flex justify-between items-center">
+        <h1 className="font-bold text-3xl">Cart</h1>
 
         <button
-          className='mt-[3px]'
+          className="mt-[3px]"
           onClick={() => dispatch(changeCartState(false))}
         >
           {' '}
@@ -121,7 +117,7 @@ const Cart = () => {
           </IconContext.Provider>
         </button>
       </div>
-      <div className='px-3 py-[60px] font-medium flex items-center justify-center h-full pt-[230px] mb-[100px]'>
+      <div className="px-3 py-[60px] font-medium flex items-center justify-center h-full pt-[230px] mb-[100px]">
         {isLoading ? (
           <Loader />
         ) : (
@@ -134,10 +130,10 @@ const Cart = () => {
           />
         )}
       </div>
-      <div className='fixed bottom-[10px] w-[220px] flex flex-col gap-2 bg-textWhite py-[10px] px-[10px] rounded-lg'>
+      <div className="fixed bottom-[10px] w-[220px] flex flex-col gap-2 bg-textWhite py-[10px] px-[10px] rounded-lg">
         {cart.length ? (
           <>
-            <p className='text-xl font-medium'>Total: {totalCartSum}$</p>
+            <p className="text-xl font-medium">Total: {totalCartSum}$</p>
             <Button onClick={createOrder} addStyles={'w-full'}>
               Order
             </Button>

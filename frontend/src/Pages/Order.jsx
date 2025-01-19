@@ -21,7 +21,7 @@ const Order = () => {
         const response = await axios.get(`${baseUrl}/orders/order/${orderId}`);
         await log(response);
         const order = response.data.order;
-        const products = response.data.products;  
+        const products = response.data.products;
         let sum = 0;
         setOrder(order);
         setProducts(products);
@@ -32,7 +32,7 @@ const Order = () => {
         setTotalPrice(sum);
         setIsLoading(false);
       } catch (error) {
-        console.log(`Error while fetching order: ${error}`);
+        console.error(`Error while fetching order: ${error}`);
       }
     };
     fetchOrder();
@@ -43,14 +43,14 @@ const Order = () => {
         <Loader />
       ) : (
         <>
-          <div className='w-full flex gap-3 flex-wrap flex-col text-text py-[30px] font-body'>
-            <h1 className='text-3xl font-bold mb-[30px] font-heading'>
+          <div className="w-full flex gap-3 flex-wrap flex-col text-text py-[30px] font-body">
+            <h1 className="text-3xl font-bold mb-[30px] font-heading">
               {' '}
               Order from {order.restaurantName} on{' '}
               {format(order.date, 'dd.MM.yyyy HH:mm:ss')}
             </h1>
             <ListOfItems list={products} isAddableToCard={true} />
-            <p className='font-medium text-xl mt-[20px]'>
+            <p className="font-medium text-xl mt-[20px]">
               Total: {totalPrice}$
             </p>
           </div>

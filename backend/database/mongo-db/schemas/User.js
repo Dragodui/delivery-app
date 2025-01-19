@@ -44,20 +44,22 @@ const UserSchema = new mongoose.Schema({
       required: false,
     },
   ],
-  restaurants: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: Restaurant,
-    default: null,
-    required: false,
-  }],
+  restaurants: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: Restaurant,
+      default: null,
+      required: false,
+    },
+  ],
   reviews: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: Review,
       default: [],
       required: false,
-    }
-  ]
+    },
+  ],
 });
 
-module.exports = mongoose.model('users', UserSchema);//v db 
+module.exports = mongoose.model('users', UserSchema); //v db

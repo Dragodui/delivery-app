@@ -18,7 +18,7 @@ require('dotenv').config();
 
 const cors = require('cors');
 
-const app = express();// pril
+const app = express(); // pril
 const PORT = process.env.PORT || 5000;
 app.use(express.json());
 const mongoStore = MongoStore.create({
@@ -32,7 +32,7 @@ app.use(
     saveUninitialized: false,
     store: mongoStore,
     cookie: { secure: true },
-  }),
+  })
 );
 //api маршруты
 app.use(cors());
@@ -45,4 +45,6 @@ app.use(userRoute);
 app.use(deliveryRoute);
 app.use(logRoute);
 
-app.listen(PORT, async () => {console.log(`listening on port ${PORT}`);});
+app.listen(PORT, async () => {
+  console.log(`listening on port ${PORT}`);
+});

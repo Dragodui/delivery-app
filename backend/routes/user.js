@@ -1,5 +1,9 @@
 const { Router } = require('express');
-const {Restaurant, User, Review} = require('../database/my-sql/schemas/index');
+const {
+  Restaurant,
+  User,
+  Review,
+} = require('../database/my-sql/schemas/index');
 
 const router = Router();
 
@@ -43,15 +47,23 @@ router.post('/user/newReview/:resId', async (req, res) => {
 
     const resIdAndUserId = `${resId}${userId}`;
 
-    const newReview = await Review.create({ rate, opinion, resId, userId, resIdAndUserId });
-    
+    const newReview = await Review.create({
+      rate,
+      opinion,
+      resId,
+      userId,
+      resIdAndUserId,
+    });
+
     restaurant.addReview(newReview);
     user.addReview(newReview);
 
     res.status(200).json({ message: 'Review successfully created' });
   } catch (error) {
     if (error.name === 'SequelizeUniqueConstraintError') {
-      res.status(400).json({ message: 'You already have reviewed this restaurant' });
+      res
+        .status(400)
+        .json({ message: 'You already have reviewed this restaurant' });
     } else {
       res.status(500).json({ message: 'Server error', error });
     }

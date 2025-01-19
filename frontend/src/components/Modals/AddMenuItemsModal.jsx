@@ -21,7 +21,7 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
 
   const handleInputChange = (id, field, value) => {
     setRows(
-      rows.map((row) => (row.id === id ? { ...row, [field]: value } : row)),
+      rows.map((row) => (row.id === id ? { ...row, [field]: value } : row))
     );
   };
 
@@ -40,7 +40,6 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
         menuItems,
       });
       await log(response);
-      console.log('Menu items added successfully:', response.data);
       setIsVisible(false);
     } catch (error) {
       console.error('Error adding menu items:', error);
@@ -57,21 +56,21 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
       className={`fixed flex items-center justify-center top-0 left-0 px-3 right-0 bottom-0 bg-[#0000004d]`}
     >
       <form
-        className='bg-textWhite px-10 flex flex-col border-2 border-text w-full gap-4 max-w-[800px] py-8 rounded-xl'
+        className="bg-textWhite px-10 flex flex-col border-2 border-text w-full gap-4 max-w-[800px] py-8 rounded-xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className='table-container table-class w-full font-body'>
-          <h1 className='text-3xl font-bold font-heading mb-[30px]'>
+        <div className="table-container table-class w-full font-body">
+          <h1 className="text-3xl font-bold font-heading mb-[30px]">
             Add new products
           </h1>
-          <table className='w-full table'>
+          <table className="w-full table">
             <thead>
-              <tr className='font-heading'>
-                <th className='text-left'>Name</th>
-                <th className='text-left'>Description</th>
-                <th className='text-left'>Price</th>
-                <th className='text-left'>Image Link</th>
-                <th className='text-left'>Delete</th>
+              <tr className="font-heading">
+                <th className="text-left">Name</th>
+                <th className="text-left">Description</th>
+                <th className="text-left">Price</th>
+                <th className="text-left">Image Link</th>
+                <th className="text-left">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -79,8 +78,8 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
                 <tr key={row.id}>
                   <td>
                     <Input
-                      type='text'
-                      placeholder='Name'
+                      type="text"
+                      placeholder="Name"
                       value={row.name}
                       onChange={(e) =>
                         handleInputChange(row.id, 'name', e.target.value)
@@ -89,8 +88,8 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
                   </td>
                   <td>
                     <Input
-                      type='text'
-                      placeholder='Description'
+                      type="text"
+                      placeholder="Description"
                       value={row.description}
                       onChange={(e) =>
                         handleInputChange(row.id, 'description', e.target.value)
@@ -99,26 +98,25 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
                   </td>
                   <td>
                     <Input
-                      type='number'
-                      min='0'
-                      placeholder='Price'
+                      type="number"
+                      min="0"
+                      placeholder="Price"
                       value={row.price}
                       onChange={(e) =>
                         handleInputChange(
                           row.id,
                           'price',
-                          parseFloat(e.target.value),
+                          parseFloat(e.target.value)
                         )
                       }
                     />
                   </td>
                   <td>
                     <Input
-                      type='text'
-                      placeholder='Image link'
+                      type="text"
+                      placeholder="Image link"
                       value={row.image}
                       onChange={(e) => {
-                        console.log(e.target.value);
                         handleInputChange(row.id, 'image', e.target.value);
                       }}
                     />
@@ -136,7 +134,7 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
             </tbody>
           </table>
         </div>
-        <Button type='button' onClick={addRow}>
+        <Button type="button" onClick={addRow}>
           Add Row
         </Button>
         <Button onClick={addNewItems}>Save Changes</Button>

@@ -35,20 +35,14 @@ const App = () => {
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      console.log(
-        "fetchCurrentUser"
-      )
       const token = localStorage.getItem('token');
-      console.log(token);
       setIsLoading(true);
       if (token) {
         try {
           const response = await axios.get(`${baseUrl}/currentUser`, {
             headers: { authorization: token },
           });
-          console.log(response);
           const user = response.data;
-          console.log(user);
           let parsedUser = {};
           if (user.role === 'owner') {
             parsedUser = {
@@ -75,7 +69,7 @@ const App = () => {
           dispatch(setUser(parsedUser));
           await log(response);
         } catch (error) {
-          console.log(`Error fetching current user: ${error}`);
+          console.error(`Error fetching current user: ${error}`);
         }
       }
     };
@@ -85,12 +79,11 @@ const App = () => {
           headers: { authorization: token },
         });
         const isLoggedInFromResponse = response.data.authenticated;
-        console.log(`Is logged: ${isLoggedInFromResponse}`)
         dispatch(setIsLoggedIn(isLoggedInFromResponse));
         setIsLoggedInState(isLoggedInFromResponse);
         await log(response);
       } catch (error) {
-        console.log(`Error fetching login: ${error}`);
+        console.error(`Error fetching login: ${error}`);
       }
     };
     const fetchCart = async () => {
@@ -100,7 +93,7 @@ const App = () => {
         dispatch(fillCart(fetchedCart));
         await log(response);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
@@ -108,11 +101,10 @@ const App = () => {
       try {
         const response = await axios.get(`${baseUrl}/orders/${user.id}`);
         // setOrders(response.data.orders);
-        console.log(response.data);
         dispatch(fillOrders(response.data.order));
         await log(response);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
@@ -126,50 +118,50 @@ const App = () => {
   return (
     <Router>
       <Header />
-      <Cart/>
+      <Cart />
       <Routes>
-        <Route path='/' element={<Navigate to='/login' />} />
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route
-          path='/login'
-          element={isLoggedInState ? <Navigate to='/profile' /> : <Login />}
+          path="/login"
+          element={isLoggedInState ? <Navigate to="/profile" /> : <Login />}
         />
         <Route
-          path='/register'
-          element={isLoggedInState ? <Navigate to='/profile' /> : <Register />}
+          path="/register"
+          element={isLoggedInState ? <Navigate to="/profile" /> : <Register />}
         />
         <Route
-          path='/profile'
-          element={isLoggedInState ? <Profile /> : <Navigate to='/login' />}
+          path="/profile"
+          element={isLoggedInState ? <Profile /> : <Navigate to="/login" />}
         />
         <Route
-          path='/my_restaurant/:resId'
+          path="/my_restaurant/:resId"
           element={
             isLoggedInState && user.role === 'owner' ? (
               <ResOwnerPanel />
             ) : (
-              <Navigate to='/profile' />
+              <Navigate to="/profile" />
             )
           }
         />
         <Route
-          path='/restaurants'
-          element={isLoggedInState ? <Restaurants /> : <Navigate to='/login' />}
+          path="/restaurants"
+          element={isLoggedInState ? <Restaurants /> : <Navigate to="/login" />}
         />
         <Route
-          path='/restaurants/:resId'
-          element={isLoggedInState ? <Restaurant /> : <Navigate to='/login' />}
+          path="/restaurants/:resId"
+          element={isLoggedInState ? <Restaurant /> : <Navigate to="/login" />}
         />
         <Route
-          path='/orders/:orderId'
-          element={isLoggedInState ? <Order /> : <Navigate to='/login' />}
-        />
-         <Route
-          path='/products/:productId'
-          element={isLoggedInState ? <Product /> : <Navigate to='/login' />}
+          path="/orders/:orderId"
+          element={isLoggedInState ? <Order /> : <Navigate to="/login" />}
         />
         <Route
-          path='/cart'
-          element={isLoggedInState ? <CartPage /> : <Navigate to='/login' />}
+          path="/products/:productId"
+          element={isLoggedInState ? <Product /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/cart"
+          element={isLoggedInState ? <CartPage /> : <Navigate to="/login" />}
         />
       </Routes>
       <footer></footer>

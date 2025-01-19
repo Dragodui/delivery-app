@@ -46,38 +46,44 @@ const Register = () => {
 
   return (
     <Wrapper>
-      <form className='items-center flex flex-col w-full max-w-[400px] gap-4 px-4 py-6 shadow-2xl rounded-xl font-body'>
-        <p className='text-3xl font-bold font-heading'>Register</p>
+      <form className="items-center flex flex-col w-full max-w-[400px] gap-4 px-4 py-6 shadow-2xl rounded-xl font-body">
+        <p className="text-3xl font-bold font-heading">Register</p>
         <Input
           onChange={(e) => {
             setEmail(e.target.value);
             setErrors({});
           }}
           value={email}
-          placeholder='Email'
-          type='text'
+          placeholder="Email"
+          type="text"
         />
-        {errors.email && <p className='text-left w-full text-error'>{errors.email}</p>}
+        {errors.email && (
+          <p className="text-left w-full text-error">{errors.email}</p>
+        )}
         <Input
           onChange={(e) => {
             setName(e.target.value);
             setErrors({});
           }}
           value={name}
-          placeholder='Your name'
-          type='text'
+          placeholder="Your name"
+          type="text"
         />
-        {errors.name && <p className='text-left text-error w-full'>{errors.name}</p>}
+        {errors.name && (
+          <p className="text-left text-error w-full">{errors.name}</p>
+        )}
         <Input
           onChange={(e) => {
             setPassword(e.target.value);
             setErrors({});
           }}
           value={password}
-          placeholder='Password'
+          placeholder="Password"
           type={isPasswordShown ? 'text' : 'password'}
         />
-        {errors.password && <p className='text-left text-error w-full'>{errors.password}</p>}
+        {errors.password && (
+          <p className="text-left text-error w-full">{errors.password}</p>
+        )}
         <div>
           <button
             className={`flex rounded-md py-1 px-2 text-text shadow-2xl items-center gap-1 ${
@@ -88,55 +94,60 @@ const Register = () => {
               e.preventDefault();
             }}
           >
-            <p className='relative top-[-2px]'>show password</p>
+            <p className="relative top-[-2px]">show password</p>
             <FaEye />
           </button>
         </div>
         <div>
-          <p className='text-xl text-center font-bold mb-2'>You are:</p>
-          <div className='flex gap-4'>
-            <div className='flex items-center justify-center gap-1'>
+          <p className="text-xl text-center font-bold mb-2">You are:</p>
+          <div className="flex gap-4">
+            <div className="flex items-center justify-center gap-1">
               <Input
                 onChange={(e) => setRole(e.target.value)}
-                value='user'
-                name='uniqueGroup'
-                id='user'
-                type='radio'
-                className='w-[20px]'
+                value="user"
+                name="uniqueGroup"
+                id="user"
+                type="radio"
+                className="w-[20px]"
               />
-              <label className='text-lg top-[-2px] relative' htmlFor='user'>
+              <label className="text-lg top-[-2px] relative" htmlFor="user">
                 user
               </label>
             </div>
-            <div className='flex items-center justify-center gap-1'>
+            <div className="flex items-center justify-center gap-1">
               <Input
-                  onChange={(e) => setRole(e.target.value)}
-                  value='deliveryman'
-                  name='uniqueGroup'
-                  id='deliveryman'
-                  type='radio'
-                  className='w-[20px]'
+                onChange={(e) => setRole(e.target.value)}
+                value="deliveryman"
+                name="uniqueGroup"
+                id="deliveryman"
+                type="radio"
+                className="w-[20px]"
               />
-              <label className='text-lg top-[-2px] relative' htmlFor='deliveryman'>
+              <label
+                className="text-lg top-[-2px] relative"
+                htmlFor="deliveryman"
+              >
                 deliveryman
               </label>
             </div>
-            <div className='flex items-center justify-center gap-1'>
+            <div className="flex items-center justify-center gap-1">
               <Input
                 onChange={(e) => setRole(e.target.value)}
-                value='owner'
-                name='uniqueGroup'
-                id='owner'
-                type='radio'
-                className='w-[20px]'
+                value="owner"
+                name="uniqueGroup"
+                id="owner"
+                type="radio"
+                className="w-[20px]"
               />
-              <label className='text-lg top-[-2px] relative' htmlFor='owner'>
+              <label className="text-lg top-[-2px] relative" htmlFor="owner">
                 restaurant owner
               </label>
             </div>
           </div>
-          
-        {errors.role && <p className='text-center w-full text-error'>{errors.role}</p>}
+
+          {errors.role && (
+            <p className="text-center w-full text-error">{errors.role}</p>
+          )}
         </div>
         {/* {
           role === 'owner'? (
@@ -158,13 +169,13 @@ const Register = () => {
 
         <p>
           Have an account?{' '}
-          <Link className='underline' to='/login'>
+          <Link className="underline" to="/login">
             log in
           </Link>
         </p>
         <Button
           addStyles={'w-full'}
-          type='submit'
+          type="submit"
           onClick={(e) => fetchRegister(e)}
         >
           Register

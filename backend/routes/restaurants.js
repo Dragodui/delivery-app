@@ -1,5 +1,10 @@
 const { Router } = require('express');
-const {Restaurant, Product, Review, User} = require('../database/my-sql/schemas/index');
+const {
+  Restaurant,
+  Product,
+  Review,
+  User,
+} = require('../database/my-sql/schemas/index');
 
 const router = Router();
 
@@ -27,7 +32,6 @@ router.post('/restaurantsMenu', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 
 router.post('/restaurants', async (req, res) => {
   const { name, address, description, ownerId, image } = req.body;

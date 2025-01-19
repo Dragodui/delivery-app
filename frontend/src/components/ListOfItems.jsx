@@ -29,7 +29,7 @@ const ListOfItems = ({
           );
         })
       ) : (
-        <p className='text-center mt-[30px] text-gray-500 text-xl font-medium'>
+        <p className="text-center mt-[30px] text-gray-500 text-xl font-medium">
           You don`t have any items here
         </p>
       )}

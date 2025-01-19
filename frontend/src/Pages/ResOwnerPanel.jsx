@@ -28,14 +28,14 @@ const ResOwnerPanel = () => {
       setRes(response.data);
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
   const fetchMenu = async () => {
     try {
       const response = await axios.get(`${baseUrl}/restaurantsMenu/${resId}`);
-            await log(response);
+      await log(response);
       setMenu(response.data);
     } catch (error) {
       console.error('Error getting menu items:', error);
@@ -65,30 +65,30 @@ const ResOwnerPanel = () => {
         <Loader />
       ) : (
         <>
-          <h1 className='text-4xl text-center sm:text-left w-full font-heading font-bold mt-[40px]'>
+          <h1 className="text-4xl text-center sm:text-left w-full font-heading font-bold mt-[40px]">
             Your restaurant
           </h1>
-          <div className='w-full flex font-body font-normal flex-col py-3'>
-            <div className='flex justify-between items-center flex-col sm:flex-row'>
+          <div className="w-full flex font-body font-normal flex-col py-3">
+            <div className="flex justify-between items-center flex-col sm:flex-row">
               <div>
-                <h2 className='flex text-2xl items-center gap-3'>
+                <h2 className="flex text-2xl items-center gap-3">
                   <RiProfileFill />
                   {res.name}
                 </h2>
-                <h2 className='flex text-2xl items-center gap-3'>
+                <h2 className="flex text-2xl items-center gap-3">
                   <FaLocationDot />
                   {res.address}
                 </h2>
               </div>
               <img
-                className='max-w-[150px] rounded-2xl'
+                className="max-w-[150px] rounded-2xl"
                 src={res.image}
-                alt=''
+                alt=""
               />
             </div>
-            <div className='mt-5 py-4 rounded-2xl'>
-              <div className='flex gap-3 w-full md:w-auto'>
-                <h2 className='flex text-2xl items-center font-bold gap-3 font-heading'>
+            <div className="mt-5 py-4 rounded-2xl">
+              <div className="flex gap-3 w-full md:w-auto">
+                <h2 className="flex text-2xl items-center font-bold gap-3 font-heading">
                   Menu
                 </h2>
                 <Button onClick={() => setIsAddItemModalVisible(true)}>
@@ -108,7 +108,7 @@ const ResOwnerPanel = () => {
       )}
       {isAddItemModalVisible ? (
         <AddMenuItemsModal
-        onClick={e => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
           res={res}
           isVisible={isAddItemModalVisible}
           setIsVisible={setIsAddItemModalVisible}

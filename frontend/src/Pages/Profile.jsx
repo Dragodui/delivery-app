@@ -26,7 +26,7 @@ const Profile = () => {
   const [reses, setReses] = useState([]);
   const [deliverymanOrder, setDeliverymanOrder] = useState(null);
   const [deliverymanCompletedOrders, setDeliverymanCompletedOrders] = useState(
-    [],
+    []
   );
   const dispatch = useAppDispatch();
 
@@ -37,7 +37,7 @@ const Profile = () => {
         await log(response);
         setReses(response.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };
@@ -52,7 +52,7 @@ const Profile = () => {
       setOrders(response.data.orders);
       dispatch(fillOrders(response.data.order));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -60,16 +60,14 @@ const Profile = () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `${baseUrl}/delivery/currentDeliverymanOrder/${user.id}`,
+        `${baseUrl}/delivery/currentDeliverymanOrder/${user.id}`
       );
       await log(response);
       setDeliverymanOrder(response.data.order);
-      console.log('HERE WE ARE:');
-      console.log(response.data.order);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -80,21 +78,20 @@ const Profile = () => {
         orderId: order.id,
       });
       await log(response);
-      console.log(response.data.message);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
   const fetchCompletedOrders = async () => {
     try {
       const response = await axios.get(
-        `${baseUrl}/delivery/completedOrders/${user.id}`,
+        `${baseUrl}/delivery/completedOrders/${user.id}`
       );
       await log(response);
       setDeliverymanCompletedOrders(response.data.orders);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -109,7 +106,7 @@ const Profile = () => {
       await log(response);
       await fetchOrders();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -130,20 +127,20 @@ const Profile = () => {
         <Loader />
       ) : (
         <>
-          <div className='w-full flex gap-3 flex-wrap items-center py-[30px] font-body'>
+          <div className="w-full flex gap-3 flex-wrap items-center py-[30px] font-body">
             <ProfileBlockWrapper title={'Profile'}>
-              <div className='flex items-center gap-3'>
+              <div className="flex items-center gap-3">
                 <IconContext.Provider
                   value={{ style: { width: '60px', height: '60px' } }}
                 >
-                  <div className='bg-textWhite rounded-full p-1'>
+                  <div className="bg-textWhite rounded-full p-1">
                     <FaUserCircle />
                   </div>
                 </IconContext.Provider>
-                <p className='text-2xl'>{user.name}</p>
+                <p className="text-2xl">{user.name}</p>
               </div>
-              <div className='mt-3'>
-                <p className='text-lg font-medium'>Email: {user.email}</p>
+              <div className="mt-3">
+                <p className="text-lg font-medium">Email: {user.email}</p>
               </div>
             </ProfileBlockWrapper>
             <ProfileBlockWrapper
@@ -151,9 +148,9 @@ const Profile = () => {
                 user.role === 'deliveryman' ? 'Available orders' : 'Orders'
               }
             >
-              <div className='flex flex-col gap-3'>
+              <div className="flex flex-col gap-3">
                 {orders === undefined || orders.length === 0 ? (
-                  <p className='text-center mt-[40px] text-gray-500 text-xl font-medium'>
+                  <p className="text-center mt-[40px] text-gray-500 text-xl font-medium">
                     {user.role === 'deliveryman'
                       ? 'No available orders yet'
                       : 'You have no orders yet'}
@@ -161,7 +158,7 @@ const Profile = () => {
                 ) : (
                   orders.map((order, index) => (
                     <Link
-                      className='bg-mainLight px-4 rounded-2xl py-3 flex justify-between'
+                      className="bg-mainLight px-4 rounded-2xl py-3 flex justify-between"
                       to={`/orders/${order.id}`}
                       key={order.id}
                     >
@@ -191,27 +188,27 @@ const Profile = () => {
             </ProfileBlockWrapper>
             {user.role === 'owner' ? (
               <ProfileBlockWrapper title={'Your restaurants'}>
-                <div className='flex justify-start flex-wrap mt-[20px] gap-5 items-center'>
+                <div className="flex justify-start flex-wrap mt-[20px] gap-5 items-center">
                   {reses.map((res) => (
-                    <div key={res.id} className='p-5 bg-textWhite rounded-lg'>
+                    <div key={res.id} className="p-5 bg-textWhite rounded-lg">
                       <Link
                         to={`/my_restaurant/${res.id}`}
-                        className='flex flex-col items-center'
+                        className="flex flex-col items-center"
                       >
-                        <h2 className='font-medium text-2xl mb-3'>
+                        <h2 className="font-medium text-2xl mb-3">
                           {res.name}
                         </h2>
                         <img
-                          className='w-[100px] h-[100px]'
+                          className="w-[100px] h-[100px]"
                           src={res.image}
-                          alt=''
+                          alt=""
                         />
                       </Link>
                     </div>
                   ))}
                   <button
                     onClick={() => setIsAddResModalVisible(true)}
-                    className='text-center text-text flex w-[100px] h-[100px] items-center justify-center hover:translate-y-[-10px] duration-300 border-2 border-text bg-gray-300 text-white py-3 px-5 rounded-2xl text-xl font-medium'
+                    className="text-center text-text flex w-[100px] h-[100px] items-center justify-center hover:translate-y-[-10px] duration-300 border-2 border-text bg-gray-300 text-white py-3 px-5 rounded-2xl text-xl font-medium"
                   >
                     <IconContext.Provider
                       value={{ style: { width: '60px', height: '60px' } }}
@@ -232,14 +229,14 @@ const Profile = () => {
                   {deliverymanOrder !== null &&
                   deliverymanOrder.status !== 'Delivered' ? (
                     <>
-                      <p className='text-xl'>
+                      <p className="text-xl">
                         Date:{' '}
                         {format(deliverymanOrder.date, 'dd.MM.yyyy HH:mm:ss')}{' '}
                       </p>
-                      <p className='text-xl'>
+                      <p className="text-xl">
                         From: {deliverymanOrder.restaurantName}
                       </p>
-                      <p className='text-xl'>Items:</p>
+                      <p className="text-xl">Items:</p>
                       <div>
                         {deliverymanOrder.products.map((item) => (
                           <p>- {item.name}</p>
@@ -253,26 +250,26 @@ const Profile = () => {
                       </Button>
                     </>
                   ) : (
-                    <p className='text-xl'>No current order</p>
+                    <p className="text-xl">No current order</p>
                   )}
                 </ProfileBlockWrapper>
                 <ProfileBlockWrapper title={'Completed orders'}>
-                 <div className="flex flex-col gap-3">
-                 {deliverymanCompletedOrders.map((order, index) => (
-                    <Link
-                      className='bg-mainLight px-4 rounded-2xl py-3 flex justify-between'
-                      to={`/orders/${order.id}`}
-                      key={order.id}
-                    >
-                      {' '}
-                      <div>
-                        {index + 1}. Order from {order.restaurantName} on{' '}
-                        {format(order.date, 'dd.MM.yyyy HH:mm:ss')}
-                        <p>Status: {order.status}</p>
-                      </div>
-                    </Link>
-                  ))}
-                 </div>
+                  <div className="flex flex-col gap-3">
+                    {deliverymanCompletedOrders.map((order, index) => (
+                      <Link
+                        className="bg-mainLight px-4 rounded-2xl py-3 flex justify-between"
+                        to={`/orders/${order.id}`}
+                        key={order.id}
+                      >
+                        {' '}
+                        <div>
+                          {index + 1}. Order from {order.restaurantName} on{' '}
+                          {format(order.date, 'dd.MM.yyyy HH:mm:ss')}
+                          <p>Status: {order.status}</p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
                 </ProfileBlockWrapper>
               </>
             ) : (

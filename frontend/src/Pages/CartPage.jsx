@@ -19,7 +19,6 @@ const CartPage = () => {
   const dispatchCart = useAppSelector((state) => state.cart.cart);
   const user = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
-  console.log(cart);
 
   const createOrder = async () => {
     try {
@@ -34,16 +33,16 @@ const CartPage = () => {
           `${baseUrl}/cart/clearCart`,
           {
             userId: user.id,
-          },
+          }
         );
-        await log(response);
+        await log(clearCartResponse);
         setCart([]);
         dispatch(fillCart([]));
       } catch (error) {
-        console.log(`Error while clearing the cart: ${error}`);
+        console.error(`Error while clearing the cart: ${error}`);
       }
     } catch (error) {
-      console.log(`Error while order: ${error}`);
+      console.error(`Error while order: ${error}`);
     }
   };
 
@@ -69,20 +68,19 @@ const CartPage = () => {
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
-        console.log(error);
+        console.error(error);
       }
     };
     fetchCart();
   }, []);
 
   const handleQuantityChange = (item, newQuantity) => {
-    console.log(item);
     setCart((prevCart) =>
       prevCart.map((cartItem) =>
         cartItem.id === item.id
           ? { ...cartItem, quantity: newQuantity }
-          : cartItem,
-      ),
+          : cartItem
+      )
     );
   };
 
@@ -92,9 +90,9 @@ const CartPage = () => {
         {isLoading ? (
           <Loader />
         ) : (
-          <div className='w-full flex gap-3 flex-wrap flex-col text-text py-[30px] rounded-[30px] font-body'>
-            <h1 className='text-4xl font-bold mb-[10px] font-heading'>Cart</h1>
-            <div className='flex flex-col gap-3'>
+          <div className="w-full flex gap-3 flex-wrap flex-col text-text py-[30px] rounded-[30px] font-body">
+            <h1 className="text-4xl font-bold mb-[10px] font-heading">Cart</h1>
+            <div className="flex flex-col gap-3">
               <ListOfItems
                 list={cart}
                 isAddableToCard={true}
@@ -103,7 +101,7 @@ const CartPage = () => {
               />
               {cart.length ? (
                 <>
-                  <p className='text-xl font-medium'>Total: {totalCartSum}$</p>
+                  <p className="text-xl font-medium">Total: {totalCartSum}$</p>
                   <Button onClick={createOrder} addStyles={'max-w-[230px]'}>
                     Order
                   </Button>

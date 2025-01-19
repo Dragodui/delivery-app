@@ -21,8 +21,8 @@ const ReviewSchema = new mongoose.Schema({
   resIdAndUserId: {
     type: mongoose.SchemaTypes.String,
     required: true,
-    unique: true
-  }
+    unique: true,
+  },
 });
 
 module.exports = mongoose.model('reviews', ReviewSchema);

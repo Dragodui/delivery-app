@@ -50,10 +50,10 @@ const Item = ({
           userId: user.id,
           productId: item.id,
         });
-        
+
         await log(response);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     } else {
       dispatch(removeItemFromCart(item));
@@ -64,7 +64,7 @@ const Item = ({
         });
         await log(response);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };
@@ -74,94 +74,98 @@ const Item = ({
     handleQuantityChange(item, newQuantity);
   };
 
-  return (<>
-    <Link onClick={e => e.preventDefault()} to={`/products/${item.id}`} className='mt-4 rounded-lg flex flex-col justify-center items-center min-h-[230px] shadow-2xl  text-text px-3 py-2'>
-      {isEditable ? (
-        <div className='flex items-center w-full mb-3 justify-between'>
-          <Button
-            onClick={() => setIsDeleteVisible(!isDeleteVisible)}
-            addStyles={'bg-red-500'}
-          >
-            <MdDeleteOutline />
-          </Button>
-          <Button onClick={() => setIsEditVisible(!isEditVisible)}>
-            <MdEdit />
-          </Button>
+  return (
+    <>
+      <Link
+        onClick={(e) => e.preventDefault()}
+        to={`/products/${item.id}`}
+        className="mt-4 rounded-lg flex flex-col justify-center items-center min-h-[230px] shadow-2xl  text-text px-3 py-2"
+      >
+        {isEditable ? (
+          <div className="flex items-center w-full mb-3 justify-between">
+            <Button
+              onClick={() => setIsDeleteVisible(!isDeleteVisible)}
+              addStyles={'bg-red-500'}
+            >
+              <MdDeleteOutline />
+            </Button>
+            <Button onClick={() => setIsEditVisible(!isEditVisible)}>
+              <MdEdit />
+            </Button>
+          </div>
+        ) : (
+          ''
+        )}
+        <img
+          src={item.image}
+          alt=""
+          className="rounded-lg max-w-[200px] max-h-[140px]"
+        />
+        <div className="flex w-full mt-2 justify-between">
+          <p>{item.name}</p>
         </div>
+
+        {isAddableToCard && (
+          <>
+            {isInCartPage ? (
+              <>
+                <div className="flex items-center gap-3 bg-slate-400 p-1 max-w-[100px] justify-between rounded-full my-2">
+                  <button
+                    onClick={() => {
+                      if (quantity > 1) {
+                        handleQuantityChangeLocal(quantity - 1);
+                      }
+                    }}
+                    className="flex items-center justify-center p-3 rounded-full w-[10px] h-[10px] bg-main"
+                  >
+                    <p className="font-bold text-text">-</p>
+                  </button>
+                  <p>{quantity}</p>
+
+                  <button
+                    onClick={() => handleQuantityChangeLocal(quantity + 1)}
+                    className="flex items-center justify-center p-3 rounded-full w-[10px] h-[10px] bg-main"
+                  >
+                    <p className="font-bold text-text">+</p>
+                  </button>
+                </div>
+              </>
+            ) : (
+              ''
+            )}
+            <div className="flex justify-between w-full mt-2">
+              <p className="mb-2">quantity: {item.quantity}</p>
+
+              <p>{item.price}$</p>
+            </div>
+            <Button onClick={changeCart}>
+              {isInCart ? 'Remove from cart' : 'Add to cart'}
+            </Button>
+          </>
+        )}
+      </Link>
+      {isDeleteVisible ? (
+        <DeleteProductModal
+          productId={item.id}
+          isVisible={isDeleteVisible}
+          setIsVisible={setIsDeleteVisible}
+          setIsEdit={setIsEdit}
+          isEdit={isEdit}
+        />
       ) : (
         ''
       )}
-      <img
-        src={item.image}
-        alt=''
-        className='rounded-lg max-w-[200px] max-h-[140px]'
-      />
-      <div className='flex w-full mt-2 justify-between'>
-        <p>{item.name}</p>
-      </div>
-
-      {isAddableToCard && (
-        <>
-          {isInCartPage ? (
-            <>
-              <div className='flex items-center gap-3 bg-slate-400 p-1 max-w-[100px] justify-between rounded-full my-2'>
-                <button
-                  onClick={() => {
-                    if (quantity > 1) {
-                      handleQuantityChangeLocal(quantity - 1);
-                    }
-                  }}
-                  className='flex items-center justify-center p-3 rounded-full w-[10px] h-[10px] bg-main'
-                >
-                  <p className='font-bold text-text'>-</p>
-                </button>
-                <p>{quantity}</p>
-                
-                <button
-                  onClick={() => handleQuantityChangeLocal(quantity + 1)}
-                  className='flex items-center justify-center p-3 rounded-full w-[10px] h-[10px] bg-main'
-                >
-                  <p className='font-bold text-text'>+</p>
-                </button>
-              </div>
-            </>
-          ) : (
-            ''
-          )}
-         <div className='flex justify-between w-full mt-2'>
-         <p className='mb-2'>quantity: {item.quantity}</p>
-          
-          <p>{item.price}$</p>
-         </div>
-          <Button onClick={changeCart}>
-            {isInCart ? 'Remove from cart' : 'Add to cart'}
-          </Button>
-        </>
+      {isEditVisible ? (
+        <EditProductModal
+          productId={item.id}
+          isVisible={isEditVisible}
+          setIsVisible={setIsEditVisible}
+          setIsEdit={setIsEdit}
+          isEdit={isEdit}
+        />
+      ) : (
+        ''
       )}
-     
-    </Link>
-     {isDeleteVisible ? (
-      <DeleteProductModal
-        productId={item.id}
-        isVisible={isDeleteVisible}
-        setIsVisible={setIsDeleteVisible}
-        setIsEdit={setIsEdit}
-        isEdit={isEdit}
-      />
-    ) : (
-      ''
-    )}
-    {isEditVisible ? (
-      <EditProductModal
-        productId={item.id}
-        isVisible={isEditVisible}
-        setIsVisible={setIsEditVisible}
-        setIsEdit={setIsEdit}
-        isEdit={isEdit}
-      />
-    ) : (
-      ''
-    )}
     </>
   );
 };

@@ -42,8 +42,8 @@ const RestaurantSchema = new mongoose.Schema({
       ref: Review,
       default: [],
       required: true,
-    }
-  ]
+    },
+  ],
 });
 
 module.exports = mongoose.model('restaurants', RestaurantSchema);

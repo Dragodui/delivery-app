@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const {Product} = require('../database/my-sql/schemas/index');
+const { Product } = require('../database/my-sql/schemas/index');
 
 const router = Router();
 
@@ -9,7 +9,7 @@ router.get('/products/:productId', async (req, res) => {
     if (!productId) {
       res.status(404).json({ message: 'Product id is required.' });
     }
-    const product = await Product.findOne({where: {id:productId}});
+    const product = await Product.findOne({ where: { id: productId } });
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }

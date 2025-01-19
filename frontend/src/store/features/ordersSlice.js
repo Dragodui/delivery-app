@@ -13,7 +13,7 @@ export const OrdersSlice = createSlice({
     },
     removeItemFromOrders: (state, action) => {
       const index = state.orders.findIndex(
-        (item) => item.id === action.payload.id,
+        (item) => item.id === action.payload.id
       );
       if (index !== -1) {
         state.orders.splice(index, 1);
