@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../store/store';
 import { fillCart } from '../store/features/cartSlice';
 import Button from '../components/UI/Button';
 import OrderNotificationModal from '../components/Modals/OrderNotificationModal';
+import { log } from '../utils';
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
@@ -26,7 +27,7 @@ const CartPage = () => {
         items: cart,
         userId: user.id,
       });
-      console.log(response);
+      await log(response);
       setIsOrderNotificationModalVisible(true);
       try {
         const clearCartResponse = await axios.post(
@@ -35,7 +36,7 @@ const CartPage = () => {
             userId: user.id,
           },
         );
-        console.log(clearCartResponse.data);
+        await log(response);
         setCart([]);
         dispatch(fillCart([]));
       } catch (error) {

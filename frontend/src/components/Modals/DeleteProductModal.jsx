@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Button from '../UI/Button';
 import axios from 'axios';
 import { baseUrl } from '../../config';
+import { log } from '../../utils';
 
 const DeleteProductModal = ({
   productId,
@@ -17,8 +18,10 @@ const DeleteProductModal = ({
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`${baseUrl}/products/${productId}`);
+        await log(response);
         const product = response.data;
         setProductName(product.name);
+        await log(response);
       } catch (error) {
         console.log(`Error while fetching product ${error}`);
       }
@@ -31,6 +34,7 @@ const DeleteProductModal = ({
       const response = await axios.delete(
         `${baseUrl}/products/delete/${productId}`,
       );
+      await log(response);
       setIsEdit(!isEdit);
       setIsVisible(false);
     } catch (error) {

@@ -5,6 +5,7 @@ import Button from '../UI/Button';
 import axios from 'axios';
 import { baseUrl } from '../../config';
 import { useAppSelector } from '../../store/store';
+import { log } from '../../utils';
 
 const AddReviewModal = ({ resId, isVisible, setIsVisible }) => {
   console.log(useAppSelector((state) => state.user.user))
@@ -26,6 +27,7 @@ const AddReviewModal = ({ resId, isVisible, setIsVisible }) => {
         rate: parseInt(row.rate),
         userId: userId,
       });
+      await log(response);
       setIsVisible(false);
     } catch (error) {
       setError('Error: You already reviewed this restaurant');

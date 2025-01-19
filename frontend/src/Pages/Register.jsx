@@ -7,6 +7,7 @@ import { FaEye } from 'react-icons/fa';
 import { baseUrl } from '../config';
 import Input from '../components/UI/Input';
 import Wrapper from '../components/UI/Wrapper';
+import { log } from '../utils';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -32,7 +33,7 @@ const Register = () => {
         : { email, name, role, password, resInfo };
     try {
       const response = await axios.post(`${baseUrl}/register`, sendUser);
-      console.log(response);
+      await log(response);
       navigate('/login');
     } catch (error) {
       const validationErrors = {};

@@ -11,6 +11,7 @@ import Button from './UI/Button';
 import { MdLogout } from 'react-icons/md';
 import NavBar from './UI/NavBar';
 import { changeCartState } from '../store/features/isCartOpenedSlice';
+import { log } from '../utils';
 
 const Header = () => {
   const [isError, setIsError] = useState(false);
@@ -34,7 +35,7 @@ const Header = () => {
         });
         const isLoggedInFromResponse = response.data.authenticated;
         setIsLoggedIn(isLoggedInFromResponse);
-        await axios.post(`${baseUrl}/logs`, {message: `GET /checkAuth STATUS ${response.status}`});
+        await log(response);
       } catch (e) {
         console.log(e);
       }
@@ -55,7 +56,7 @@ const Header = () => {
      localStorage.removeItem('token');
      window.location.reload();
      
-     await axios.post(`${baseUrl}/logs`, {message: `POST /logout STATUS ${response.status}`});
+     await log(response);
      navigate('/login');
    } catch (error) {
      console.error('Error logging out:', error);

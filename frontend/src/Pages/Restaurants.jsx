@@ -5,6 +5,7 @@ import axios from 'axios';
 import Loader from '../components/UI/Loader';
 import { baseUrl } from '../config';
 import { Link } from 'react-router-dom';
+import { log } from '../utils';
 
 const Restaurants = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -13,6 +14,7 @@ const Restaurants = () => {
   const fetchRestaurants = async () => {
     try {
       const response = await axios.get(`${baseUrl}/restaurants`);
+            await log(response);
       setRestaurants(response.data);
       setIsLoading(false);
     } catch (error) {

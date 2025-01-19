@@ -8,6 +8,7 @@ import Loader from '../components/UI/Loader';
 import { FaLocationDot } from 'react-icons/fa6';
 import AddReviewModal from '../components/Modals/AddReviewModal';
 import Reviews from '../components/Reviews';
+import { log } from '../utils';
 
 const Restaurant = () => {
   const { resId } = useParams();
@@ -20,6 +21,7 @@ const Restaurant = () => {
     const fetchRestaurant = async () => {
       try {
         const response = await axios.get(`${baseUrl}/restaurant/${resId}`);
+              await log(response);
         console.log(response.data);
         setRes(response.data);
       } catch (error) {
@@ -30,6 +32,7 @@ const Restaurant = () => {
     const fetchResMenu = async () => {
       try {
         const response = await axios.get(`${baseUrl}/restaurantsMenu/${resId}`);
+              await log(response);
         setResMenu(response.data);
       } catch (error) {
         console.log(error);

@@ -6,6 +6,7 @@ import { baseUrl } from '../config';
 import { format } from 'date-fns';
 import Loader from '../components/UI/Loader';
 import ListOfItems from '../components/ListOfItems';
+import { log } from '../utils';
 
 const Order = () => {
   const { orderId } = useParams();
@@ -18,7 +19,7 @@ const Order = () => {
     const fetchOrder = async () => {
       try {
         const response = await axios.get(`${baseUrl}/orders/order/${orderId}`);
-        console.log(response.data);
+        await log(response);
         const order = response.data.order;
         const products = response.data.products;  
         let sum = 0;

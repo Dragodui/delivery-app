@@ -10,6 +10,7 @@ import { addItemToCart, removeItemFromCart } from '../store/features/cartSlice';
 import { baseUrl } from '../config';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { log } from '../utils';
 
 const Item = ({
   item,
@@ -50,7 +51,7 @@ const Item = ({
           productId: item.id,
         });
         
-        await axios.post(`${baseUrl}/logs`, {message: `POST /cart/addToCart STATUS ${response.status}`});
+        await log(response);
       } catch (error) {
         console.log(error);
       }
@@ -61,7 +62,7 @@ const Item = ({
           userId: user.id,
           productId: item.id,
         });
-        await axios.post(`${baseUrl}/logs`, {message: `POST /cart/removeFromCart STATUS ${response.status}`});
+        await log(response);
       } catch (error) {
         console.log(error);
       }

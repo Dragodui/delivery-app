@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Button from '../UI/Button';
 import axios from 'axios';
 import { baseUrl } from '../../config';
+import { log } from '../../utils';
 
 const EditProductModal = ({ productId, isVisible, setIsVisible, setIsEdit, isEdit }) => {
   const [row, setRow] = useState({
@@ -20,6 +21,7 @@ const EditProductModal = ({ productId, isVisible, setIsVisible, setIsEdit, isEdi
         const response = await axios.get(`${baseUrl}/products/${productId}`);
         const product = response.data;
         setRow(product);
+        await log(response);
       } catch (error) {
         console.log(`Error while fetching product ${error}`);
       }
@@ -39,6 +41,7 @@ const EditProductModal = ({ productId, isVisible, setIsVisible, setIsEdit, isEdi
       );
       setIsEdit(!isEdit);
       setIsVisible(false);
+      await log(response);
     } catch (error) {
       console.log(`Error while editing product ${error}`);
     }

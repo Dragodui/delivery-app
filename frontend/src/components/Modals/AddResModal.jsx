@@ -4,6 +4,7 @@ import { useAppSelector } from '../../store/store';
 import { baseUrl } from '../../config';
 import Button from '../UI/Button';
 import axios from 'axios';
+import { log } from '../../utils';
 
 const AddResModal = ({ isVisible, setIsVisible }) => {
   const user = useAppSelector((state) => state.user.user);
@@ -21,6 +22,7 @@ const AddResModal = ({ isVisible, setIsVisible }) => {
     try {
       console.log(resInfo)
       const response = await axios.post(`${baseUrl}/restaurants`, resInfo);
+      await log(response);
       setIsVisible(false);
     } catch (error) {
       console.log(error);

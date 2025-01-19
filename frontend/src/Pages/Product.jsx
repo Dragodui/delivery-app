@@ -4,6 +4,7 @@ import Wrapper from '../components/UI/Wrapper';
 import axios from 'axios';
 import { baseUrl } from '../config';
 import Loader from '../components/UI/Loader';
+import { log } from '../utils';
 
 const Product = () => {
   const { productId } = useParams();
@@ -14,6 +15,7 @@ const Product = () => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`${baseUrl}/products/${productId}`);
+        await log(response);
         setProduct(response.data);
         setIsLoading(false);
       } catch (error) {

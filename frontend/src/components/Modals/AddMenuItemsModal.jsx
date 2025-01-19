@@ -5,6 +5,7 @@ import Button from '../UI/Button';
 import axios from 'axios';
 import { baseUrl } from '../../config';
 import { MdDeleteOutline } from 'react-icons/md';
+import { log } from '../../utils';
 
 const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
   const [rows, setRows] = useState([
@@ -38,6 +39,7 @@ const AddMenuItemsModal = ({ res, isVisible, setIsVisible }) => {
         resId: res.id,
         menuItems,
       });
+      await log(response);
       console.log('Menu items added successfully:', response.data);
       setIsVisible(false);
     } catch (error) {

@@ -10,6 +10,7 @@ import AddMenuItemsModal from '../components/Modals/AddMenuItemsModal';
 import { FaLocationDot } from 'react-icons/fa6';
 import { RiProfileFill } from 'react-icons/ri';
 import { useParams } from 'react-router-dom';
+import { log } from '../utils';
 
 const ResOwnerPanel = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,7 +24,7 @@ const ResOwnerPanel = () => {
   const fetchRes = async () => {
     try {
       const response = await axios.get(`${baseUrl}/restaurant/${resId}`);
-      console.log(response.data);
+      await log(response);
       setRes(response.data);
       setIsLoading(false);
     } catch (error) {
@@ -34,6 +35,7 @@ const ResOwnerPanel = () => {
   const fetchMenu = async () => {
     try {
       const response = await axios.get(`${baseUrl}/restaurantsMenu/${resId}`);
+            await log(response);
       setMenu(response.data);
     } catch (error) {
       console.error('Error getting menu items:', error);

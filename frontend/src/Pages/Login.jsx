@@ -9,6 +9,7 @@ import { FaEye } from 'react-icons/fa';
 import { baseUrl } from '../config';
 import Input from '../components/UI/Input';
 import Wrapper from '../components/UI/Wrapper';
+import { log } from '../utils';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -28,6 +29,7 @@ const Login = () => {
       const token = response.data.token;
       dispatch(setIsLoggedIn({ isLoggedIn: true }));
       localStorage.setItem('token', token);
+      await log(response);
       window.location.reload();
       navigate('/profile');
     } catch (error) {

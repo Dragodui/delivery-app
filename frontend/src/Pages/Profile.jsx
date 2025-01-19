@@ -14,6 +14,7 @@ import { useAppDispatch } from '../store/store';
 import { fillOrders } from '../store/features/ordersSlice';
 import Button from '../components/UI/Button';
 import ProfileBlockWrapper from '../components/UI/ProfileBlockWrapper';
+import { log } from '../utils';
 
 //TODO: add modal for accepting delivery
 
@@ -33,6 +34,7 @@ const Profile = () => {
     if (user.role === 'owner') {
       try {
         const response = await axios.get(`${baseUrl}/restaurants/${user.id}`);
+        await log(response);
         setReses(response.data);
       } catch (error) {
         console.log(error);
@@ -46,7 +48,7 @@ const Profile = () => {
           ? `${baseUrl}/delivery/availableOrders`
           : `${baseUrl}/orders/${user.id}`;
       const response = await axios.get(link);
-      console.log(response.data.orders);
+      await log(response);
       setOrders(response.data.orders);
       dispatch(fillOrders(response.data.order));
     } catch (error) {
@@ -60,6 +62,7 @@ const Profile = () => {
       const response = await axios.get(
         `${baseUrl}/delivery/currentDeliverymanOrder/${user.id}`,
       );
+      await log(response);
       setDeliverymanOrder(response.data.order);
       console.log('HERE WE ARE:');
       console.log(response.data.order);
@@ -76,6 +79,7 @@ const Profile = () => {
         userId: user.id,
         orderId: order.id,
       });
+      await log(response);
       console.log(response.data.message);
     } catch (error) {
       console.log(error);
@@ -87,6 +91,7 @@ const Profile = () => {
       const response = await axios.get(
         `${baseUrl}/delivery/completedOrders/${user.id}`,
       );
+      await log(response);
       setDeliverymanCompletedOrders(response.data.orders);
     } catch (error) {
       console.log(error);
@@ -101,7 +106,7 @@ const Profile = () => {
           ? `${baseUrl}/delivery/finishOrder/${orderId}`
           : `${baseUrl}/orders/finishOrder/${orderId}`;
       const response = await axios.post(link);
-      console.log(response.data.message);
+      await log(response);
       await fetchOrders();
     } catch (error) {
       console.log(error);
