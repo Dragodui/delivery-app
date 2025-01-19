@@ -11,6 +11,7 @@ const ordersRoute = require('./routes/orders.js');
 const productRoute = require('./routes/products.js');
 const userRoute = require('./routes/user.js');
 const deliveryRoute = require('./routes/delivery.js');
+const logRoute = require('./routes/logs.js');
 require('./database/my-sql/index.js');
 
 require('dotenv').config();
@@ -42,5 +43,6 @@ app.use(cartRoute);
 app.use(productRoute);
 app.use(userRoute);
 app.use(deliveryRoute);
+app.use(logRoute);
 
 app.listen(PORT, async () => {console.log(`listening on port ${PORT}`);});

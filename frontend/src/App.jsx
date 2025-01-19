@@ -71,7 +71,7 @@ const App = () => {
             };
           }
           dispatch(setUser(parsedUser));
-          console.log(parsedUser);
+          await axios.post(`${baseUrl}/logs`, {message: `GET /currentUser STATUS ${response.status}`});
         } catch (error) {
           console.log(`Error fetching current user: ${error}`);
         }
@@ -86,6 +86,7 @@ const App = () => {
         console.log(`Is logged: ${isLoggedInFromResponse}`)
         dispatch(setIsLoggedIn(isLoggedInFromResponse));
         setIsLoggedInState(isLoggedInFromResponse);
+        await axios.post(`${baseUrl}/logs`, {message: `GET /checkAuth STATUS ${response.status}`});
       } catch (error) {
         console.log(`Error fetching login: ${error}`);
       }
@@ -95,6 +96,7 @@ const App = () => {
         const response = await axios.get(`${baseUrl}/cart/${user.id}`);
         const fetchedCart = response.data.cart;
         dispatch(fillCart(fetchedCart));
+        await axios.post(`${baseUrl}/logs`, {message: `GET /cart/${user.id} STATUS ${response.status}`});
       } catch (error) {
         console.log(error);
       }
@@ -106,6 +108,7 @@ const App = () => {
         // setOrders(response.data.orders);
         console.log(response.data);
         dispatch(fillOrders(response.data.order));
+        await axios.post(`${baseUrl}/logs`, {message: `GET /orders/${user.id} STATUS ${response.status}`});
       } catch (error) {
         console.log(error);
       }

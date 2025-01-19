@@ -34,6 +34,7 @@ const Header = () => {
         });
         const isLoggedInFromResponse = response.data.authenticated;
         setIsLoggedIn(isLoggedInFromResponse);
+        await axios.post(`${baseUrl}/logs`, {message: `GET /checkAuth STATUS ${response.status}`});
       } catch (e) {
         console.log(e);
       }
@@ -46,17 +47,21 @@ const Header = () => {
   }, [cart]);
 
   const logOut = async () => {
-    const token = localStorage.getItem('token');
-    setIsError(false);
-    axios
-      .post(`${baseUrl}/logout`, { headers: { authorization: token } })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => setIsError(true));
-    localStorage.removeItem('token');
-    window.location.reload();
-    navigate('/login');
+   try {
+     const token = localStorage.getItem('token');
+     setIsError(false);
+     const response = await axios.post(`${baseUrl}/logout`, { headers: { authorization: token } })
+     
+     localStorage.removeItem('token');
+     window.location.reload();
+     
+     await axios.post(`${baseUrl}/logs`, {message: `POST /logout STATUS ${response.status}`});
+     navigate('/login');
+   } catch (error) {
+     console.error('Error logging out:', error);
+     setIsError(true);
+    
+   }
   };
   return (
     <header className='h-[60px] flex justify-center w-full font-body bg-main'>

@@ -36,7 +36,7 @@ router.post('/restaurants', async (req, res) => {
   if (resDB) {
     res.status(400).send({ msg: 'Restaurant already exists' });
   }
-  await Restaurant.create({
+  const newRestaurant = await Restaurant.create({
     name,
     address,
     description,

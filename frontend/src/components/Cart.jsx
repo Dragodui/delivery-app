@@ -33,6 +33,7 @@ const Cart = () => {
       });
       console.log(response);
       setIsOrderNotificationModalVisible(true);
+      await axios.post(`${baseUrl}/logs`, {message: `POST /orders/makeOrder STATUS ${response.status}`});
       try {
         const clearCartResponse = await axios.post(
           `${baseUrl}/cart/clearCart`,
@@ -43,6 +44,7 @@ const Cart = () => {
         console.log(clearCartResponse.data);
         setCart([]);
         dispatch(fillCart([]));
+        await axios.post(`${baseUrl}/logs`, {message: `POST /cart/clearCart STATUS ${response.status}`});
       } catch (error) {
         console.log(`Error while clearing the cart: ${error}`);
       }
@@ -76,6 +78,7 @@ const Cart = () => {
         setCart(fetchedCart);
         dispatch(fillCart(fetchedCart));
         setIsLoading(false);
+        await axios.post(`${baseUrl}/logs`, {message: `GET /cart/${user.id} STATUS ${response.status}`});
       } catch (error) {
         setIsLoading(false);
         console.log(error);
