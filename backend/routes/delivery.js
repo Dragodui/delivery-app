@@ -73,7 +73,9 @@ router.post('/delivery/finishOrder/:orderId', async (req, res) => {
     }
 
     order.status = 'Delivered for deliveryman';
-    await logDB(`Updating order with id: ${orderId} status to 'Delivered for deliveryman'`);
+    await logDB(
+      `Updating order with id: ${orderId} status to 'Delivered for deliveryman'`
+    );
     await order.save();
 
     res.status(200).json({ message: 'Order has been delivered successfully' });

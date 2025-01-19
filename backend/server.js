@@ -13,6 +13,7 @@ const userRoute = require('./routes/user.js');
 const deliveryRoute = require('./routes/delivery.js');
 const logRoute = require('./routes/logs.js');
 require('./database/my-sql/index.js');
+const setupSwagger = require('./utils/swagger'); 
 
 require('dotenv').config();
 
@@ -45,6 +46,8 @@ app.use(userRoute);
 app.use(deliveryRoute);
 app.use(logRoute);
 
+setupSwagger(app); 
 app.listen(PORT, async () => {
+  console.log(`docs are available on http://localhost:${PORT}/api-docs`);
   console.log(`listening on port ${PORT}`);
 });

@@ -56,7 +56,7 @@ router.post(
         password: hashedPassword,
         role,
       });
-      await logDB(`User registered with data ${email, name, role}`);
+      await logDB(`User registered with data ${(email, name, role)}`);
 
       res
         .status(201)
