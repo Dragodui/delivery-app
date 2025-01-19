@@ -21,7 +21,8 @@ const Reviews = ({ setIsVisible, resId }) => {
       console.log(response.data);
       const reviews = response.data;
       setReviews(reviews);
-
+      
+      await axios.post(`${baseUrl}/logs`, {message: `GET /restaurant/getReviews/${resId} STATUS ${response.status}`});
       const userIds = reviews.map((review) => review.userId);
       const uniqueUserIds = [...new Set(userIds)];
 
@@ -29,6 +30,8 @@ const Reviews = ({ setIsVisible, resId }) => {
         axios.get(`${baseUrl}/user/getUser/${userId}`),
       );
       const users = await Promise.all(userPromises);
+      
+      await axios.post(`${baseUrl}/logs`, {message: `GET /restaurant/getReviews/${resId} STATUS ${response.status}`});
 
       const usersMap = users.reduce((acc, user) => {
         acc[user.data.id] = user.data;

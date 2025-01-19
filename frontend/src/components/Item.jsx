@@ -45,20 +45,23 @@ const Item = ({
     if (index === -1) {
       dispatch(addItemToCart(item));
       try {
-        await axios.post(`${baseUrl}/cart/addToCart`, {
+        const response = await axios.post(`${baseUrl}/cart/addToCart`, {
           userId: user.id,
           productId: item.id,
         });
+        
+        await axios.post(`${baseUrl}/logs`, {message: `POST /cart/addToCart STATUS ${response.status}`});
       } catch (error) {
         console.log(error);
       }
     } else {
       dispatch(removeItemFromCart(item));
       try {
-        await axios.post(`${baseUrl}/cart/removeFromCart`, {
+        const response = await axios.post(`${baseUrl}/cart/removeFromCart`, {
           userId: user.id,
           productId: item.id,
         });
+        await axios.post(`${baseUrl}/logs`, {message: `POST /cart/removeFromCart STATUS ${response.status}`});
       } catch (error) {
         console.log(error);
       }
