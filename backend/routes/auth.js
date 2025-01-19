@@ -5,6 +5,7 @@ const { User } = require('../database/my-sql/schemas/index');
 const { hashPassword, comparePassword } = require('../utils/helpers');
 const jwt = require('jsonwebtoken');
 const { secret } = require('../config');
+const logDB = require('../utils/logs');
 
 const router = Router();
 
@@ -43,6 +44,7 @@ router.post(
 
     try {
       const existingUser = await User.findOne({ where: { email } });
+      await logDB(`Check if user unique with email: ${email}`);
       if (existingUser) {
         return res.status(400).json({ message: 'User already exists' });
       }
@@ -54,6 +56,7 @@ router.post(
         password: hashedPassword,
         role,
       });
+      await logDB(`User registered with data ${email, name, role}`);
 
       res
         .status(201)
@@ -81,6 +84,7 @@ router.post(
 
     try {
       const user = await User.findOne({ where: { email } });
+      await logDB(`Getting user with email: ${email}`);
       if (!user) {
         return res.status(401).json({ message: 'User does not exist' });
       }
@@ -110,6 +114,7 @@ router.get('/checkAuth', verifyToken, (req, res) => {
 router.get('/currentUser', verifyToken, async (req, res) => {
   try {
     const user = await User.findByPk(req.userId);
+    await logDB(`Getting user with id: ${req.userId}`);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }

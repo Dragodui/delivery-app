@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { Order } = require('../database/my-sql/schemas/index');
+const logDB = require('../utils/logs');
 
 const router = Router();
 
@@ -8,6 +9,7 @@ router.get('/delivery/availableOrders', async (req, res) => {
     const ordersToDeliver = await Order.findAll({
       where: { status: 'waiting for deliveryman' },
     });
+    await logDB(`Getting all orders with status: 'waiting for deliveryman'`);
 
     res.json({ orders: ordersToDeliver });
   } catch (error) {
@@ -20,6 +22,7 @@ router.post('/delivery/takeOrder', async (req, res) => {
   try {
     const { userId, orderId } = req.body;
     const orderToDeliver = await Order.findByPk(orderId);
+    await logDB(`Getting order with id: ${orderId}`);
 
     if (!orderToDeliver) {
       return res.status(404).json({ message: 'Order not found' });
@@ -45,6 +48,7 @@ router.get(
       const order = await Order.findOne({
         where: { deliverymanId, status: 'On the way' },
       });
+      await logDB(`Getting order for deliveryman with id: ${deliverymanId}`);
 
       if (!order) {
         return res
@@ -63,11 +67,13 @@ router.post('/delivery/finishOrder/:orderId', async (req, res) => {
   try {
     const { orderId } = req.params;
     const order = await Order.findByPk(orderId);
+    await logDB(`Getting order with id: ${orderId}`);
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
 
     order.status = 'Delivered for deliveryman';
+    await logDB(`Updating order with id: ${orderId} status to 'Delivered for deliveryman'`);
     await order.save();
 
     res.status(200).json({ message: 'Order has been delivered successfully' });
@@ -89,6 +95,7 @@ router.get('/delivery/completedOrders/:deliverymanId', async (req, res) => {
     const orders = await Order.findAll({
       where: { deliverymanId, status: 'Delivered for deliveryman' },
     });
+    await logDB(`Getting all orders for deliveryman with id: ${deliverymanId}`);
 
     res.status(200).json({ orders });
   } catch (error) {

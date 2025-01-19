@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { Product } = require('../database/my-sql/schemas/index');
+const logDB = require('../utils/logs');
 
 const router = Router();
 
@@ -10,6 +11,8 @@ router.get('/products/:productId', async (req, res) => {
       res.status(404).json({ message: 'Product id is required.' });
     }
     const product = await Product.findOne({ where: { id: productId } });
+    await logDB(`Getting product with id: ${productId}`);
+
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
@@ -37,6 +40,7 @@ router.post('/products/edit/:productId', async (req, res) => {
       returning: true,
       plain: true,
     });
+    await logDB(`Updating product with id: ${productId}`);
 
     if (!updatedProduct) {
       return res.status(404).json({ message: 'Product not found' });
@@ -57,6 +61,7 @@ router.delete('/products/delete/:productId', async (req, res) => {
     }
 
     const deletedProduct = await Product.destroy({ where: { id: productId } });
+    await logDB(`Deleting product with id: ${productId}`);
     if (!deletedProduct) {
       return res.status(404).json({ message: 'Product not found' });
     }
