@@ -13,14 +13,13 @@ const userRoute = require('./routes/user.js');
 const deliveryRoute = require('./routes/delivery.js');
 const logRoute = require('./routes/logs.js');
 require('./database/my-sql/index.js');
-const setupSwagger = require('./utils/swagger'); 
-
-require('dotenv').config();
 
 const cors = require('cors');
+const setupSwagger = require('./utils/swagger'); // Подключение Swagger
 
-const app = express(); // pril
+const app = express();// pril
 const PORT = process.env.PORT || 5000;
+
 app.use(express.json());
 const mongoStore = MongoStore.create({
   mongoUrl: 'mongodb://127.0.0.1:27017/todos-test-app',
@@ -33,9 +32,10 @@ app.use(
     saveUninitialized: false,
     store: mongoStore,
     cookie: { secure: true },
-  })
+  }),
 );
-//api маршруты
+
+// API маршруты
 app.use(cors());
 app.use(authRoutes);
 app.use(resRoute);
@@ -46,8 +46,10 @@ app.use(userRoute);
 app.use(deliveryRoute);
 app.use(logRoute);
 
-setupSwagger(app); 
+// Подключение Swagger
+setupSwagger(app);
+
 app.listen(PORT, async () => {
-  console.log(`docs are available on http://localhost:${PORT}/api-docs`);
-  console.log(`listening on port ${PORT}`);
+  console.log(`Сервер запущен на http://localhost:${PORT}`);
+  console.log(`Документация доступна на http://localhost:${PORT}/api-docs`);
 });

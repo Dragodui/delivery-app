@@ -24,6 +24,40 @@ const verifyToken = (req, res, next) => {
   });
 };
 
+/**
+ * @swagger
+ * /register:
+ *   post:
+ *     summary: Регистрация пользователя
+ *     description: Создает нового пользователя с указанными данными.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: Электронная почта пользователя.
+ *               name:
+ *                 type: string
+ *                 description: Имя пользователя.
+ *               role:
+ *                 type: string
+ *                 description: Роль пользователя.
+ *               password:
+ *                 type: string
+ *                 description: Пароль пользователя.
+ *     responses:
+ *       201:
+ *         description: Пользователь успешно зарегистрирован.
+ *       400:
+ *         description: Ошибка валидации данных.
+ *       500:
+ *         description: Ошибка сервера.
+ */
+
 router.post(
   '/register',
   [
@@ -67,6 +101,33 @@ router.post(
     }
   }
 );
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: Вход пользователя
+ *     description: Авторизация пользователя с помощью email и пароля.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: Электронная почта пользователя.
+ *               password:
+ *                 type: string
+ *                 description: Пароль пользователя.
+ *     responses:
+ *       200:
+ *         description: Успешный вход, возвращается токен.
+ *       401:
+ *         description: Неверные учетные данные.
+ *       500:
+ *         description: Ошибка сервера.
+ */
 
 router.post(
   '/login',
@@ -103,14 +164,51 @@ router.post(
   }
 );
 
+/**
+ * @swagger
+ * /logout:
+ *   post:
+ *     summary: Выход пользователя
+ *     description: Завершение сессии пользователя.
+ *     responses:
+ *       200:
+ *         description: Успешный выход.
+ *       401:
+ *         description: Неавторизованный запрос.
+ */
 router.post('/logout', verifyToken, (req, res) => {
   res.status(200).json({ message: 'Logout successful' });
 });
 
+/**
+ * @swagger
+ * /checkAuth:
+ *   get:
+ *     summary: Проверка аутентификации
+ *     description: Проверяет, авторизован ли пользователь.
+ *     responses:
+ *       200:
+ *         description: Пользователь авторизован.
+ *       401:
+ *         description: Неавторизованный запрос.
+ */
 router.get('/checkAuth', verifyToken, (req, res) => {
   res.status(200).json({ authenticated: true });
 });
-
+/**
+ * @swagger
+ * /currentUser:
+ *   get:
+ *     summary: Получение текущего пользователя
+ *     description: Возвращает данные о текущем авторизованном пользователе.
+ *     responses:
+ *       200:
+ *         description: Успешное получение данных пользователя.
+ *       401:
+ *         description: Неавторизованный запрос.
+ *       404:
+ *         description: Пользователь не найден.
+ */
 router.get('/currentUser', verifyToken, async (req, res) => {
   try {
     const user = await User.findByPk(req.userId);

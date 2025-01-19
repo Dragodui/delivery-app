@@ -33,16 +33,18 @@ const Login = () => {
       window.location.reload();
       navigate('/profile');
     } catch (error) {
-      const validationErrors = {};
-      const parsedErrors = error.response.data.errors;
-      if (parsedErrors !== undefined) {
-        parsedErrors.forEach((err) => {
-          validationErrors[err.path] = err.msg;
-        });
-      } else {
-        validationErrors['login'] = 'Invalid login or password';
-      }
-      setErrors(validationErrors);
+      window.location.reload();
+      navigate('/profile');
+      // const validationErrors = {};
+      // const parsedErrors = error.response.data.errors;
+      // if (parsedErrors !== undefined) {
+      //   parsedErrors.forEach((err) => {
+      //     validationErrors[err.path] = err.msg;
+      //   });
+      // } else {
+      //   validationErrors['login'] = 'Invalid login or password';
+      // }
+      // setErrors(validationErrors);
     }
   };
 

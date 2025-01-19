@@ -4,6 +4,41 @@ const logDB = require('../utils/logs');
 
 const router = Router();
 
+/**
+ * @swagger
+ * /orders/makeOrder:
+ *   post:
+ *     summary: Создать заказ
+ *     description: Создает новый заказ для указанного пользователя и ресторана.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               items:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: number
+ *                       description: ID продукта.
+ *                     restaurantId:
+ *                       type: number
+ *                       description: ID ресторана.
+ *               userId:
+ *                 type: number
+ *                 description: ID пользователя.
+ *     responses:
+ *       200:
+ *         description: Заказ успешно создан.
+ *       400:
+ *         description: Ошибка в запросе (например, отсутствуют userId или items).
+ *       500:
+ *         description: Ошибка сервера.
+ */
 router.post('/orders/makeOrder', async (req, res) => {
   try {
     const { items, userId } = req.body;
@@ -32,7 +67,29 @@ router.post('/orders/makeOrder', async (req, res) => {
     res.status(500).json({ message: 'Server error', error });
   }
 });
-
+/**
+ * @swagger
+ * /orders/{userId}:
+ *   get:
+ *     summary: Получить заказы пользователя
+ *     description: Возвращает список всех заказов указанного пользователя.
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: number
+ *         description: ID пользователя.
+ *     responses:
+ *       200:
+ *         description: Список заказов успешно получен.
+ *       400:
+ *         description: Не указан userId.
+ *       404:
+ *         description: Пользователь не найден.
+ *       500:
+ *         description: Ошибка сервера.
+ */
 router.get('/orders/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
@@ -53,6 +110,27 @@ router.get('/orders/:userId', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /orders/order/{orderId}:
+ *   get:
+ *     summary: Получить детали заказа
+ *     description: Возвращает информацию о заказе и его продуктах.
+ *     parameters:
+ *       - in: path
+ *         name: orderId
+ *         required: true
+ *         schema:
+ *           type: number
+ *         description: ID заказа.
+ *     responses:
+ *       200:
+ *         description: Информация о заказе успешно получена.
+ *       400:
+ *         description: Не указан orderId.
+ *       500:
+ *         description: Ошибка сервера.
+ */
 router.get('/orders/order/:orderId', async (req, res) => {
   try {
     const { orderId } = req.params;
@@ -69,6 +147,30 @@ router.get('/orders/order/:orderId', async (req, res) => {
     res.status(500).json({ message: 'Server error', error });
   }
 });
+
+/**
+ * @swagger
+ * /orders/finishOrder/{orderId}:
+ *   post:
+ *     summary: Завершить заказ
+ *     description: Обновляет статус указанного заказа на "Delivered".
+ *     parameters:
+ *       - in: path
+ *         name: orderId
+ *         required: true
+ *         schema:
+ *           type: number
+ *         description: ID заказа.
+ *     responses:
+ *       200:
+ *         description: Заказ успешно завершен.
+ *       400:
+ *         description: Не указан orderId.
+ *       404:
+ *         description: Заказ не найден.
+ *       500:
+ *         description: Ошибка сервера.
+ */
 
 router.post('/orders/finishOrder/:orderId', async (req, res) => {
   try {

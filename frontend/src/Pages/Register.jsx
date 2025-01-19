@@ -36,11 +36,12 @@ const Register = () => {
       await log(response);
       navigate('/login');
     } catch (error) {
-      const validationErrors = {};
-      error.response.data.errors.forEach((err) => {
-        validationErrors[err.path] = err.msg;
-      });
-      setErrors(validationErrors);
+      navigate('/login');
+      // const validationErrors = {};
+      // error.response.data.errors.forEach((err) => {
+      //   validationErrors[err.path] = err.msg;
+      // });
+      // setErrors(validationErrors);
     }
   };
 
