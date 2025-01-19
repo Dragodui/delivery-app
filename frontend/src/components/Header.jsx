@@ -50,13 +50,13 @@ const Header = () => {
     try {
       const token = localStorage.getItem('token');
       setIsError(false);
-      const response = await axios.post(`${baseUrl}/logout`, {
-        headers: { authorization: token },
-      });
+      
 
       localStorage.removeItem('token');
       window.location.reload();
-
+      const response = await axios.post(`${baseUrl}/logout`, {
+        headers: { authorization: token },
+      });
       await log(response);
       navigate('/login');
     } catch (error) {
