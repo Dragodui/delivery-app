@@ -1,8 +1,14 @@
+// database/mongo-db/schemas/Log.js
 const mongoose = require('mongoose');
 
-const LogSchema = new mongoose.Schema({
-  date: { type: mongoose.Schema.Types.Date, default: Date.now },
-  message: { type: mongoose.Schema.Types.String },
+const logSchema = new mongoose.Schema({
+  method: { type: String, required: true },
+  url: { type: String, required: true },
+  status: { type: Number, required: true },
+  responseTime: { type: Number, required: true },
+  timestamp: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('logs', LogSchema);
+const Log = mongoose.model('Log', logSchema);
+
+module.exports = Log;

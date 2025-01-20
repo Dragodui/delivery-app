@@ -16,8 +16,9 @@ require('./database/my-sql/index.js');
 
 const cors = require('cors');
 const setupSwagger = require('./utils/swagger'); // Подключение Swagger
+const logger = require('./utils/logMiddleware'); // Импорт вашего middleware для логирования
 
-const app = express();// pril
+const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
@@ -35,8 +36,12 @@ app.use(
   }),
 );
 
-// API маршруты
+// Добавьте middleware для логирования
+app.use(logger);
+
 app.use(cors());
+
+// API маршруты
 app.use(authRoutes);
 app.use(resRoute);
 app.use(ordersRoute);
