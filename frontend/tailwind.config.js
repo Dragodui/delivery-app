@@ -11,9 +11,13 @@ module.exports = {
       accent: '#9060e6',
       modalBg: '#ddcbff',
       error: '#f44336',
-      main: '#30ff68',
-      mainLight: '#8cffab',
-      main2: '#f0f0f0',
+      // main: '#30ff68',
+      // mainLight: '#8cffab',
+      // main2: '#f0f0f0',
+      main: '#a57eff',      // основной фиолетовый цвет
+      mainLight: '#ffffff',  // светлый фиолетовый оттенок
+      main2: '#f3f0ff',     // очень светлый фиолетовый
+
     },
     fontSize: {
       sm: '0.750rem',

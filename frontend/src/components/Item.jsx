@@ -99,10 +99,10 @@ const Item = ({
         <img
           src={item.image}
           alt=""
-          className="rounded-lg max-w-[200px] max-h-[140px]"
+          className="rounded-lg w-[200px] h-[170px] object-cover"
         />
-        <div className="flex w-full mt-2 justify-between">
-          <p>{item.name}</p>
+        <div className="text-center w-full mt-2 justify-between">
+          <p >{item.name}</p> 
         </div>
 
         {isAddableToCard && (
@@ -133,8 +133,8 @@ const Item = ({
             ) : (
               ''
             )}
-            <div className="flex justify-between w-full mt-2">
-              <p className="mb-2">quantity: {item.quantity}</p>
+            <div className="flex justify-center w-full mt-2">
+              {/* <p className="mb-2">quantity: {item.quantity}</p> */}
 
               <p>{item.price}$</p>
             </div>

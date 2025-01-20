@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(authRouter);
 
-// Мокаем модели и функции
+
 jest.mock('../database/my-sql/schemas/index', () => ({
   User: {
     findOne: jest.fn(),

@@ -42,9 +42,9 @@ const Restaurants = () => {
                 <img
                   src={res.image}
                   alt=""
-                  className="max-w-[150px] rounded-xl"
+                  className="rounded-lg w-[200px] h-[170px] object-cover"
                 />
-                <h1 className="font-bold text-2xl">{res.name}</h1>
+                <h1 className=" font-bold text-2xl">{res.name}</h1>
               </Link>
             ))}
           </div>
